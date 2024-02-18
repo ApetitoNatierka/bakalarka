@@ -3,7 +3,8 @@
 }
 
 .custom-modal-header {
-    color: yellow; /* Barva textu nadpisu */
+    background-color: #404040;
+    color: #E0E0E0; /* Barva textu nadpisu */
 }
 
 .custom-modal-body {
@@ -11,30 +12,30 @@
 }
 
 .custom-form-floating {
-    background-color: #fff; /* Barva pozadí vstupního pole */
-    border-color: #ccc; /* Barva ohraničení vstupního pole */
+    background-color: #808080; /* Barva pozadí vstupního pole */
+    border-color: #808080; /* Barva ohraničení vstupního pole */
 }
 
 .custom-input {
-    color: #333; /* Barva textu vstupního pole */
+    color: #C0C0C0; /* Barva textu vstupního pole */
 }
 
 .custom-label {
-    color: #333; /* Barva textu nadpisu vstupního pole */
+    color: #202020; /* Barva textu nadpisu vstupního pole */
 }
 
 .custom-btn-primary {
-    background-color: #007bff; /* Barva pozadí tlačítka */
-    border-color: #007bff; /* Barva ohraničení tlačítka */
-    color: #fff; /* Barva textu tlačítka */
+    background-color: #FFD425; /* Barva pozadí tlačítka */
+    border-color: #FFD425; /* Barva ohraničení tlačítka */
+    color: #202020; /* Barva textu tlačítka */
 }
 
 .custom-btn-primary:hover {
-    background-color: #0056b3; /* Barva pozadí tlačítka po najetí myší */
-    border-color: #0056b3; /* Barva ohraničení tlačítka po najetí myší */
-    color: #fff; /* Barva textu tlačítka po najetí myší */
+    background-color: #DAB523; /* Barva pozadí tlačítka po najetí myší */
+    border-color: #DAB523; /* Barva ohraničení tlačítka po najetí myší */
+    color: #202020; /* Barva textu tlačítka po najetí myší */
 }
 
 .custom-text-secondary {
-    color: #888; /* Barva textu sekundárního textu */
+    color: #E0E0E0; /* Barva textu sekundárního textu */
 }
