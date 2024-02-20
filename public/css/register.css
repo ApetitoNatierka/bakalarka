@@ -25,14 +25,14 @@
 }
 
 .custom-btn-primary {
-    background-color: #FFD425; /* Barva pozadí tlačítka */
-    border-color: #FFD425; /* Barva ohraničení tlačítka */
+    background-color: #FDAD34; /* Barva pozadí tlačítka */
+    border-color: #FDAD34; /* Barva ohraničení tlačítka */
     color: #202020; /* Barva textu tlačítka */
 }
 
 .custom-btn-primary:hover {
-    background-color: #DAB523; /* Barva pozadí tlačítka po najetí myší */
-    border-color: #DAB523; /* Barva ohraničení tlačítka po najetí myší */
+    background-color: #FFBB54; /* Barva pozadí tlačítka po najetí myší */
+    border-color: #FFBB54; /* Barva ohraničení tlačítka po najetí myší */
     color: #202020; /* Barva textu tlačítka po najetí myší */
 }
 
