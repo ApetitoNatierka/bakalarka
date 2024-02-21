@@ -33,7 +33,7 @@
     </form>
     <div class="registration-text">
         <a href="/register">
-            <p>New in Bazar Slnko? Let's register!</p>
+            <p>New ? Let's register!</p>
         </a>
     </div>
 </div>
