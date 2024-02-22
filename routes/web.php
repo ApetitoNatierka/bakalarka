@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('register');
+    return view('start_page');
 });
 
 Route::get('/register', [UserController::class, 'get_register']);
