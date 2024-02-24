@@ -1,41 +1,49 @@
+:root {
+    --primary-color: #FDAD34;
+    --secondary-color: #303030;
+    --tercial-color: #404040;
+    --text-color: #E0E0E0;
+    --text-secondary-dark: #202020;
+}
+
 .custom-modal-background {
-    background-color: #404040; /* Barva pozadí modálního okna */
+    background-color: var(--secondary-color); /* Barva pozadí modálního okna */
 }
 
 .custom-modal-header {
-    background-color: #404040;
-    color: #E0E0E0; /* Barva textu nadpisu */
+    background-color: var(--secondary-color);
+    color: var(--text-color); /* Barva textu nadpisu */
 }
 
 .custom-modal-body {
-    background-color: #404040; /* Barva pozadí těla modálního okna */
+    background-color: var(--secondary-color); /* Barva pozadí těla modálního okna */
 }
 
 .custom-form-floating {
-    background-color: #808080; /* Barva pozadí vstupního pole */
-    border-color: #808080; /* Barva ohraničení vstupního pole */
+    background-color: var(--tercial-color); /* Barva pozadí vstupního pole */
+    border-color: var(--tercial-color); /* Barva ohraničení vstupního pole */
 }
 
 .custom-input {
-    color: #C0C0C0; /* Barva textu vstupního pole */
+    color: var(--text-color); /* Barva textu vstupního pole */
 }
 
 .custom-label {
-    color: #202020; /* Barva textu nadpisu vstupního pole */
+    color: var(--text-secondary-dark); /* Barva textu nadpisu vstupního pole */
 }
 
 .custom-btn-primary {
-    background-color: #FDAD34; /* Barva pozadí tlačítka */
-    border-color: #FDAD34; /* Barva ohraničení tlačítka */
-    color: #202020; /* Barva textu tlačítka */
+    background-color: var(--primary-color); /* Barva pozadí tlačítka */
+    border-color: var(--primary-color); /* Barva ohraničení tlačítka */
+    color: var(--text-secondary-dark); /* Barva textu tlačítka */
 }
 
 .custom-btn-primary:hover {
     background-color: #FFBB54; /* Barva pozadí tlačítka po najetí myší */
     border-color: #FFBB54; /* Barva ohraničení tlačítka po najetí myší */
-    color: #202020; /* Barva textu tlačítka po najetí myší */
+    color: var(--text-secondary-dark); /* Barva textu tlačítka po najetí myší */
 }
 
 .custom-text-secondary {
-    color: #E0E0E0; /* Barva textu sekundárního textu */
+    color: var(--text-color); /* Barva textu sekundárního textu */
 }

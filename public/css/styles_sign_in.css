@@ -1,12 +1,13 @@
 :root {
-    --primary-color: #FDAD34; /* Default primary color */
-    --secondary-color: #404040; /* Default secondary color */
-    --form-background-color: #404040; /* Default form background color */
-    --text-color: #E0E0E0; /* Default text color */
+    --primary-color: #FDAD34;
+    --secondary-color: #303030;
+    --tercial-color: #404040;
+    --text-color: #E0E0E0;
+    --text-secondary-dark: #202020;
 }
 
 body {
-    background-color: var(--form-background-color);
+    background-color: var(--secondary-color);
     color: var(--text-color);
 }
 
@@ -14,7 +15,7 @@ body {
     max-width: 400px;
     margin: 0 auto;
     margin-top: 100px;
-    background-color: var(--form-background-color);
+    background-color: var(--secondary-color);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
@@ -44,7 +45,7 @@ body {
 
 .btn-primary {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-color);
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
@@ -52,7 +53,7 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #FFBB54;
+    background-color: var(--text-color);
 }
 
 .registration-text a {

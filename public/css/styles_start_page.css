@@ -1,0 +1,33 @@
+:root {
+    --primary-color: #FDAD34;
+    --secondary-color: #303030;
+    --tercial-color: #404040;
+    --text-color: #E0E0E0;
+    --text-secondary-dark: #202020;
+}
+
+/* Zmena farby textu v nadpise a popise kariet */
+.card-title,
+.card-text {
+    color: var(--text-color);
+}
+
+/* Zmena veľkosti textu v nadpise a popise kariet */
+.card-title {
+    font-size: 20px; /* Nastaví veľkosť nadpisu */
+}
+
+.card-text {
+    font-size: 16px; /* Nastaví veľkosť textu */
+}
+
+/* Zmena veľkosti obrázkov v kartách */
+.card-img-top {
+    width: 100%; /* Nastaví šírku obrázka na 100% šírky karty */
+    height: auto; /* Udržuje pomer strán obrazu */
+}
+
+/* Zmena farby pozadia karty */
+.card {
+    background-color: var(--secondary-color); /* Nastaví svetlo sivé pozadie karty */
+}
