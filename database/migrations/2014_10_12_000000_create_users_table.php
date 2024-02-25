@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role')->default('person');
+            $table->string('phone_number');
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');;
+            $table->string('company_position');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -28,5 +33,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+    }
+
+    public static function allowedRoles(): array
+    {
+        return ['admin', 'employee', 'person'];
     }
 };
