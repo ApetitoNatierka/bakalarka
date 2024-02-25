@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('company');
             $table->string('type')->default('customer');
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
             $table->string('email');
             $table->string('phone_number');
             $table->timestamps();

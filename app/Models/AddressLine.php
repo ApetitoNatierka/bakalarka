@@ -6,17 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Cart extends Model
+class AddressLine extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'total_cost',
-    ];
-
-    public function user():BelongsTo
+    public function adress():BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Address::class);
     }
 }
+
+

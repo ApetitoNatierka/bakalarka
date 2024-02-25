@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('role')->default('person');
             $table->string('phone_number');
             $table->unsignedBigInteger('company_id')->nullable();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');;
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
             $table->string('company_position');
             $table->rememberToken();
             $table->timestamps();
