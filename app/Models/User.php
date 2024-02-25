@@ -25,7 +25,9 @@ class User extends Authenticatable
         'password',
         'role',
         'company_position',
-        'number',
+        'phone_number',
+        'address_id',
+        'company_id',
     ];
 
     /**
@@ -51,6 +53,11 @@ class User extends Authenticatable
     public function cart():HasOne
     {
         return $this->hasOne(Cart::class);
+    }
+
+    public function address():BelongsTo
+    {
+        return $this->belongsTo(Address::class);
     }
 
     public function company():BelongsTo

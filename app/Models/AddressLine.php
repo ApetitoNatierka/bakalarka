@@ -10,6 +10,16 @@ class AddressLine extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'street',
+        'house_number',
+        'city',
+        'region',
+        'postal_code',
+        'country',
+        'address_id',
+    ];
+
     public function adress():BelongsTo
     {
         return $this->belongsTo(Address::class);

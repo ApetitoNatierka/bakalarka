@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('phone_number');
             $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
             $table->string('company_position');
             $table->rememberToken();
             $table->timestamps();
