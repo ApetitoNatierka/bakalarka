@@ -22,7 +22,7 @@
                     <a class="nav-link" aria-current="page" href="#">Centered nav only</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-disabled="true">Disabled</a>
@@ -31,9 +31,9 @@
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Company</a></li>
-                        <li><a class="dropdown-item" href="#">Individual</a></li>
-                        <li><a class="dropdown-item" href="#">Sign in</a></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" href="/user_profile">User profile</a></li>
+                        <li><a class="dropdown-item" href="/sign_in">Sign in</a></li>
+                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
                     </ul>
                 </li>
             </ul>

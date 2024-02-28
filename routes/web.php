@@ -22,10 +22,14 @@ Route::get('/register', [UserController::class, 'get_register']);
 
 Route::post('/register', [UserController::class, 'register']);
 
-Route::post('/logout', [UserController::class, 'logout']);
+Route::get('/logout', [UserController::class, 'logout']);
 
 Route::post('/sign_in', [UserController::class, 'sign_in']);
 
 Route::get('/sign_in',  [UserController::class, 'get_sign_in']);
+
+Route::get('/user_profile', [UserController::class, 'get_user_profile']);
+
+Route::post('/modify_user_info', [UserController::class, 'modify_user_info']);
 
 

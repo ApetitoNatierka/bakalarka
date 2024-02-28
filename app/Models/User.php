@@ -65,4 +65,36 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class);
     }
 
+    public function get_id() {
+        return $this->attributes['id'];
+    }
+
+    public function get_name() {
+        return $this->attributes['name'];
+    }
+
+    public function get_email() {
+        return $this->attributes['email'];
+    }
+
+    public function get_role() {
+        return $this->attributes['role'];
+    }
+
+    public function get_company_position() {
+        return $this->attributes['company_position'];
+    }
+
+    public function get_phone_number() {
+        return $this->attributes['phone_number'];
+    }
+
+    public function get_address_id() {
+        return $this->attributes['address_id'];
+    }
+
+    public function get_company_id() {
+        return $this->attributes['company_id'];
+    }
+
 }
