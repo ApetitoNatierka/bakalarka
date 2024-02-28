@@ -119,6 +119,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/manage_user_profile.js') }}"></script>
+    <script src="{{ asset('js/manage_user_profile.js')}}"></script>
 
 @endsection
