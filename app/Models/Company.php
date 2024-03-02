@@ -29,4 +29,9 @@ class Company extends Model
         return $this->hasMany(User::class);
     }
 
+    public static function allowedTypes(): array
+    {
+        return ['customer', 'supplier', 'mine'];
+    }
+
 }

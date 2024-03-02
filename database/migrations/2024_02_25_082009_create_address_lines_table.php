@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('address_lines', function (Blueprint $table) {
             $table->id();
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->string('street');
             $table->string('house_number');
             $table->string('city');

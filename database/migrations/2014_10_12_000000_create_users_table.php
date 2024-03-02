@@ -19,10 +19,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('person');
             $table->string('phone_number');
-            $table->unsignedBigInteger('company_id')->nullable();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
-            $table->unsignedBigInteger('address_id')->nullable();
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
             $table->string('company_position');
             $table->rememberToken();
             $table->timestamps();
@@ -37,8 +33,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 
-    public static function allowedRoles(): array
-    {
-        return ['admin', 'employee', 'person'];
-    }
 };

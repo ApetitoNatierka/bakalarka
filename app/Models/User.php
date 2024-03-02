@@ -97,4 +97,9 @@ class User extends Authenticatable
         return $this->attributes['company_id'];
     }
 
+    public static function allowedRoles(): array
+    {
+        return ['admin', 'employee', 'person'];
+    }
+
 }
