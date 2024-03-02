@@ -31,10 +31,10 @@ document.getElementById('new_address').addEventListener('click', function() {
         if (response.ok) {
             dialog.style.display = 'none';
         } else {
-            console.error('Server error:', response.status);
+            console.error('Server error:');
         }
     }).catch(error => {
-        console.error('Fetch error:', error);
+        console.error('Fetch error:');
     });
 });
 

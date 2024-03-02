@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AddressLineController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +35,10 @@ Route::get('/user_profile', [UserController::class, 'get_user_profile']);
 Route::post('/modify_user_info', [UserController::class, 'modify_user_info']);
 
 
+
+Route::post('/add_new_address_line', [AddressLineController::class, 'add_new_address_line']);
+
+
+Route::get('/company_profile{company}', [CompanyController::class, 'get_company_profile']);
+
+Route::get('/user_company_profile', [CompanyController::class, 'get_user_company_profile']);
