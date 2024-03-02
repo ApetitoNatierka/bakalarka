@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,7 +22,15 @@ class UserController extends Controller
         ]);
 
         $incoming_fields_['password'] = bcrypt($incoming_fields_['password']);
+
+        $address = Address::create();
+
+        $incoming_fields_['address_id'] = $address->id;
+
+
         $user = User::create($incoming_fields_);
+
+
         auth()->login($user);
 
         return redirect('/');
@@ -65,7 +74,7 @@ class UserController extends Controller
         return view('user_profile', ['user' => $user]);
     }
 
-    public function saveUserData(Request $request)
+    public function modify_user_info(Request $request)
     {
         $validatedData = $request->validate([
             'name' => ['required', 'min:3', 'max:15', Rule::unique('users', 'name')],
