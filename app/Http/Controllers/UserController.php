@@ -23,7 +23,9 @@ class UserController extends Controller
 
         $incoming_fields_['password'] = bcrypt($incoming_fields_['password']);
 
-        $address = Address::create();
+        $address_vales['name'] = '';
+
+        $address = Address::create($address_vales);
 
         $incoming_fields_['address_id'] = $address->id;
 
@@ -77,17 +79,14 @@ class UserController extends Controller
     public function modify_user_info(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => ['required', 'min:3', 'max:15', Rule::unique('users', 'name')],
-            'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'phone_number' => 'required|integer',
+            'name' => ['required', 'min:3', 'max:15'],
+            'email' => ['required', 'email'],
+            'phone_number' => ['required'],
         ]);
 
         $user = User::find(auth()->id());
-        $user->name = $validatedData['name'];
-        $user->email = $validatedData['email'];
-        $user->phone_number = $validatedData['phone_number'];
-        $user->save();
+        $user->update($validatedData);
 
-        return response()->json(['message' => 'User data saved successfully'], 200);
+        return response()->json(['message' => 'User data saved successfully']);
     }
 }

@@ -38,6 +38,12 @@ Route::post('/modify_user_info', [UserController::class, 'modify_user_info']);
 
 Route::post('/add_new_address_line', [AddressLineController::class, 'add_new_address_line']);
 
+Route::post('/modify_address_line', [AddressLineController::class, 'modify_address_line']);
+
+Route::post('/delete_address_line', [AddressLineController::class, 'delete_address_line']);
+
+
+
 
 Route::get('/company_profile{company}', [CompanyController::class, 'get_company_profile']);
 

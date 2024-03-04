@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('company');
             $table->string('type')->default('customer');
             $table->string('email');
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }

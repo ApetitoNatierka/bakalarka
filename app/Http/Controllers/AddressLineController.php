@@ -21,11 +21,54 @@ class AddressLineController extends Controller
 
         $user = User::find(auth()->id());
 
-        $validatedData['address_id'] = $user->get_address()->get_id();
+        $address = $user->address;
 
-        AddressLine::create($validatedData);
+        if (!$address) {
+            return response()->json([
+                'message' => 'Address not found for user'
+            ], 404);
+        }
 
-        return view('user_profile', ['user' => $user]);
+        $validatedData['address_id'] = $address->id;
+
+        $address_line = AddressLine::create($validatedData);
+
+        return response()->json([
+            'message' => 'Address line added successfully',
+            'address_line' => $address_line,
+        ]);
+    }
+
+    public function modify_address_line(Request $request) {
+        $validatedData = $request->validate([
+            'address_line_id' => ['required'],
+            'street' => ['required', 'string'],
+            'house_number' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'region' => ['required', 'string'],
+            'postal_code' => ['required', 'string'],
+            'country' => ['required', 'string'],
+        ]);
+
+        $address_line = AddressLine::find($validatedData['address_line_id']);
+
+        unset($validatedData['address_line_id']);
+        $address_line->update($validatedData);
+
+        return response()->json(['message' => 'Address line modified successfully']);
+    }
+
+    public function delete_address_line(Request $request) {
+        $validatedData = $request->validate([
+            'address_line_id' => ['required'],
+            ]);
+
+        $address_line = AddressLine::find($validatedData['address_line_id']);
+
+        $address_line->delete();
+
+        return response()->json(['message' => 'Address line deleted successfully']);
 
     }
+
 }
