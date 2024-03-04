@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #FDAD34;
+    --secondary-color: #303030;
+    --tercial-color: #404040;
+    --text-color: #E0E0E0;
+    --text-secondary-dark: #202020;
+}
+
+.custom-modal-background {
+    background-color: var(--secondary-color); /* Barva pozadí modálního okna */
+}
+
+.custom-modal-header {
+    background-color: var(--secondary-color);
+    color: var(--text-color); /* Barva textu nadpisu */
+}
+
+.custom-modal-body {
+    background-color: var(--secondary-color); /* Barva pozadí těla modálního okna */
+}
+
+.custom-form-floating {
+    background-color: var(--tercial-color); /* Barva pozadí vstupního pole */
+    border-color: var(--tercial-color); /* Barva ohraničení vstupního pole */
+}
+
+.custom-input {
+    color: var(--text-color); /* Barva textu vstupního pole */
+}
+
+.custom-label {
+    color: var(--text-secondary-dark); /* Barva textu nadpisu vstupního pole */
+}
+
+.custom-btn-primary {
+    background-color: var(--primary-color); /* Barva pozadí tlačítka */
+    border-color: var(--primary-color); /* Barva ohraničení tlačítka */
+    color: var(--text-secondary-dark); /* Barva textu tlačítka */
+}
+
+.custom-btn-primary:hover {
+    background-color: #FFBB54; /* Barva pozadí tlačítka po najetí myší */
+    border-color: #FFBB54; /* Barva ohraničení tlačítka po najetí myší */
+    color: var(--text-secondary-dark); /* Barva textu tlačítka po najetí myší */
+}
+
+.custom-text-secondary {
+    color: var(--text-color); /* Barva textu sekundárního textu */
+}
