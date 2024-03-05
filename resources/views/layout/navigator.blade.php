@@ -33,8 +33,14 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Company</a></li>
-                        <li><a class="dropdown-item" href="/user_profile">User profile</a></li>
+                        @auth
+                            <li><a class="dropdown-item" href="/company_profile">Company</a></li>
+                        @endif
+                        @auth
+                            <li><a class="dropdown-item" href="/user_profile">User profile</a></li>
+                        @else
+                            <li><a class="dropdown-item" href="/sign_in">User profile</a></li>
+                        @endauth
                         <li><a class="dropdown-item" href="/sign_in">Sign in</a></li>
                         <li><a class="dropdown-item" href="/logout">Sign out</a></li>
                     </ul>

@@ -8,13 +8,10 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    public function get_company_profile(Company $company) {
-        return view('company_profile', ['company' => $company]);
-    }
 
-    public function get_user_company_profile() {
+    public function get_company_profile() {
         $user = User::find(auth()->id());
-        $company = Company::find($user->company());
+        $company = $user->company;
 
         return view('company_profile', ['company' => $company]);
     }

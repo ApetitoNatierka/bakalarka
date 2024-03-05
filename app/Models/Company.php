@@ -29,6 +29,11 @@ class Company extends Model
         return $this->hasMany(User::class);
     }
 
+    public function get_id()
+    {
+        return $this->attributes['id'];
+    }
+
     public static function allowedTypes(): array
     {
         return ['customer', 'supplier', 'mine'];

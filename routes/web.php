@@ -45,6 +45,6 @@ Route::post('/delete_address_line', [AddressLineController::class, 'delete_addre
 
 
 
-Route::get('/company_profile{company}', [CompanyController::class, 'get_company_profile']);
+Route::get('/company_profile', [CompanyController::class, 'get_company_profile']);
 
-Route::get('/user_company_profile', [CompanyController::class, 'get_user_company_profile']);
+
