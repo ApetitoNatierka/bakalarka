@@ -19,9 +19,9 @@ class Company extends Model
         'phone_number',
     ];
 
-    public function address():HasOne
+    public function address():BelongsTo
     {
-        return $this->hasOne(Address::class);
+        return $this->belongsTo(Address::class);
     }
 
     public function users():HasMany
@@ -32,6 +32,26 @@ class Company extends Model
     public function get_id()
     {
         return $this->attributes['id'];
+    }
+
+    public function get_company()
+    {
+        return $this->attributes['company'];
+    }
+
+    public function get_email()
+    {
+        return $this->attributes['email'];
+    }
+
+    public function get_type()
+    {
+        return $this->attributes['type'];
+    }
+
+    public function get_phone_number()
+    {
+        return $this->attributes['phone_number'];
     }
 
     public static function allowedTypes(): array

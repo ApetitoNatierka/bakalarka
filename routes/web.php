@@ -44,7 +44,8 @@ Route::post('/delete_address_line', [AddressLineController::class, 'delete_addre
 
 
 
-
 Route::get('/company_profile', [CompanyController::class, 'get_company_profile']);
+
+Route::post('/add_company_info', [CompanyController::class, 'add_company_info']);
 
 

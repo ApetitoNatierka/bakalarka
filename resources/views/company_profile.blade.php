@@ -2,7 +2,7 @@
 @extends('layout.navigator')
 @section('content')
 
-    <link href="{{ asset('css/styles_user_profile.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles_company_profile.css') }}" rel="stylesheet">
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
@@ -14,7 +14,7 @@
                     </svg>
                 </button>
                 @else
-                    <button type="button" class="btn btn-secondary custom-btn" id="add_company_line">
+                    <button type="button" class="btn btn-secondary custom-btn" id="add_company_info">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
                         </svg>
@@ -48,18 +48,21 @@
                     <div class="row mb-3">
                         <div class="col">
                             @if(isset($company) && $user->get_company_position() == 'admin')
-                                <label for="type" class="form-label">Type</label>
-                                <select id="type" class="form-select" name="type">
+                                <label for="type" class="col-form-label">Type</label>
+                                <select id="type" class="form-select col custom-input" name="type">
                                     <option selected>{{ $company->get_type() }}</option>
                                     <option>Customer</option>
                                     <option>Supplier</option>
                                 </select>
                             @elseif(isset($company))
-                                <label for="type" class="form-label">Type</label>
+                                <label for="type" class="col-form-label">Type</label>
                                 <input type="text" class="form-control col custom-input" id="type" name="type" value="{{ $company->get_type() }}" disabled>
                             @else
-                                <label for="type" class="form-label">Type</label>
-                                <input type="text" class="form-control col custom-input" id="type" name="type">
+                                <label for="type" class="col-form-label">Type</label>
+                                <select id="type" class="form-select col custom-input" name="type">
+                                    <option selected>Customer</option>
+                                    <option>Customer</option>
+                                    <option>Supplier</option>
                             @endif
                         </div>
                         <div class="col">
@@ -101,7 +104,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(isset($company) && $user->get_company_position() == 'admin')
+                                        @if(isset($company->users) && $user->get_company_position() == 'admin')
                                             @foreach($company->users as $users)
                                                 <tr>
                                                     <td>
@@ -140,7 +143,7 @@
                         </div>
                     </div>
                 @endif
-                @if(isset($company))
+                @if(isset($company->address))
                 <div class="addresses-container mt-3">
                     <div class="dropdown mt-3">
                         <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
