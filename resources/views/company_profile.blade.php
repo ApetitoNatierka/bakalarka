@@ -87,7 +87,7 @@
                                 <div class="card p-3">
                                     <h5 class="card-title">Users</h5>
                                     @if($user->get_company_position() == 'admin')
-                                    <button type="button" class="btn btn-secondary custom-btn" id="add_address_line">
+                                    <button type="button" class="btn btn-secondary custom-btn" id="add_user_line">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
                                         </svg>
@@ -109,14 +109,14 @@
                                                 <tr>
                                                     <td>
                                                         <div class="dropdown">
-                                                            <button class="btn btn-secondary dropdown-toggle no-caret" type="button" id="dropdownMenuButton" data-address-line-id="{{ $users->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <button class="btn btn-secondary dropdown-toggle no-caret" type="button" id="dropdownMenuButton" data-user-line-id="{{ $users->id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                                                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
                                                                 </svg>
                                                             </button>
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <li><p class="dropdown-item modify_user_line" id="modify_user_line" data-address-line-id="{{ $users->id }}">Modify</p></li>
-                                                                <li><p class="dropdown-item delete_user_line" id="delete_user_line" data-address-line-id="{{ $users->id }}">Delete</p></li>
+                                                                <li><p class="dropdown-item modify_user_line" id="modify_user_line" data-user-line-id="{{ $users->id }}">Modify</p></li>
+                                                                <li><p class="dropdown-item delete_user_line" id="delete_user_line" data-user-line-id="{{ $users->id }}">Delete</p></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                 @endif
-                @if(isset($company->address))
+                @if(isset($company))
                 <div class="addresses-container mt-3">
                     <div class="dropdown mt-3">
                         <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -172,7 +172,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if(isset($company) && $user->get_company_position() == 'admin')
+                                    @if(isset($company->address->addresses) && $user->get_company_position() == 'admin')
                                         @foreach($company->address->addresses as $address)
                                             <tr>
                                                 <td>
@@ -196,7 +196,7 @@
                                                 <td><input type="text" class="form-control" name="country" value="{{ $address->country }}"></td>
                                             </tr>
                                         @endforeach
-                                    @elseif(isset($company))
+                                    @elseif(isset($company->address->addresses))
                                         @foreach($company->address->addresses as $address)
                                             <tr>
                                                 <td><input type="text" class="form-control" name="street" value="{{ $address->street }}" disabled></td>
@@ -256,18 +256,26 @@
                 <input type="text" name="email" id="email" placeholder="Email">
             </label><br>
             <label>
+                <input type="text" name="password" id="password" placeholder="Password">
+            </label><br>
+            <label>
                 <input type="text" name="phone_number" id="phone_number" placeholder="Phone number">
             </label><br>
             <label>
                 <input type="text" name="company_position" id="company_position" placeholder="Company position">
             </label><br>
-            <button type="button" id="new_address">New</button>
-            <button type="button" id="cancel_address">Cancel</button>
+            <button type="button" id="new_user">New</button>
+            <button type="button" id="cancel_user">Cancel</button>
 
         </form>
     </div>
 
+    <input id="entity_type" type="hidden" value="company">
+    @if(isset($company))
+        <input id="company_id" type="hidden" value={{$company->id}}>
+    @endif
     <script src="{{ asset('js/manage_company_profile.js')}}"></script>
+    <script src="{{ asset('js/add_address_line.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 

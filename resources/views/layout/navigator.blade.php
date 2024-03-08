@@ -35,7 +35,7 @@
                     <ul class="dropdown-menu">
                         @auth
                             <li><a class="dropdown-item" href="/company_profile">Company</a></li>
-                        @endif
+                        @endauth
                         @auth
                             <li><a class="dropdown-item" href="/user_profile">User profile</a></li>
                         @else

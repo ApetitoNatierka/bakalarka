@@ -25,7 +25,7 @@ class CompanyController extends Controller
             'email' => ['required', 'string'],
         ]);
 
-        $address_values['name'] = $validatedData['company'];
+        $address_values['name'] = '';
 
         $address = Address::create($address_values);
 
@@ -42,5 +42,22 @@ class CompanyController extends Controller
             'success' => true,
             'message' => 'Company information added successfully.',
         ]);
+    }
+
+    public function modify_company_info(Request $request) {
+        $validatedData = $request->validate([
+            'company' => ['required', 'min:3', 'max:15'],
+            'email' => ['required', 'email'],
+            'phone_number' => ['required'],
+            'type' => ['required'],
+            'company_id' => ['required']
+        ]);
+
+        $company = Company::find($validatedData['company_id']);
+
+        unset($validatedData['company_id']);
+        $company->update($validatedData);
+
+        return response()->json(['message' => 'User data saved successfully']);
     }
 }

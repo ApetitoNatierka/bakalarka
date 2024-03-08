@@ -34,6 +34,12 @@ Route::get('/user_profile', [UserController::class, 'get_user_profile']);
 
 Route::post('/modify_user_info', [UserController::class, 'modify_user_info']);
 
+Route::post('/modify_user_line', [UserController::class, 'modify_user_line']);
+
+Route::post('/delete_user_line', [UserController::class, 'delete_user_line']);
+
+Route::post('/add_new_user_line', [UserController::class, 'add_new_user_line']);
+
 
 
 Route::post('/add_new_address_line', [AddressLineController::class, 'add_new_address_line']);
@@ -47,5 +53,8 @@ Route::post('/delete_address_line', [AddressLineController::class, 'delete_addre
 Route::get('/company_profile', [CompanyController::class, 'get_company_profile']);
 
 Route::post('/add_company_info', [CompanyController::class, 'add_company_info']);
+
+Route::post('/modify_company_info', [CompanyController::class, 'modify_company_info']);
+
 
 

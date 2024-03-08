@@ -11,6 +11,7 @@ class AddressLineController extends Controller
 {
     public function add_new_address_line(Request $request) {
         $validatedData = $request->validate([
+            'entity_type' => ['required'],
             'street' => ['required', 'string'],
             'house_number' => ['required', 'string'],
             'city' => ['required', 'string'],
@@ -21,7 +22,14 @@ class AddressLineController extends Controller
 
         $user = User::find(auth()->id());
 
-        $address = $user->address;
+        if ($validatedData['entity_type'] = 'user') {
+            $address = $user->address;
+        } else
+        {
+            $company = $user->company;
+            $address = $company->address;
+        }
+
 
         if (!$address) {
             return response()->json([

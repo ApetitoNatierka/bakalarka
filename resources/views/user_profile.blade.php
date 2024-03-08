@@ -155,7 +155,11 @@
         </form>
     </div>
 
+
+    <input id="entity_type" type="hidden" value="user">
+
     <script src="{{ asset('js/manage_user_profile.js')}}"></script>
+    <script src="{{ asset('js/add_address_line.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
