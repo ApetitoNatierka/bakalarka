@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressLineController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,10 @@ Route::get('/company_profile', [CompanyController::class, 'get_company_profile']
 Route::post('/add_company_info', [CompanyController::class, 'add_company_info']);
 
 Route::post('/modify_company_info', [CompanyController::class, 'modify_company_info']);
+
+
+
+Route::get('/products', [ProductController::class, 'get_products']);
 
 
 

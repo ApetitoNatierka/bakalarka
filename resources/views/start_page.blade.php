@@ -17,13 +17,15 @@
             </div>
             <div class="col">
                 <div class="col">
-                    <div class="card">
-                        <img src="{{ asset('images/products.jpg') }}" class="card-img-top" alt="Placeholder image">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <a href="/products">
+                        <div class="card">
+                            <img src="{{ asset('images/products.jpg') }}" class="card-img-top" alt="Placeholder image">
+                            <div class="card-body">
+                                <h5 class="card-title">Products</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="col">
