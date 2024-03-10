@@ -21,6 +21,13 @@ Route::get('/', function () {
     return view('start_page');
 });
 
+Route::get('/homepage', function () {
+    return view('start_page');
+});
+
+
+
+
 Route::get('/register', [UserController::class, 'get_register']);
 
 Route::post('/register', [UserController::class, 'register']);
@@ -61,5 +68,11 @@ Route::post('/modify_company_info', [CompanyController::class, 'modify_company_i
 
 Route::get('/products', [ProductController::class, 'get_products']);
 
+Route::get('/search_products', [ProductController::class, 'get_search_products']);
 
+Route::post('/add_new_product', [ProductController::class, 'add_new_product']);
+
+Route::post('/delete_product', [ProductController::class, 'delete_product']);
+
+Route::post('/modify_product', [ProductController::class, 'modify_product']);
 

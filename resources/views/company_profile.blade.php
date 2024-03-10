@@ -97,6 +97,7 @@
                                     <table class="users_line_table" id="users_lines_table">
                                         <thead>
                                         <tr>
+                                            <th>    </th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phnoe number</th>
@@ -163,6 +164,7 @@
                                 <table class="address_line_table" id="address_lines_table">
                                     <thead>
                                     <tr>
+                                        <th>      </th>
                                         <th>Street</th>
                                         <th>House Number</th>
                                         <th>City</th>

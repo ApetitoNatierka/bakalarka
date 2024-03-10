@@ -1,68 +1,71 @@
-/*
-document.getElementById('add_company_info').addEventListener('click', function() {
-    var par_company = document.getElementById('company').value;
-    var par_email = document.getElementById('email').value;
-    var par_phone_number = document.getElementById('phone_number').value;
-    var par_type = document.getElementById('type').value;
 
-    $.ajax({
-        type: 'post',
-        url: '/add_company_info',
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        data: {
-            company: par_company,
-            email: par_email,
-            phone_number: par_phone_number,
-            type: par_type,
-        },
-        success: function(response) {
-            if(response.success) {
-                console.log(response.message);
-                window.location.href = '/company_profile';
+$(document).ready(function() {
+    $('#add_company_info').click(function() {
+        var par_company = document.getElementById('company').value;
+        var par_email = document.getElementById('email').value;
+        var par_phone_number = document.getElementById('phone_number').value;
+        var par_type = document.getElementById('type').value;
+
+        $.ajax({
+            type: 'post',
+            url: '/add_company_info',
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            data: {
+                company: par_company,
+                email: par_email,
+                phone_number: par_phone_number,
+                type: par_type,
+            },
+            success: function(response) {
+                if(response.success) {
+                    console.log(response.message);
+                    window.location.href = '/company_profile';
+                }
+            },
+            error: function(response) {
+                console.error('Error saving user data:');
             }
-        },
-        error: function(response) {
-            console.error('Error saving user data:');
-        }
+        });
     });
-
-});
-*/
-document.getElementById('modify_company_info').addEventListener('click', function() {
-    var par_company = document.getElementById('company').value;
-    var par_email = document.getElementById('email').value;
-    var par_phone_number = document.getElementById('phone_number').value;
-    var par_type = document.getElementById('type').value;
-    var par_company_id = document.getElementById('company_id').value;
-
-    $.ajax({
-        type: 'post',
-        url: '/modify_company_info',
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        data: {
-            company_id: par_company_id,
-            company: par_company,
-            email: par_email,
-            phone_number: par_phone_number,
-            type: par_type,
-        },
-        success: function(response) {
-            console.log(response.message);
-        },
-        error: function(response) {
-            console.error('Error saving user data:');
-        }
-    });
-
 });
 
-document.getElementById('add_user_line').addEventListener('click', function() {
+$(document).ready(function() {
+    $('#modify_company_info').click(function() {
+        var par_company = document.getElementById('company').value;
+        var par_email = document.getElementById('email').value;
+        var par_phone_number = document.getElementById('phone_number').value;
+        var par_type = document.getElementById('type').value;
+        var par_company_id = document.getElementById('company_id').value;
+
+        $.ajax({
+            type: 'post',
+            url: '/modify_company_info',
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            data: {
+                company_id: par_company_id,
+                company: par_company,
+                email: par_email,
+                phone_number: par_phone_number,
+                type: par_type,
+            },
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (response) {
+                console.error('Error saving user data:');
+            }
+        });
+
+    });
+});
+
+$('#add_user_line').click(function() {
     var dialog = document.getElementById('user_dialog');
     dialog.style.display = 'block';
 });

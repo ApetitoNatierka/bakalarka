@@ -61,7 +61,26 @@
                             <div class="card p-3">
                                 <h5 class="card-title">Company Information</h5>
                                 <hr>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id nisi ut justo ultrices feugiat. Donec tristique odio sit amet augue tincidunt feugiat.</p>
+                                <table class="address_line_table" id="address_lines_table">
+                                    <thead>
+                                        <tr>
+                                            <th>      </th>
+                                            <th>Company name</th>
+                                            <th>Email</th>
+                                            <th>Type</th>
+                                            <th>Phone Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th></th>
+                                            <th>{{$user->company->get_company()}}</th>
+                                            <th>{{$user->company->get_email()}}</th>
+                                            <th>{{$user->company->get_type()}}</th>
+                                            <th>{{$user->company->get_phone_number()}}</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -84,6 +103,7 @@
                             <table class="address_line_table" id="address_lines_table">
                             <thead>
                             <tr>
+                                <th>      </th>
                                 <th>Street</th>
                                 <th>House Number</th>
                                 <th>City</th>

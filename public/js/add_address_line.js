@@ -1,4 +1,4 @@
-document.getElementById('add_address_line').addEventListener('click', function() {
+$('#add_address_line').click(function() {
     var dialog = document.getElementById('address_dialog');
     dialog.style.display = 'block';
 });
