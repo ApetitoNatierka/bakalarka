@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Address;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,9 +30,10 @@ class UserController extends Controller
 
         $incoming_fields_['address_id'] = $address->id;
 
-
         $user = User::create($incoming_fields_);
 
+        $cart_values['user_id'] = $user->get_id();
+        Cart::create($cart_values);
 
         auth()->login($user);
 

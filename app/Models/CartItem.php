@@ -12,13 +12,34 @@ class CartItem extends Model
 
     protected $fillable = [
         'cart_id',
-        'itemable_id',
-        'itemable_type',
+        'product_id',
+        'name',
+        'unit_price',
         'quantity',
     ];
 
     public function cart():BelongsTo
     {
         return $this->belongsTo(Cart::class);
+    }
+
+    public function get_id() {
+        return $this->attributes['id'];
+    }
+
+    public function get_item_id() {
+        return $this->attributes['product_id'];
+    }
+
+    public function get_name() {
+        return $this->attributes['name'];
+    }
+
+    public function get_unit_price() {
+        return $this->attributes['unit_price'];
+    }
+
+    public function get_quantity() {
+        return $this->attributes['quantity'];
     }
 }

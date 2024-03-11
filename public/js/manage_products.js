@@ -205,3 +205,69 @@ $('.dropdown-item.delete_product').on('click', function(e) {
         }
     })
 });
+
+$(document).ready(function() {
+
+    $('#add_to_cart_button').click(function() {
+        var dialog = document.getElementById('quantity_dialog');
+        var par_product_id = $(this).data('product-id');
+        dialog.style.display = 'block';
+        $('#quantity_dialog').data('cart-product-id', par_product_id);
+    });
+});
+
+$(document).ready(function() {
+    $(document).on('click', '#add_to_cart', function() {
+        var dialog = document.getElementById('quantity_dialog');
+        var par_quantity = document.getElementById('quantity').value;
+        var par_product_id = dialog.getAttribute('data-cart-product-id');
+
+        $.ajax({
+            type: 'post',
+            url: '/add_to_cart',
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            data: {
+                quantity: par_quantity,
+                product_id: par_product_id,
+            },
+            success: function (response) {
+                dialog.style.display = 'none';
+                var show_cart_dialog = document.getElementById('show_cart_dialog');
+                show_cart_dialog.display = 'block';
+            },
+            error: function (response) {
+                console.error('Error adding product to cart:');
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
+    $('#go_to_cart').click(function() {
+        $.ajax({
+            type: 'get',
+            url: '/cart',
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            success: function (response) {
+                console.log("Success");
+            },
+            error: function (response) {
+                console.error('Error adding product to cart:');
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
+    $('#cancel_go_to_cart').click(function() {
+        var show_cart_dialog = document.getElementById('show_cart_dialog');
+        show_cart_dialog.display = 'none';
+    });
+});
+

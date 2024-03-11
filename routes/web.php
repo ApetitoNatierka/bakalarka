@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressLineController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -75,4 +76,9 @@ Route::post('/add_new_product', [ProductController::class, 'add_new_product']);
 Route::post('/delete_product', [ProductController::class, 'delete_product']);
 
 Route::post('/modify_product', [ProductController::class, 'modify_product']);
+
+
+Route::get('/cart', [CartController::class, 'get_cart']);
+
+Route::get('/add_to_cart', [CartController::class, 'add_to_cart']);
 

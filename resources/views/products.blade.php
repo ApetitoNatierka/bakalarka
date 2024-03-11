@@ -43,24 +43,28 @@
                                         <label>
                                             <input name="product_price" value="{{$product->get_price()}}€">
                                         </label>
+                                    <button id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
                                 @else
                                 <div class="col-8">
                                         <h3>Name - {{$product->get_name()}}</h3>
                                         <p>Description - {{$product->get_description()}}</p>
                                         <p>Price - {{$product->get_price()}}€</p>
+                                    <button id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
                                 @endif
                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle no-caret" type="button" id="dropdownMenuButton" data-product-id="{{ $product->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
-                                        </svg>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><p class="dropdown-item modify_product" id="modify_product" data-product-id="{{ $product->id }}">Modify</p></li>
-                                        <li><p class="dropdown-item delete_product" id="delete_product" data-product-id="{{ $product->id }}">Delete</p></li>
-                                    </ul>
-                                </div>
+                                @if(isset($user) && $user->get_role() == 'admin')
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle no-caret" type="button" id="dropdownMenuButton" data-product-id="{{ $product->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
+                                            </svg>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><p class="dropdown-item modify_product" id="modify_product" data-product-id="{{ $product->id }}">Modify</p></li>
+                                            <li><p class="dropdown-item delete_product" id="delete_product" data-product-id="{{ $product->id }}">Delete</p></li>
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -92,6 +96,26 @@
             </label><br>
             <button type="button" id="new_product">New</button>
             <button type="button" id="cancel_product">Cancel</button>
+        </form>
+    </div>
+
+    <div id="quantity_dialog" class="dialog" style="display: none;" data-cart-product-id="">
+        <form id="quantity">
+            @csrf
+            <label>
+                <input type="number" id="quantity" name="quantity" placeholder="Quantity"/>
+            </label><br>
+            <button type="button" id="add_to_cart">New</button>
+            <button type="button" id="cancel_add_to_cart">Cancel</button>
+        </form>
+    </div>
+
+    <div id="show_cart_dialog" class="dialog" style="display: none;">
+        <form id="show_cart">
+            @csrf
+            <p>Proceed to cart?</p>
+            <button type="button" id="go_to_cart">New</button>
+            <button type="button" id="cancel_go_to_cart">Cancel</button>
         </form>
     </div>
 
