@@ -80,5 +80,5 @@ Route::post('/modify_product', [ProductController::class, 'modify_product']);
 
 Route::get('/cart', [CartController::class, 'get_cart']);
 
-Route::get('/add_to_cart', [CartController::class, 'add_to_cart']);
+Route::post('/add_to_cart', [CartController::class, 'add_to_cart']);
 

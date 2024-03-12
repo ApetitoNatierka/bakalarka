@@ -12,9 +12,9 @@ class CartController extends Controller
     public function get_cart() {
         $user = User::find(auth()->id());
 
-        $cart = $user->cart;
+        $cart = $user?->cart;
 
-        $cart_items = $cart->cart_items;
+        $cart_items = $cart?->cart_items;
 
         return view('cart', ['cart_items', $cart_items]);
     }
@@ -35,6 +35,10 @@ class CartController extends Controller
         $cart_item_data['unit_price'] = $product->get_price();
         $cart_item_data['quantity'] = $validatedData['quantity'];
 
-        $cart_item = CartItem::create();
+        $cart_item = CartItem::create($cart_item_data);
+
+        return response()->json([
+            'message' => 'Product added to cart successfully',
+        ]);
     }
 }

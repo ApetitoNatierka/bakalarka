@@ -100,7 +100,7 @@
     </div>
 
     <div id="quantity_dialog" class="dialog" style="display: none;" data-cart-product-id="">
-        <form id="quantity">
+        <form id="quantity_form">
             @csrf
             <label>
                 <input type="number" id="quantity" name="quantity" placeholder="Quantity"/>
