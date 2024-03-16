@@ -1,0 +1,6 @@
+.flex-shrink-0 {
+    min-height: calc(100vh - 60px); /* Odpočíta výšku navigátora */
+    overflow-y: auto; /* Pridá skrolovanie, ak je obsah dlhší ako výška */
+    display: flex;
+    flex-direction: column; /* Umožní obsahu vnútri navigátora zoradiť sa vertikálne */
+}

@@ -27,6 +27,10 @@ Route::get('/homepage', function () {
     return view('start_page');
 });
 
+Route::get('/sidebar', function () {
+    return view('layout.sidebar');
+});
+
 
 //---------------------------------------------------------------
 //-----------------------User------------------------------------

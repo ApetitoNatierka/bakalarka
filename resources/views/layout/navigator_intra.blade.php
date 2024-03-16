@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <link href="{{ asset('css/styles_navigator.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles_navigator_intra.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -63,7 +63,12 @@
 
 <div class="content-under-navbar">
 
-    @yield('content')
+    <div class="layout-wrapper">
+        @include('layout.sidebar')
+        <div class="content">
+            @yield('content')
+        </div>
+    </div>
 
 </div>
 

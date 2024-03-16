@@ -1,0 +1,59 @@
+:root {
+    --primary-color: #FDAD34;
+    --secondary-color: #303030;
+    --tercial-color: #404040;
+    --text-color: #E0E0E0;
+    --text-secondary-dark: #202020;
+}
+
+/* Zmena farby pozadia navigačného panelu */
+.navbar {
+    background-color: var(--secondary-color); /* Nastaví tmavo sivé pozadie navigačného panelu */
+}
+
+/* Zmena farby textu v navigačnom paneli */
+.navbar-nav .nav-link {
+    color: var(--primary-color); /* Nastaví bielu farbu textu v odkazoch navigačného panelu */
+}
+
+/* Zmena veľkosti textu v navigačnom paneli */
+.navbar-nav .nav-link {
+    font-size: 18px; /* Nastaví veľkosť textu v odkazoch navigačného panelu */
+}
+
+/* Zmena farby aktívneho odkazu v navigačnom paneli */
+.navbar-nav .nav-link.active {
+    color: var(--primary-color); /* Nastaví žltú farbu pre aktívny odkaz v navigačnom paneli */
+}
+
+body {
+    background-color: var(--tercial-color); /* Nastaví svetlo sivú farbu pozadia */
+}
+
+/* Zabezpečenie, aby navigačný panel bol vždy na vrchu stránky */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Nastavenie vysokého indexu zobrazenia */
+}
+
+/* Zabezpečenie, aby ostatné elementy boli pod navigačným panelom */
+.content-under-navbar {
+    margin-top: 56px; /* Výška navigačného panelu + priestor pre oddelenie */
+}
+
+.layout-wrapper {
+    display: flex;
+}
+
+.sidebar {
+    flex: 0 0 280px; /* Šírka sidebaru */
+    /* Pridajte ďalšie štýly pre sidebar */
+}
+
+.content {
+    flex-grow: 1; /* Obsah zaberá zvyšok dostupného priestoru */
+    padding: 20px; /* Pridajte padding pre trochu priestoru okolo obsahu */
+    /* Pridajte ďalšie štýly pre obsah */
+}
