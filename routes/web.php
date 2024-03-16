@@ -27,8 +27,8 @@ Route::get('/homepage', function () {
     return view('start_page');
 });
 
-Route::get('/sidebar', function () {
-    return view('layout.sidebar');
+Route::get('/intranet', function () {
+    return view('intranet');
 });
 
 
@@ -110,5 +110,18 @@ Route::post('/modify_cart_item', [CartController::class, 'modify_cart_item']);
 //-----------------------Order------------------------------------
 //---------------------------------------------------------------
 
+Route::get('/orders', [OrderController::class, 'get_orders']);
+
+Route::get('/order/{order}', [OrderController::class, 'get_order']);
+
 Route::post('/create_order', [OrderController::class, 'create_order']);
+
+Route::post('/add_order', [OrderController::class, 'add_order']);
+
+Route::post('/delete_order', [OrderController::class, 'delete_order']);
+
+Route::post('/modify_order', [OrderController::class, 'modify_order']);
+
+
+
 

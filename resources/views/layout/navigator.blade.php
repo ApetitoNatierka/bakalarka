@@ -23,7 +23,7 @@
             <ul class="navbar-nav">
                 @if(auth()->user()->get_role() == 'admin' || auth()->user()->get_role() == 'employee')
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/sidebar">Intranet</a>
+                        <a class="nav-link" aria-current="page" href="/intranet">Intranet</a>
                     </li>
                 @endauth
                 <li class="nav-item">
