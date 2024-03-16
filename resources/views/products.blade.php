@@ -43,12 +43,20 @@
                                         <label>
                                             <input name="product_price" value="{{$product->get_price()}}€">
                                         </label>
-                                    <button id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
+                                        <label>
+                                            <input name="product_type" value="{{$product->get_type()}}">
+                                        </label>
+                                        <label>
+                                            <input name="product_units" value="{{$product->get_units()}}">
+                                        </label>
+                                    <button class="add_to_cart_button" id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
                                 @else
                                 <div class="col-8">
                                         <h3>Name - {{$product->get_name()}}</h3>
                                         <p>Description - {{$product->get_description()}}</p>
                                         <p>Price - {{$product->get_price()}}€</p>
+                                        <p>Type - {{$product->get_type()}}</p>
+                                        <p>Units - {{$product->get_units()}}</p>
                                     <button id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
                                 @endif
                                </div>
@@ -89,11 +97,19 @@
                 <input type="text" name="product_name" id="product_name" placeholder="Name">
             </label><br>
             <label>
-                <input type="text" name="product_description" id="product_description" placeholder="Description">
+                <textarea type="text" name="product_description" id="product_description" placeholder="Description"></textarea>
             </label><br>
             <label>
                 <input type="text" name="product_price" id="product_price" placeholder="Price">
             </label><br>
+            <label>
+                <input type="text" name="product_units" id="product_units" placeholder="Units">
+            </label><br>
+            <select id="product_type" class="form-select" name="type">
+                <option selected>product</option>
+                <option>service</option>
+                <option>animal</option>
+            </select>
             <button type="button" id="new_product">New</button>
             <button type="button" id="cancel_product">Cancel</button>
         </form>
@@ -114,7 +130,7 @@
         <form id="show_cart">
             @csrf
             <p>Proceed to cart?</p>
-            <button type="button" id="go_to_cart">New</button>
+            <button type="button" id="go_to_cart">Go to cart</button>
             <button type="button" id="cancel_go_to_cart">Cancel</button>
         </form>
     </div>

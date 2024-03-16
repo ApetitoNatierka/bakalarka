@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\User;
@@ -16,10 +17,11 @@ class CartController extends Controller
 
         $cart_items = $cart?->cart_items;
 
-        return view('cart', ['cart_items', $cart_items]);
+        return view('cart', ['cart_items' => $cart_items]);
     }
 
-    public function add_to_cart(Request $request) {
+    public function add_to_cart(Request $request)
+    {
         $validatedData = $request->validate([
             'product_id' => ['required'],
             'quantity' => ['required'],
@@ -29,16 +31,53 @@ class CartController extends Controller
 
         $product = Product::find($validatedData['product_id']);
 
-        $cart_item_data['product_id'] = $product->id;
-        $cart_item_data['cart_id'] = $user->cart->id;
-        $cart_item_data['name'] = $product->get_name();
-        $cart_item_data['unit_price'] = $product->get_price();
-        $cart_item_data['quantity'] = $validatedData['quantity'];
+        $existingCartItem = CartItem::where('cart_id', $user->cart->id)
+            ->where('product_id', $product->id)
+            ->first();
 
-        $cart_item = CartItem::create($cart_item_data);
+        if ($existingCartItem) {
+            $existingCartItem->quantity += $validatedData['quantity'];
+            $existingCartItem->save();
+        } else {
+            $cart_item_data['product_id'] = $product->id;
+            $cart_item_data['cart_id'] = $user->cart->id;
+            $cart_item_data['name'] = $product->get_name();
+            $cart_item_data['unit_price'] = $product->get_price();
+            $cart_item_data['quantity'] = $validatedData['quantity'];
+
+            $cart_item = CartItem::create($cart_item_data);
+        }
 
         return response()->json([
             'message' => 'Product added to cart successfully',
         ]);
+    }
+
+    public function delete_cart_item(Request $request)
+    {
+        $validatedData = $request->validate([
+            'cart_item_id' => ['required'],
+        ]);
+
+        $cart_item = CartItem::find($validatedData['cart_item_id']);
+
+        $cart_item->delete();
+
+        return response()->json(['message' => 'Cart Item deleted successfully']);
+    }
+
+    public function modify_cart_item(Request $request) {
+        $validatedData = $request->validate([
+            'cart_item_id' => ['required'],
+            'quantity' => ['required'],
+        ]);
+
+        $cart_item = CartItem::find($validatedData['cart_item_id']);
+
+        unset($validatedData['cart_item_id']);
+        $cart_item->update($validatedData);
+
+        return response()->json(['message' => 'Cart Item modified successfully', 'unit_price' => $cart_item->unit_price]);
+
     }
 }

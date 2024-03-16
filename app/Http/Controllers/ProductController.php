@@ -11,7 +11,33 @@ class ProductController extends Controller
 {
     public function get_products() {
         $user = User::find(auth()->id());
-        $products= Product::all();
+
+        $productsQuery = Product::query();
+        $productsQuery->where('type', '=', 'product');
+
+        $products = $productsQuery->get();
+
+        return view('products', ['user' => $user, 'products' => $products]);
+    }
+
+    public function get_animals() {
+        $user = User::find(auth()->id());
+
+        $productsQuery = Product::query();
+        $productsQuery->where('type', '=', 'animal');
+
+        $products = $productsQuery->get();
+
+        return view('products', ['user' => $user, 'products' => $products]);
+    }
+
+    public function get_services() {
+        $user = User::find(auth()->id());
+
+        $productsQuery = Product::query();
+        $productsQuery->where('type', '=', 'services');
+
+        $products = $productsQuery->get();
 
         return view('products', ['user' => $user, 'products' => $products]);
     }
@@ -20,12 +46,14 @@ class ProductController extends Controller
         $searchTerm = $request->input('name', '');
         $minPrice = $request->input('min_price', null);
         $maxPrice = $request->input('max_price', null);
+        $type = $request->input('type', null);
+        $units = $request->input('units', null);
 
         $productsQuery = Product::query();
 
         if ($searchTerm) {
             $productsQuery->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like',  '%' . $searchTerm . '%' );
+                $query->where('name', 'like', '%' . $searchTerm . '%');
             });
         }
 
@@ -37,22 +65,37 @@ class ProductController extends Controller
             $productsQuery->where('price', '<', $maxPrice);
         }
 
+        if ($type !== null) {
+            $productsQuery->where(function ($query) use ($type) {
+                $query->where('type', 'like', '%' . $type . '%');
+            });
+        }
+
+        if ($units !== null) {
+            $productsQuery->where(function ($query) use ($units) {
+                $query->where('units', 'like', '%' . $units . '%');
+            });
+        }
+
         $products = $productsQuery->get();
 
         $user = User::find(auth()->id());
 
         return response()->json([
-            'message' => 'Preducts returned successfully',
+            'message' => 'Products returned successfully',
             'products' => $products,
             'user' => $user,
         ]);
     }
+
 
     public function add_new_product(Request $request) {
         $validatedData = $request->validate([
             'name' => ['required'],
             'price' => ['required'],
             'description' => ['required'],
+            'type' => ['required'],
+            'units' => ['required']
         ]);
 
         $new_product = Product::create($validatedData);
@@ -69,6 +112,8 @@ class ProductController extends Controller
             'name' => ['required'],
             'price' => ['required'],
             'description' => ['required'],
+            'type' => ['required'],
+            'units' => ['required']
         ]);
 
         $product = Product::find($validatedData['product_id']);

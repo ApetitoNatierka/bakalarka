@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('state');
+            $table->enum('state', ['arrival', 'ongoing', 'processed']);
             $table->date('created');
             $table->timestamps();
         });

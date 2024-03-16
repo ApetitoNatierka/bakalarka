@@ -4,6 +4,8 @@ $(document).ready(function() {
         var inputs = '<input type="text" id="search_name" name="search_name" placeholder="product" />\n' +
             '        <input type="number" id="search_min_price" name="search_min_price" placeholder="min. price"/>\n' +
             '        <input type="number" id="search_max_price" name="search_max_price" placeholder="max. price"/>\n' +
+            '        <input type="text" id="search_type" name="search_type" placeholder="type"/>\n' +
+            '        <input type="text" id="search_units" name="search_units" placeholder="units"/>\n' +
             '        <button id="search_button" style="border-radius: 5px" >search</button>';
 
         if (search.is(':empty')) {
@@ -20,6 +22,8 @@ $(document).ready(function() {
         var par_name = $('#search_name').val();
         var par_min_price = $('#search_min_price').val();
         var par_max_price = $('#search_max_price').val();
+        var par_type = $('#search_type').val();
+        var par_units = $('#search_units').val();
 
         $.ajax({
             url: '/search_products',
@@ -31,6 +35,8 @@ $(document).ready(function() {
                 name: par_name,
                 min_price: par_min_price,
                 max_price: par_max_price,
+                type: par_type,
+                units: par_units,
             },
             success: function(response) {
                 console.log(response.message);
@@ -56,6 +62,8 @@ $(document).ready(function() {
                             '        <h3>' + product.name + '</h3>' +
                             '        <p>' + product.description + '</p>' +
                             '        <p>' + product.price + '€</p>' +
+                            '        <p>' + product.type + '</p>' +
+                            '        <p>' + product.units + '</p>' +
                             '    </div>' +
                             '</div>' +
                             '</div>';
@@ -76,6 +84,8 @@ $(document).ready(function() {
         var par_name = document.getElementById('product_name').value;
         var par_description = document.getElementById('product_description').value;
         var par_price = document.getElementById('product_price').value;
+        var par_type = document.getElementById('product_type').value;
+        var par_units = document.getElementById('product_units').value;
 
         $.ajax({
             type: 'post',
@@ -88,6 +98,8 @@ $(document).ready(function() {
                 name: par_name,
                 description: par_description,
                 price: par_price,
+                type: par_type,
+                units: par_units,
             },
             success: function (response) {
                 dialog.style.display = 'none';
@@ -104,6 +116,8 @@ $(document).ready(function() {
                                     '            <h3>' + new_product.name + '</h3>' +
                                     '            <p>' + new_product.description + '</p>' +
                                     '            <p>' + new_product.price + '€</p>' +
+                                    '            <p>' + new_product.type + '</p>' +
+                                    '            <p>' + new_product.units + '</p>' +
                                     '        </div>' +
                                     '    </div>' +
                                     '</div>';
@@ -152,6 +166,10 @@ $('.dropdown-item.modify_product').on('click', function(e) {
     var par_description = $productContainer.find('textarea[name="product_description"]').val();
     var par_price = $productContainer.find('input[name="product_price"]').val();
     par_price = par_price ? par_price.replace('€', '') : '';
+    var par_type = $productContainer.find('input[name="product_type"]').val();
+    var par_units = $productContainer.find('input[name="product_units"]').val();
+
+
 
     $.ajax({
         type: 'post',
@@ -165,6 +183,8 @@ $('.dropdown-item.modify_product').on('click', function(e) {
             name: par_name,
             description: par_description,
             price: par_price,
+            type: par_type,
+            units: par_units,
         },
         success: function (response) {
             console.log(response.message);
@@ -208,11 +228,12 @@ $('.dropdown-item.delete_product').on('click', function(e) {
 
 $(document).ready(function() {
 
-    $('#add_to_cart_button').click(function() {
+    $('.add_to_cart_button').click(function() {
         var dialog = document.getElementById('quantity_dialog');
-        var par_product_id = $(this).data('product-id');
+        var par_product_id = $(this).closest('.product').data('product-id');
         dialog.style.display = 'block';
-        $('#quantity_dialog').data('cart-product-id', par_product_id);
+        $('#quantity_dialog').attr('data-cart-product-id', par_product_id);
+        console.log(par_product_id)
     });
 });
 
@@ -247,20 +268,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#go_to_cart').click(function() {
-        $.ajax({
-            type: 'get',
-            url: '/cart',
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            success: function (response) {
-                console.log("Success");
-            },
-            error: function (response) {
-                console.error('Error adding product to cart:');
-            }
-        });
+        window.location.href = '/cart';
     });
 });
 

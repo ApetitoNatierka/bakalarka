@@ -14,6 +14,7 @@ class Product extends Model
         'description',
         'price',
         'type',
+        'units',
     ];
 
     public function get_id() {
@@ -34,5 +35,9 @@ class Product extends Model
 
     public function get_type() {
         return $this->attributes['type'];
+    }
+
+    public function get_units() {
+        return $this->attributes['units'];
     }
 }

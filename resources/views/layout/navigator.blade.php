@@ -25,7 +25,13 @@
                     <a class="nav-link" aria-current="page" href="/homepage">Get back home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/homepage">Products</a>
+                    <a class="nav-link" aria-current="page" href="/animals">Animals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/services">Services</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">Cart</a>
