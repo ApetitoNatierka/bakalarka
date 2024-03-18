@@ -34,4 +34,12 @@ class OrderLine extends Model
     public function get_unit_price() {
         return $this->attributes['unit_price'];
     }
+
+    public function get_total_amount() {
+        return $this->quantity * $this->unit_price;
+    }
+
+    public function get_product_name() {
+        return $this->product->name;
+    }
 }

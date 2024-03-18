@@ -23,6 +23,11 @@
     display: none !important;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.dropdown-menu {
+    max-height: 400px;
+    overflow-x: auto;
+}
+
+.card.p-3 {
+    min-width: 800px;
 }

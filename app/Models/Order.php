@@ -23,7 +23,7 @@ class Order extends Model
     }
 
     public function customer():BelongsTo {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(User::class);
     }
 
     public function get_state() {
@@ -40,5 +40,12 @@ class Order extends Model
         return $this->attributes['created'];
     }
 
+    public function get_total_amount() {
+
+        return $this->order_lines->sum(function($orderLine) {
+            return $orderLine->quantity * $orderLine->unit_price;
+        });
+
+    }
 
 }

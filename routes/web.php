@@ -112,7 +112,11 @@ Route::post('/modify_cart_item', [CartController::class, 'modify_cart_item']);
 
 Route::get('/orders', [OrderController::class, 'get_orders']);
 
+Route::get('/order', [OrderController::class, 'get_order_empty']);
+
 Route::get('/order/{order}', [OrderController::class, 'get_order']);
+
+Route::get('/search_orders', [OrderController::class, 'get_search_orders']);
 
 Route::post('/create_order', [OrderController::class, 'create_order']);
 

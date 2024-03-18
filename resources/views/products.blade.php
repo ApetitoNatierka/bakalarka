@@ -50,7 +50,7 @@
                                             <input name="product_units" value="{{$product->get_units()}}">
                                         </label>
                                     <button class="add_to_cart_button" id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
-                                @else
+                                @elseif(isset($user))
                                 <div class="col-8">
                                         <h3>Name - {{$product->get_name()}}</h3>
                                         <p>Description - {{$product->get_description()}}</p>
@@ -58,6 +58,13 @@
                                         <p>Type - {{$product->get_type()}}</p>
                                         <p>Units - {{$product->get_units()}}</p>
                                     <button id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
+                                    @else
+                                        <div class="col-8">
+                                            <h3>Name - {{$product->get_name()}}</h3>
+                                            <p>Description - {{$product->get_description()}}</p>
+                                            <p>Price - {{$product->get_price()}}€</p>
+                                            <p>Type - {{$product->get_type()}}</p>
+                                            <p>Units - {{$product->get_units()}}</p>
                                 @endif
                                </div>
                                 @if(isset($user) && $user->get_role() == 'admin')

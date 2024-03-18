@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->double('quantity');
             $table->string('unit_price');
+            $table->double('vat_percentage');
             $table->timestamps();
         });
     }

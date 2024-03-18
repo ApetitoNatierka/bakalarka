@@ -1,12 +1,12 @@
 $(document).ready(function() {
     $('#search_products').click(function() {
         var search = $('#search_inputs');
-        var inputs = '<input type="text" id="search_name" name="search_name" placeholder="product" />\n' +
-            '        <input type="number" id="search_min_price" name="search_min_price" placeholder="min. price"/>\n' +
-            '        <input type="number" id="search_max_price" name="search_max_price" placeholder="max. price"/>\n' +
-            '        <input type="text" id="search_type" name="search_type" placeholder="type"/>\n' +
-            '        <input type="text" id="search_units" name="search_units" placeholder="units"/>\n' +
-            '        <button id="search_button" style="border-radius: 5px" >search</button>';
+        var inputs = '<div class="form-group"><input type="text" id="search_name" name="search_name" class="form-control" placeholder="product" /></div>\n' +
+            '<div class="form-group"><input type="number" id="search_min_price" name="search_min_price" class="form-control" placeholder="min. price"/></div>\n' +
+            '<div class="form-group"><input type="number" id="search_max_price" name="search_max_price" class="form-control" placeholder="max. price"/></div>\n' +
+            '<div class="form-group"><input type="text" id="search_type" name="search_type" class="form-control" placeholder="type"/></div>\n' +
+            '<div class="form-group"><input type="text" id="search_units" name="search_units" class="form-control" placeholder="units"/></div>\n' +
+            '<div class="form-group"><button id="search_button" class="btn btn-primary" style="border-radius: 5px">Search</button></div>';
 
         if (search.is(':empty')) {
             search.append(inputs)

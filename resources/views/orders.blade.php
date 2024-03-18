@@ -34,6 +34,7 @@
                                 <th>State</th>
                                 <th>Created</th>
                                 <th>Customer name</th>
+                                <th>Total amount</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,7 +49,7 @@
                                                     </svg>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <li><p href="/order/{{$order->id}}" class="dropdown-item detail_order" id="detail_order" data-order-id="{{ $order->id }}">Detail</p></li>
+                                                    <li><a href="/order/{{$order->id}}" class="dropdown-item detail_order" id="detail_order" data-order-id="{{ $order->id }}">Detail</a></li>
                                                     <li><p class="dropdown-item modify_order" id="modify_order" data-order-id="{{ $order->id }}">Modify</p></li>
                                                     <li><p class="dropdown-item delete_order" id="delete_order" data-order-id="{{ $order->id }}">Delete</p></li>
                                                 </ul>
@@ -57,15 +58,19 @@
                                         <td><input type="text" class="form-control" name="order_number" value="{{ $order->id }}" disabled></td>
                                         <td>
                                             <select id="state" class="form-select state" name="state">
-                                                <option selected>arrival</option>
+                                                <option selected>{{$order->state}}</option>
+                                                <option>arrival</option>
                                                 <option>ongoing</option>
                                                 <option>processed</option>
                                             </select>
                                         </td>
                                         <td><input type="text" class="form-control" name="created" value="{{ $order->get_created() }}" disabled></td>
-                                        @if(isset($customer))
-                                            <td><input type="text" class="form-control" name="customer_name" value="{{ $customer->get_name() }}" disabled></td>
+                                        @if(isset($order->customer->company))
+                                            <td><input type="text" class="form-control" name="customer_name" value="{{ $order->customer->company->company }}" disabled></td>
+                                        @elseif($order->customer)
+                                            <td><input type="text" class="form-control" name="customer_name" value="{{ $order->customer->name }}" disabled></td>
                                         @endif
+                                        <td><input type="text" class="form-control" name="total_amount" value="{{ $order->get_total_amount() }}" disabled></td>
                                     </tr>
                                 @endforeach
                             @endif

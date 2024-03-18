@@ -21,10 +21,12 @@
         </button>
         <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
             <ul class="navbar-nav">
-                @if(auth()->user()->get_role() == 'admin' || auth()->user()->get_role() == 'employee')
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/intranet">Intranet</a>
-                    </li>
+                @auth()
+                    @if((auth()->user()->get_role() == 'admin' || auth()->user()->get_role() == 'employee'))
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/intranet">Intranet</a>
+                        </li>
+                    @endif
                 @endauth
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/homepage">Get back home</a>
