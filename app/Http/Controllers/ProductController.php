@@ -136,4 +136,11 @@ class ProductController extends Controller
 
         return response()->json(['message' => 'Product deleted successfully']);
     }
+
+    public function select_products(Request $request) {
+        $search_term = $request->search_term;
+        $products = Product::where('name', 'like', '%' . $search_term . '%')->get();
+
+        return response()->json(['products' => $products]);
+    }
 }

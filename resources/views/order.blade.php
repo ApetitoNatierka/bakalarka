@@ -1,24 +1,16 @@
 
 @extends('layout.navigator_intra')
 @section('content')
-
     <link href="{{ asset('css/styles_order.css') }}" rel="stylesheet">
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
                 @if(isset($order))
-                    <h1 class="card-title">Order {{$order->id}}</h1>
+                    <h1 class="card-title">Order - {{$order->id}}</h1>
                 @else
                     <h1 class="card-title">Order</h1>
                 @endif
-                <button type="button" class="btn btn-secondary" id="search_orders">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-search" viewBox="0 0 16 16">
-                        <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                    </svg>
-                </button>
-                    <button type="button" class="btn btn-secondary custom-btn" id="add_oorder">
+                    <button type="button" class="btn btn-secondary custom-btn" id="add_new_order">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
                         </svg>
@@ -50,9 +42,26 @@
                         <div class="col">
                             <label for="email" class="col-form-label">State</label>
                             @if(isset($order))
-                                <input type="email" class="form-control col custom-input" id="state" name="state" value="{{ $order->get_state() }}">
+                                <select id="state" class="form-select state" name="state" dis>
+                                    <option selected>{{$order->state}}</option>
+                                    <option>arrival</option>
+                                    <option>ongoing</option>
+                                    <option>processed</option>
+                                </select>
                             @else
-                                <input type="email" class="form-control col custom-input" id="state" name="state" disabled>
+                                <select id="state" class="form-select state" name="state" disabled>
+                                    <option selected>arrival</option>
+                                    <option>ongoing</option>
+                                    <option>processed</option>
+                                </select>
+                            @endif
+                        </div>
+                        <div class="col">
+                            <label for="total_amount" class="col-form-label">Total Net Amount</label>
+                            @if(isset($order))
+                                <input type="number" class="form-control col custom-input" id="total_net_amount" name="total_net_amount" value="{{ $order->get_total_net_amount() }}" disabled>
+                            @else
+                                <input type="number" class="form-control col custom-input" id="total_net_amount" name="total_net_amount" disabled>
                             @endif
                         </div>
                     </div>
@@ -74,11 +83,11 @@
                             @endif
                         </div>
                         <div class="col">
-                            <label for="total_amount" class="col-form-label">Total amount</label>
+                            <label for="total_amount" class="col-form-label">Total Gross Amount</label>
                             @if(isset($order))
-                                <input type="number" class="form-control col custom-input" id="total_amount" name="total_amount" value="{{ $order->total_amount }}" disabled>
+                                <input type="number" class="form-control col custom-input" id="total_gross_amount" name="total_gross_amount" value="{{ $order->get_total_gross_amount() }}" disabled>
                             @else
-                                <input type="number" class="form-control col custom-input" id="total_amount" name="total_amount" disabled>
+                                <input type="number" class="form-control col custom-input" id="total_gross_amount" name="total_gross_amount" disabled>
                             @endif
                         </div>
                     </div>
@@ -108,13 +117,15 @@
                                             <th>Quantity</th>
                                             <th>Units</th>
                                             <th>Unit Price</th>
-                                            <th>Total Amount</th>
+                                            <th>VAT Percentage</th>
+                                            <th>Total Net Amount</th>
+                                            <th>Total Gross Amount</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @if(isset($order->order_lines))
                                             @foreach($order->order_lines as $order_line)
-                                                <tr>
+                                                <tr data-order-line-id="{{ $order_line->id }}">
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-secondary dropdown-toggle no-caret" type="button" id="dropdownMenuButton" data-order-line-id="{{ $order_line->id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -123,8 +134,8 @@
                                                                 </svg>
                                                             </button>
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <li><p class="dropdown-item modify_order_lines" id="modify_order_lines" data-order-line-id="{{ $order_line->id }}">Modify</p></li>
-                                                                <li><p class="dropdown-item delete_order_lines" id="delete_order_lines" data-order-line-id="{{ $order_line->id }}">Delete</p></li>
+                                                                <li><p class="dropdown-item modify_order_line" id="modify_order_lines" data-order-line-id="{{ $order_line->id }}">Modify</p></li>
+                                                                <li><p class="dropdown-item delete_order_line" id="delete_order_lines" data-order-line-id="{{ $order_line->id }}">Delete</p></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -134,7 +145,9 @@
                                                     <td><input type="text" class="form-control" name="quantity" value="{{ $order_line->quantity }}"></td>
                                                     <td><input type="text" class="form-control" name="units" value="{{ $order_line->units }}" disabled></td>
                                                     <td><input type="text" class="form-control" name="unit_price" value="{{ $order_line->unit_price }}" disabled></td>
-                                                    <td><input type="text" class="form-control" name="total_amount" value="{{ $order_line->total_amount }}" disabled></td>
+                                                    <td><input type="text" class="form-control" name="vat_percentage" value="{{ $order_line->vat_percentage }}"></td>
+                                                    <td><input type="text" class="form-control" name="total_order_line_net_amount" value="{{ $order_line->total_net_amount }}" disabled></td>
+                                                    <td><input type="text" class="form-control" name="total_order_line_gross_amount" value="{{ $order_line->total_gross_amount }}" disabled></td>
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -153,19 +166,33 @@
         <form id="order_line_form">
             @csrf
             <label>
-                <input type="text" name="product_id" id="product_id" placeholder="Product number">
+                <select id="new_product_id_select" name="new_product_id"></select>
             </label><br>
             <label>
-                <input type="text" name="quantity" id="quantity" placeholder="Quantity">
+                <input type="text" name="new_quantity" id="new_quantity" placeholder="Quantity">
             </label><br>
-            <button type="button" id="new_address">New</button>
-            <button type="button" id="cancel_address">Cancel</button>
+            <label>
+                <input type="text" name="new_vat_percentage" id="new_vat_percentage" placeholder="VAT Percentage">
+            </label><br>
+            <button type="button" id="new_order_line">New</button>
+            <button type="button" id="cancel_order_line">Cancel</button>
 
         </form>
     </div>
 
+    <div id="order_dialog" class="dialog" style="display: none;">
+        <form id="order_form">
+            @csrf
+            <label>
+                <select id="customer_select" name="customer"></select>
+            </label><br>
+            <button type="button" id="new_order">New</button>
+            <button type="button" id="cancel_order">Cancel</button>
+        </form>
+    </div>
+
     <script src="{{ asset('js/manage_order_lines.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('js/manage_order.js')}}"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
 @endsection

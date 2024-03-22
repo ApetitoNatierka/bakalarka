@@ -41,7 +41,7 @@
                                             <textarea name="product_description">{{$product->get_description()}}</textarea>
                                         </label>
                                         <label>
-                                            <input name="product_price" value="{{$product->get_price()}}€">
+                                            <input name="product_price" value="{{$product->get_price() * 1.2}}€">
                                         </label>
                                         <label>
                                             <input name="product_type" value="{{$product->get_type()}}">
@@ -54,7 +54,7 @@
                                 <div class="col-8">
                                         <h3>Name - {{$product->get_name()}}</h3>
                                         <p>Description - {{$product->get_description()}}</p>
-                                        <p>Price - {{$product->get_price()}}€</p>
+                                        <p>Price - {{$product->get_price() * 1.2}}€</p>
                                         <p>Type - {{$product->get_type()}}</p>
                                         <p>Units - {{$product->get_units()}}</p>
                                     <button id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
@@ -62,7 +62,7 @@
                                         <div class="col-8">
                                             <h3>Name - {{$product->get_name()}}</h3>
                                             <p>Description - {{$product->get_description()}}</p>
-                                            <p>Price - {{$product->get_price()}}€</p>
+                                            <p>Price - {{$product->get_price() * 1.2}}€</p>
                                             <p>Type - {{$product->get_type()}}</p>
                                             <p>Units - {{$product->get_units()}}</p>
                                 @endif

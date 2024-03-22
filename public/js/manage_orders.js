@@ -31,8 +31,6 @@ document.getElementById('new_order').addEventListener('click', function() {
             console.log(response.order);
             console.log(response.order);
             var order = response.order;
-            var customer = response.customer;
-            var total_amount = response.total_amount;
 
             var new_row =
                 `<tr>
@@ -60,8 +58,9 @@ document.getElementById('new_order').addEventListener('click', function() {
                         </select>
                     </td>
                     <td><input type="text" class="form-control" name="created" value="${order.created}"></td>
-                    <td><input type="text" class="form-control" name="customer_name" value="${customer.name}"></td>
-                    <td><input type="text" class="form-control" name="total_amount" value="${total_amount}"></td>
+                    <td><input type="text" class="form-control" name="customer_name" value="${order.customer_name}"></td>
+                    <td><input type="text" class="form-control" name="total_net_amount" value="${order.total_net_amount}"></td>
+                    <td><input type="text" class="form-control" name="total_gross_amount" value="${order.total_gross_amount}"></td>
                 </tr>`;
 
             $('.order_table tbody').append(new_row);
@@ -136,8 +135,10 @@ $(document).ready(function() {
             '<div class="form-group"><input type="date" id="search_created_from" name="search_created_from" class="form-control" placeholder="created from"/></div>\n' +
             '<div class="form-group"><input type="date" id="search_created_to" name="search_created_to" class="form-control" placeholder="created to"/></div>\n' +
             '<div class="form-group"><input type="text" id="search_customer_name" name="search_customer_name" class="form-control" placeholder="customer name"/></div>\n' +
-            '<div class="form-group"><input type="number" id="search_total_amount_min" name="search_total_amount_min" class="form-control" placeholder="total amount min."/></div>\n' +
-            '<div class="form-group"><input type="number" id="search_total_amount_max" name="search_total_amount_max" class="form-control" placeholder="total amount max."/></div>\n' +
+            '<div class="form-group"><input type="number" id="search_total_net_amount_min" name="search_total_net_amount_min" class="form-control" placeholder="total net amount min."/></div>\n' +
+            '<div class="form-group"><input type="number" id="search_total_net_amount_max" name="search_total_net_amount_max" class="form-control" placeholder="total net amount max."/></div>\n' +
+            '<div class="form-group"><input type="number" id="search_total_gross_amount_min" name="search_total_gross_amount_min" class="form-control" placeholder="total gross amount min."/></div>\n' +
+            '<div class="form-group"><input type="number" id="search_total_gross_amount_max" name="search_total_gross_amount_max" class="form-control" placeholder="total gross amount max."/></div>\n' +
             '<div class="form-group"><button id="search_button" class="btn btn-primary" style="border-radius: 5px">Search</button></div>';
 
         if (search.is(':empty')) {
@@ -155,8 +156,10 @@ $(document).ready(function() {
         var par_created_from = $('#search_created_from').val();
         var par_created_to = $('#search_created_to').val();
         var par_customer_name = $('#search_customer_name').val();
-        var par_total_amount_min = $('#search_total_amount_min').val();
-        var par_total_amount_max = $('#search_total_amount_max').val();
+        var par_total_net_amount_min = $('#search_total_net_amount_min').val();
+        var par_total_net_amount_max = $('#search_total_net_amount_max').val();
+        var par_total_gross_amount_min = $('#search_total_gross_amount_min').val();
+        var par_total_gross_amount_max = $('#search_total_gross_amount_max').val();
 
         $.ajax({
             url: '/search_orders',
@@ -170,8 +173,10 @@ $(document).ready(function() {
                 created_from: par_created_from,
                 created_to: par_created_to,
                 customer_name: par_customer_name,
-                total_amount_min: par_total_amount_min,
-                total_amount_max: par_total_amount_max,
+                total_net_amount_min: par_total_net_amount_min,
+                total_net_amount_max: par_total_net_amount_max,
+                total_gross_amount_min: par_total_gross_amount_min,
+                total_gross_amount_max: par_total_gross_amount_max,
             },
             success: function(response) {
                 console.log(response.message);
@@ -186,8 +191,9 @@ $(document).ready(function() {
                     '<th>Order Number</th>' +
                     '<th>State</th>' +
                     '<th>Created</th>' +
-                    '<th>Customer name</th>' +
-                    '<th>Total amount</th>' +
+                    '<th>Customer Name</th>' +
+                    '<th>Total Net Amount</th>' +
+                    '<th>Total Gross Amount</th>' +
                     '</tr>' +
                     '</thead>' +
                     '<tbody>';
@@ -216,7 +222,8 @@ $(document).ready(function() {
                         '</select></td>' +
                         '<td><input type="text" class="form-control" name="created" value="' + order.created_at + '" disabled></td>' +
                         '<td><input type="text" class="form-control" name="customer_name" value="' + order.customer_name + '" disabled></td>' +
-                        '<td><input type="text" class="form-control" name="total_amount" value="' + order.total_amount + '" disabled></td>' +
+                        '<td><input type="text" class="form-control" name="total_net_amount" value="' + order.total_net_amount + '" disabled></td>' +
+                        '<td><input type="text" class="form-control" name="total_gross_amount" value="' + order.total_gross_amount + '" disabled></td>' +
                         '</tr>';
                 });
 

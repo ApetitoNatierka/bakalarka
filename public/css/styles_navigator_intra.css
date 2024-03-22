@@ -30,17 +30,15 @@ body {
     background-color: var(--tercial-color); /* Nastaví svetlo sivú farbu pozadia */
 }
 
-/* Zabezpečenie, aby navigačný panel bol vždy na vrchu stránky */
 .navbar {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Nastavenie vysokého indexu zobrazenia */
+    z-index: 1000;
 }
 
-/* Zabezpečenie, aby ostatné elementy boli pod navigačným panelom */
 .content-under-navbar {
-    margin-top: 56px; /* Výška navigačného panelu + priestor pre oddelenie */
+    margin-top: 56px;
 }
 
 .layout-wrapper {
@@ -48,12 +46,10 @@ body {
 }
 
 .sidebar {
-    flex: 0 0 280px; /* Šírka sidebaru */
-    /* Pridajte ďalšie štýly pre sidebar */
+    flex: 0 0 20%;
 }
 
 .content {
-    flex-grow: 1; /* Obsah zaberá zvyšok dostupného priestoru */
-    padding: 20px; /* Pridajte padding pre trochu priestoru okolo obsahu */
-    /* Pridajte ďalšie štýly pre obsah */
+    flex-grow: 1;
+    padding: 20px;
 }

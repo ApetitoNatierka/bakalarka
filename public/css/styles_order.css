@@ -28,6 +28,6 @@
     overflow-x: auto;
 }
 
-.card.p-3 {
-    min-width: 800px;
+.select2-container {
+    z-index: 9999 !important;
 }

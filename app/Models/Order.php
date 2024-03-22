@@ -40,12 +40,16 @@ class Order extends Model
         return $this->attributes['created'];
     }
 
-    public function get_total_amount() {
-
+    public function get_total_gross_amount() {
         return $this->order_lines->sum(function($orderLine) {
-            return $orderLine->quantity * $orderLine->unit_price;
+            return $orderLine->get_total_gross_amount();
         });
+    }
 
+    public function get_total_net_amount() {
+        return $this->order_lines->sum(function($orderLine) {
+            return $orderLine->get_total_net_amount();
+        });
     }
 
 }

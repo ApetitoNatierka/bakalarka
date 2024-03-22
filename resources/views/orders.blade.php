@@ -34,7 +34,8 @@
                                 <th>State</th>
                                 <th>Created</th>
                                 <th>Customer name</th>
-                                <th>Total amount</th>
+                                <th>Total net amount</th>
+                                <th>Total gross amount</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -70,7 +71,8 @@
                                         @elseif($order->customer)
                                             <td><input type="text" class="form-control" name="customer_name" value="{{ $order->customer->name }}" disabled></td>
                                         @endif
-                                        <td><input type="text" class="form-control" name="total_amount" value="{{ $order->get_total_amount() }}" disabled></td>
+                                        <td><input type="text" class="form-control" name="total_net_amount" value="{{ $order->get_total_net_amount() }}" disabled></td>
+                                        <td><input type="text" class="form-control" name="total_gross_amount" value="{{ $order->get_total_gross_amount() }}" disabled></td>
                                     </tr>
                                 @endforeach
                             @endif

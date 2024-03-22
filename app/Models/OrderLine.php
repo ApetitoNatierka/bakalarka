@@ -15,6 +15,7 @@ class OrderLine extends Model
         'unit_price',
         'order_id',
         'product_id',
+        'vat_percentage',
     ];
 
     public function order():BelongsTo
@@ -35,7 +36,11 @@ class OrderLine extends Model
         return $this->attributes['unit_price'];
     }
 
-    public function get_total_amount() {
+    public function get_total_gross_amount() {
+        return $this->quantity * ($this->unit_price * (1 + $this->vat_percentage));
+    }
+
+    public function get_total_net_amount() {
         return $this->quantity * $this->unit_price;
     }
 

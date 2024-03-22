@@ -151,4 +151,11 @@ class UserController extends Controller
         return response()->json(['message' => 'User line deleted successfully']);
     }
 
+    public function select_users(Request $request) {
+        $search_term = $request->search_term;
+        $users = User::where('name', 'like', '%' . $search_term . '%')->get();
+
+        return response()->json(['users' => $users]);
+    }
+
 }

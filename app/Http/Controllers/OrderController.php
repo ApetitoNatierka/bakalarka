@@ -55,11 +55,12 @@ class OrderController extends Controller
         ];
 
         $order = Order::create($order_data);
-        $order = Order::create($order_data);
 
-        $total_amount = $order->get_total_amount();
+        $order->total_net_amount = $order->get_total_net_amount();
+        $order->total_gross_amount = $order->get_total_gross_amount();
+        $order->customer_name = $order->customer ? ($order->customer->company ? $order->customer->company->company : $order->customer->name) : '';
 
-        return response()->json(['message' => 'Order created successfully', 'order' => $order, 'customer' => $customer, 'total_amount' => $total_amount]);
+        return response()->json(['message' => 'Order created successfully', 'order' => $order]);
     }
 
     public function get_orders() {
@@ -82,30 +83,32 @@ class OrderController extends Controller
 
     public function modify_order(Request $request)
     {
-        $validatedData = $request->validate([
+        $validate_data = $request->validate([
             'order_id' => ['required'],
             'state' => ['required'],
         ]);
 
-        $order = Order::find($validatedData['order_id']);
+        $order = Order::find($validate_data['order_id']);
 
-        unset($validatedData['order_id']);
-        $order->update($validatedData);
+        unset($validate_data['order_id']);
+        $order->update($validate_data);
 
         return response()->json(['message' => 'Order modified successfully']);
     }
 
     public function get_order(Order $order) {
-        $order->total_amount = $order->get_total_amount();
+        $order->total_net_amount = $order->get_total_net_amount();
+        $order->total_gross_amount = $order->get_total_gross_amount();
         $order->customer_name = $order->customer ? ($order->customer->company ? $order->customer->company->company : $order->customer->name) : '';
 
-        $orderLineIndex = 1;
-        foreach ($order->order_lines as $orderLine) {
-            $orderLine->product_name = $orderLine->product->name;
-            $orderLine->total_amount = $orderLine->get_total_amount();
-            $orderLine->units = $orderLine->product->units;
-            $orderLine->order_line = $orderLineIndex;
-            $orderLineIndex++;
+        $order_line_index = 1;
+        foreach ($order->order_lines as $order_line) {
+            $order_line->product_name = $order_line->product->name;
+            $order_line->total_gross_amount = $order_line->get_total_gross_amount();
+            $order_line->total_net_amount = $order_line->get_total_net_amount();
+            $order_line->units = $order_line->product->units;
+            $order_line->order_line = $order_line_index;
+            $order_line_index++;
         }
 
         return view('order', ['order' => $order]);
@@ -122,8 +125,10 @@ class OrderController extends Controller
         $customer_name = $request->input('customer_name', null);
         $created_from = $request->input('created_from', null);
         $created_to = $request->input('created_to', null);
-        $total_amount_min = $request->input('total_amount_min', null);
-        $total_amount_max = $request->input('total_amount_max', null);
+        $total_net_amount_min = $request->input('total_net_amount_min', null);
+        $total_net_amount_max = $request->input('total_net_amount_max', null);
+        $total_gross_amount_min = $request->input('total_gross_amount_min', null);
+        $total_gross_amount_max = $request->input('total_gross_amount_max', null);
 
         $orderQuery = Order::query();
 
@@ -157,30 +162,68 @@ class OrderController extends Controller
         }
 
         $orders = $orderQuery->get()->map(function ($order) {
-            $order->total_amount = $order->get_total_amount();
+            $order->total_net_amount = $order->get_total_net_amount();
+            $order->total_gross_amount = $order->get_total_gross_amount();
             $order->customer_name = $order->customer ? ($order->customer->company ? $order->customer->company->company : $order->customer->name) : '';
 
             return $order;
         });
 
-        $filteredOrders = $orders->filter(function ($order) use ($total_amount_min, $total_amount_max) {
-            $totalAmount = $order->get_total_amount();
-
-            if ($total_amount_min !== null && $total_amount_max !== null) {
-                return $total_amount_min <= $totalAmount && $total_amount_max >= $totalAmount;
-            } elseif ($total_amount_min !== null) {
-                return $total_amount_min <= $totalAmount;
-            } elseif ($total_amount_max !== null) {
-                return $total_amount_max >= $totalAmount;
+        $filteredOrders = $orders->filter(function ($order) use ($total_net_amount_min, $total_net_amount_max) {
+            if ($total_net_amount_min !== null && $total_net_amount_max !== null) {
+                return $total_net_amount_min <= $order->total_net_amount && $total_net_amount_max >= $order->total_net_amount;
+            } elseif ($total_net_amount_min !== null) {
+                return $total_net_amount_max <= $order->total_net_amount;
+            } elseif ($total_net_amount_max !== null) {
+                return $total_net_amount_max >= $order->total_net_amount;
             }
 
             return true;
         });
 
+        $filteredOrders = $orders->filter(function ($order) use ($total_gross_amount_min, $total_gross_amount_max) {
+            if ($total_gross_amount_min !== null && $total_gross_amount_max !== null) {
+                return $total_gross_amount_min <= $order->total_gross_amount && $total_gross_amount_max >= $order->total_gross_amount;
+            } elseif ($total_gross_amount_min !== null) {
+                return $total_gross_amount_max <= $order->total_gross_amount;
+            } elseif ($total_gross_amount_max !== null) {
+                return $total_gross_amount_max >= $order->total_gross_amount;
+            }
+
+            return true;
+        });
 
         return response()->json([
             'message' => 'Orders returned successfully',
             'orders' => $filteredOrders,
+        ]);
+    }
+
+    public function download_pdf(Order $order)
+    {
+        $templatePath = resource_path('tex/order_template.tex');
+        $latexContent = file_get_contents($templatePath);
+
+        // Nahraďte placeholder v šablóne reálnymi dátami
+        //$latexContent = str_replace('%ORDER_ID%', $order->id, $latexContent);
+        // Doplníte ďalšie nahradenia podľa potreby
+
+        // Uložte upravený obsah do dočasného súboru
+        $tempTexPath = tempnam(sys_get_temp_dir(), 'order') . '.tex';
+        file_put_contents($tempTexPath, $latexContent);
+
+        // Spustite pdflatex alebo iný kompilátor a generujte PDF
+        $outputDir = sys_get_temp_dir();
+        $command = "pdflatex -output-directory={$outputDir} {$tempTexPath}";
+        shell_exec($command);
+
+        // Získajte cestu k vygenerovanému PDF
+        $pdfPath = str_replace('.tex', '.pdf', $tempTexPath);
+
+        // Odosielanie PDF súboru užívateľovi
+        return response()->file($pdfPath, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="order-' . $order->id . '.pdf"'
         ]);
     }
 }
