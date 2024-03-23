@@ -9,17 +9,20 @@
 
 \begin{document}
 
-% Logo spoločnosti a Order ID
-\noindent
-\begin{minipage}{0.48\textwidth}
-    \includegraphics[width=0.3\textwidth]{logo.png} % Cesta k logu
-\end{minipage}
-\hfill
-\begin{minipage}{0.48\textwidth}
-    \raggedleft
-    {\Large\textbf{Order}}\\
-    {\large ID: }%ORDER_ID%}
-\end{minipage}
+% Logo spoločnosti a Order ID a Dátum vytvorenia
+    \noindent
+    \begin{minipage}{0.33\textwidth}
+        \raggedright
+        \includegraphics[width=.5\linewidth]{C:/Users/keres/PhpstormProjects/bakalarka/bakalarka/public/images/circles.png} % Logo
+    \end{minipage}%
+    \begin{minipage}{0.33\textwidth}
+        \centering
+        {\Large\textbf{Order}: %ORDER_ID%} % Order ID
+    \end{minipage}%
+    \begin{minipage}{0.33\textwidth}
+        \raggedleft
+        Created: %CREATED_DATE% % Dátum vytvorenia
+    \end{minipage}
 
 % Horizontálna čiara
 \vspace{1cm}
@@ -30,9 +33,9 @@
     \textbf{Supplier}\\
     \fbox{%
         \begin{minipage}{\textwidth}
-            Name: %SUPPLIER_NAME%\\
-            Address: %SUPPLIER_ADDRESS%\\
-            ICO: %SUPPLIER_ICO%
+            Name: Organisation\\%SUPPLIER_NAME%\\
+            Address: Organisation Address\\%SUPPLIER_ADDRESS%\\
+            ICO: Organisation ICO%SUPPLIER_ICO%
         \end{minipage}
     }
 \end{minipage}
@@ -42,14 +45,17 @@
     \fbox{%
         \begin{minipage}{\textwidth}
             Name:  %CUSTOMER_NAME%\\
-            Address: %CUSTOMER_ADDRESS%
+            Country: %CUSTOMER_ADDRESS_COUNTRY%\\
+            Region: %CUSTOMER_ADDRESS_REGION%\\
+            City: %CUSTOMER_ADDRESS_CITY%\\
+            Street: %CUSTOMER_ADDRESS_STREET%\\
+            House Number: %CUSTOMER_ADDRESS_HOUSE_NUMBER%\\
+            Postal Code: %CUSTOMER_POSTAL_CODE%\\
             ICO: %CUSTOMER_ICO%
         \end{minipage}
     }
 \end{minipage}
 
-% Dátum vytvorenia
-\noindent Created: %CREATED_DATE%
 \vspace{1cm}
 
 % Sekcia Order Lines
@@ -61,7 +67,7 @@
 \hline
 Quantity & Units & Unit Price & VAT \% & Total Net Amount & Total Gross Amount \\
 \hline
-% Tu vložte údaje pre každú order_line %
+%orderLinesLatex%
 \end{tabular}
 \end{table}
 

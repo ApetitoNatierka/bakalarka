@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\AddressLineController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderLineController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Address\AddressLineController;
+use App\Http\Controllers\Orders\CartController;
+use App\Http\Controllers\Orders\OrderController;
+use App\Http\Controllers\Orders\OrderLineController;
+use App\Http\Controllers\Orders\ProductController;
+use App\Http\Controllers\UserComp\CompanyController;
+use App\Http\Controllers\UserComp\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -123,7 +123,7 @@ Route::get('/order/{order}', [OrderController::class, 'get_order']);
 
 Route::get('/search_orders', [OrderController::class, 'get_search_orders']);
 
-Route::get('/download_pdf', [OrderController::class, 'download_pdf']);
+Route::get('/download_order/{order}', [OrderController::class, 'download_order']);
 
 Route::post('/create_order', [OrderController::class, 'create_order']);
 

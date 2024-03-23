@@ -10,6 +10,19 @@
     <ul class="list-unstyled ps-0">
         <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                Organisation
+            </button>
+            <div class="collapse show" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/download_pdf" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Organisations</a></li>
+                    <li><a href="/Company" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Organisation</a></li>
+                    <li><a href="/Employees" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Employees</a></li>
+                    <li><a href="/Employee" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Employee</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
                 Orders
             </button>
             <div class="collapse show" id="home-collapse">
@@ -21,7 +34,7 @@
         </li>
         <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                Dashboard
+                Products
             </button>
             <div class="collapse" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">

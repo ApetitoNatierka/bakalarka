@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\UserComp;
 
+use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\User;

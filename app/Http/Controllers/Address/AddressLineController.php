@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Address;
 
+use App\Http\Controllers\Controller;
 use App\Models\AddressLine;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class AddressLineController extends Controller
 {

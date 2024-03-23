@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Orders;
 
-use App\Models\CartItem;
+use App\Http\Controllers\Controller;
+use App\Models\Address;
+use App\Models\AddressLine;
 use App\Models\Order;
 use App\Models\OrderLine;
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -199,31 +200,110 @@ class OrderController extends Controller
         ]);
     }
 
-    public function download_pdf(Order $order)
+    public function download_order(Order $order)
     {
+        $order->customer_name = $order->customer ? ($order->customer->company ? $order->customer->company->company : $order->customer->name) : '';
+
+        $company = (bool)$order->customer->company;
+        $customer = ($order->customer->company ? $order->customer->company : $order->customer) ;
+
+        $customer_address = Address::find($customer->address_id);
+        $customer_address_line = $customer_address->addresses->first();
+
+        $order_lines = $order->order_lines;
+
+        // Načítanie šablóny
         $templatePath = resource_path('tex/order_template.tex');
-        $latexContent = file_get_contents($templatePath);
+        $templateContent = file_get_contents($templatePath);
 
-        // Nahraďte placeholder v šablóne reálnymi dátami
-        //$latexContent = str_replace('%ORDER_ID%', $order->id, $latexContent);
-        // Doplníte ďalšie nahradenia podľa potreby
+        // Nahradenie placeholderov reálnymi dátami
+        $filledTemplate = str_replace('%ORDER_ID%', $order->id, $templateContent);
 
-        // Uložte upravený obsah do dočasného súboru
-        $tempTexPath = tempnam(sys_get_temp_dir(), 'order') . '.tex';
-        file_put_contents($tempTexPath, $latexContent);
+        //Customer Address
+        $filledTemplate = str_replace('%CUSTOMER_NAME%', $company ? $customer->company : $customer->name, $filledTemplate);
+        $filledTemplate = str_replace('%CUSTOMER_ADDRESS_COUNTRY%', $customer_address_line->country, $filledTemplate);
+        $filledTemplate = str_replace('%CUSTOMER_ADDRESS_REGION%', $customer_address_line->region, $filledTemplate);
+        $filledTemplate = str_replace('%CUSTOMER_ADDRESS_CITY%', $customer_address_line->city, $filledTemplate);
+        $filledTemplate = str_replace('%CUSTOMER_ADDRESS_STREET%', $customer_address_line->street, $filledTemplate);
+        $filledTemplate = str_replace('%CUSTOMER_ADDRESS_HOUSE_NUMBER%', $customer_address_line->house_number, $filledTemplate);
+        $filledTemplate = str_replace('%CUSTOMER_POSTAL_CODE%', $customer_address_line->postal_code, $filledTemplate);
+        //$filledTemplate = str_replace('%CUSTOMER_ICO%', $customer_address_line->id, $templateContent);
 
-        // Spustite pdflatex alebo iný kompilátor a generujte PDF
-        $outputDir = sys_get_temp_dir();
-        $command = "pdflatex -output-directory={$outputDir} {$tempTexPath}";
-        shell_exec($command);
+        //created
+        $filledTemplate = str_replace('%CREATED_DATE%', $order->get_created(), $filledTemplate);
 
-        // Získajte cestu k vygenerovanému PDF
-        $pdfPath = str_replace('.tex', '.pdf', $tempTexPath);
+        $orderLinesLatex = "";
+        $line_no = 0;
+        /*
+        foreach ($order_lines as $order_line) {
+            $line_no++;
+            $product = $order_line->product;
 
-        // Odosielanie PDF súboru užívateľovi
-        return response()->file($pdfPath, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="order-' . $order->id . '.pdf"'
-        ]);
+            $orderLinesLatex .= "\\hline\n";
+            $orderLinesLatex .= "\\multicolumn{1}{|c|}{$line_no} & \multicolumn{2}{c|}{$product->id} & \multicolumn{2}{c|}{$product->description} & {$product->name} \\";
+            $orderLinesLatex .= "\\hline\n";
+            $orderLinesLatex .= "{$order_line->quantity} & {$order_line->units} & {$order_line->unit_price} & {$order_line->vat_percentage} & {$order_line->get_total_net_amount()} & {$order_line->get_total_gross_amount()} \\";
+            $orderLinesLatex .= "\\hline\n";
+        }
+        */
+        foreach ($order_lines as $order_line) {
+            $line_no++;
+            $product = $order_line->product;
+
+            // Prvý riadok pre order_line
+            $orderLinesLatex .= "\\hline\n";
+            $orderLinesLatex .= "\\multicolumn{1}{|c|}{$line_no} & \\multicolumn{2}{c|}{$product->id} & \\multicolumn{2}{c|}{$product->description} & {$product->name} \\\\\n";
+
+            $orderLinesLatex .= "\\hline\n";
+
+            // Druhý riadok pre order_line
+            $orderLinesLatex .= " {$order_line->quantity} & {$order_line->units} & {$order_line->unit_price} & {$order_line->vat_percentage} & {{$order_line->get_total_net_amount()}} & {$order_line->get_total_gross_amount()} \\\\[5pt]\n";
+
+            $orderLinesLatex .= "\\hline\n";
+
+        }
+
+        $orderLinesLatex .= "\\hline\n";
+
+        $filledTemplate = str_replace('%orderLinesLatex%', $orderLinesLatex, $filledTemplate);
+
+
+        //Total order amnt
+        $filledTemplate = str_replace('%TOTAL_NET_AMOUNT%', $order->get_total_net_amount(), $filledTemplate);
+        $filledTemplate = str_replace('%TOTAL_GROSS_AMOUNT%', $order->get_total_gross_amount(), $filledTemplate);
+
+        // Uloženie dočasného LaTeX súboru
+        $texFilePath = 'order_' . time() . '.tex';
+        Storage::disk('pdfs')->put($texFilePath, $filledTemplate);
+
+        // Cesta k dočasnému LaTeX súboru
+        $texFileFullPath = Storage::disk('pdfs')->path($texFilePath);
+
+        // Spustenie LaTeX kompilátora a generovanie PDF
+       // $command = "pdflatex -interaction=nonstopmode -output-directory=" . escapeshellarg(dirname($texFileFullPath)) . " " . escapeshellarg($texFileFullPath);
+        //$command .= " 2>&1";
+        $command = "C:\\texlive\\2024\\bin\\windows\\pdflatex -interaction=nonstopmode -output-directory=" . escapeshellarg(dirname($texFileFullPath)) . " " . escapeshellarg($texFileFullPath);
+        $command .= " 2>&1";
+
+        exec($command, $output, $returnVar);
+        if ($returnVar !== 0) {
+            // Kompilácia zlyhala, vypíšte chyby
+            return response()->json(['error' => 'LaTeX compilation failed', 'details' => implode("\n", $output)], 500);
+        }
+
+        // Odstránenie dočasného .tex súboru
+        Storage::disk('pdfs')->delete($texFilePath);
+
+        // Názov generovaného PDF súboru (predpokladáme rovnaký názov ako .tex s výnimkou prípony)
+        $pdfFileName = str_replace('.tex', '.pdf', $texFilePath);
+
+        // Vrátenie PDF súboru užívateľovi
+        if (Storage::disk('pdfs')->exists($pdfFileName)) {
+            return response()->download(Storage::disk('pdfs')->path($pdfFileName), 'order.pdf', [
+                'Content-Type' => 'application/pdf',
+            ]);
+        } else {
+            return response()->json(['error' => 'Failed to generate PDF.'], 500);
+        }
     }
 }
