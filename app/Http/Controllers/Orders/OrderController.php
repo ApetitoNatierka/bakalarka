@@ -252,18 +252,15 @@ class OrderController extends Controller
 
             // Prvý riadok pre order_line
             $orderLinesLatex .= "\\hline\n";
-            $orderLinesLatex .= "\\multicolumn{1}{|c|}{$line_no} & \\multicolumn{2}{c|}{$product->id} & \\multicolumn{2}{c|}{$product->description} & {$product->name} \\\\\n";
-
+            $orderLinesLatex .= "\\multicolumn{1}{|c|}{$line_no} & \\multicolumn{1}{c|}{$product->id} & \\multicolumn{3}{c|}{".str_replace('&', '\&', $product->description)."} & {$product->name} \\\\\n";
             $orderLinesLatex .= "\\hline\n";
 
             // Druhý riadok pre order_line
-            $orderLinesLatex .= " {$order_line->quantity} & {$order_line->units} & {$order_line->unit_price} & {$order_line->vat_percentage} & {{$order_line->get_total_net_amount()}} & {$order_line->get_total_gross_amount()} \\\\[5pt]\n";
+            $orderLinesLatex .= " {$order_line->quantity} & {$product->units} & {$order_line->unit_price} & {$order_line->vat_percentage} & {{$order_line->get_total_net_amount()}} & {$order_line->get_total_gross_amount()} \\\\[5pt]\n";
 
             $orderLinesLatex .= "\\hline\n";
 
         }
-
-        $orderLinesLatex .= "\\hline\n";
 
         $filledTemplate = str_replace('%orderLinesLatex%', $orderLinesLatex, $filledTemplate);
 
