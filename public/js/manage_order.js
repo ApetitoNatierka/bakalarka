@@ -310,3 +310,8 @@ $(document).ready(function() {
         width: '100%',
     });
 });
+
+$('#print_order').on('click', function() {
+    var orderId = $(this).data('order-id');
+    window.location.href = "/download_order/" + orderId;
+});

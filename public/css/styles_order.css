@@ -7,6 +7,11 @@
     max-width: 40px;
 }
 
+.command-btn {
+    width: auto;
+    max-width: 150px;
+}
+
 .dialog {
     position: fixed;
     top: 50%;
