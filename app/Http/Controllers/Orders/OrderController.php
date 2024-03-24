@@ -252,7 +252,7 @@ class OrderController extends Controller
 
             // Prvý riadok pre order_line
             $orderLinesLatex .= "\\hline\n";
-            $orderLinesLatex .= "\\multicolumn{1}{|c|}{$line_no} & \\multicolumn{1}{c|}{$product->id} & \\multicolumn{3}{c|}{".str_replace('&', '\&', $product->description)."} & {$product->name} \\\\\n";
+            $orderLinesLatex .= "\\multicolumn{1}{|c|}{$line_no} & \\multicolumn{1}{c|}{$product->id} & \\multicolumn{3}{p{4cm}|}{".str_replace('&', '\&', $product->description)."} & {$product->name} \\\\\n";
             $orderLinesLatex .= "\\hline\n";
 
             // Druhý riadok pre order_line
