@@ -115,11 +115,11 @@ Route::post('/modify_cart_item', [CartController::class, 'modify_cart_item']);
 //-----------------------Order-----------------------------------
 //---------------------------------------------------------------
 
-Route::get('/orders', [OrderController::class, 'get_orders']);
+Route::get('/orders', [OrderController::class, 'get_orders'])->middleware('auth.redirect');
 
 Route::get('/order', [OrderController::class, 'get_order_empty']);
 
-Route::get('/order/{order}', [OrderController::class, 'get_order']);
+Route::get('/order/{order}', [OrderController::class, 'get_order'])->middleware('auth.redirect');
 
 Route::get('/search_orders', [OrderController::class, 'get_search_orders']);
 

@@ -12,9 +12,8 @@ class Organisation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company',
+        'organisation',
         'email',
-        'type',
         'phone_number',
     ];
 
