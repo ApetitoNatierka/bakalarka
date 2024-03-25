@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasOne(Cart::class);
     }
 
+    public function employee():HasOne
+    {
+        return $this->hasOne(Employee::class);
+    }
+
     public function address():BelongsTo
     {
         return $this->belongsTo(Address::class);
@@ -99,7 +104,7 @@ class User extends Authenticatable
 
     public static function allowedRoles(): array
     {
-        return ['admin', 'employee', 'person'];
+        return ['admin', 'person'];
     }
 
 }

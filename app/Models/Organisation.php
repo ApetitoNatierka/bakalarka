@@ -15,6 +15,7 @@ class Organisation extends Model
         'organisation',
         'email',
         'phone_number',
+        'address_id',
     ];
 
     public function address():BelongsTo
@@ -22,8 +23,12 @@ class Organisation extends Model
         return $this->belongsTo(Address::class);
     }
 
-    public function users():HasMany
+    public function employees():HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Employee::class);
+    }
+
+    public function get_num_of_employees(){
+        return $this->employees->count();
     }
 }

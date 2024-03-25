@@ -14,10 +14,8 @@
             </button>
             <div class="collapse show" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="/download_pdf" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Organisations</a></li>
-                    <li><a href="/Company" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Organisation</a></li>
-                    <li><a href="/Employees" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Employees</a></li>
-                    <li><a href="/Employee" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Employee</a></li>
+                    <li><a href="/organisations" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Organisations</a></li>
+                    <li><a href="/employees" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Employees</a></li>
                 </ul>
             </div>
         </li>
@@ -27,7 +25,6 @@
             </button>
             <div class="collapse show" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="/order" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Order</a></li>
                     <li><a href="/orders" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Orders</a></li>
                 </ul>
             </div>
