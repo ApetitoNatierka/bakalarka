@@ -113,4 +113,11 @@ class OrganisationController extends Controller
             'organisations' => $organisations,
         ]);
     }
+
+    public function select_organisations(Request $request) {
+        $search_term = $request->search_term;
+        $organisations = Organisation::where('organisation', 'like', '%' . $search_term . '%')->get();
+
+        return response()->json(['organisations' => $organisations]);
+    }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Orders\CartController;
 use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\Orders\OrderLineController;
 use App\Http\Controllers\Orders\ProductController;
+use App\Http\Controllers\Organisations\EmployeeController;
 use App\Http\Controllers\Organisations\OrganisationController;
 use App\Http\Controllers\UserComp\CompanyController;
 use App\Http\Controllers\UserComp\UserController;
@@ -164,7 +165,27 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/organisations', [OrganisationController::class, 'get_organisations']);
 
+    Route::get('/select_organisations', [OrganisationController::class, 'select_organisations']);
+
+    Route::get('/search_organisations', [OrganisationController::class, 'get_search_organisations']);
+
     Route::post('/add_organisation', [OrganisationController::class, 'add_organisation']);
+
+    Route::post('/delete_organisation', [OrganisationController::class, 'delete_organisation']);
+
+    Route::post('/modify_organisation', [OrganisationController::class, 'modify_organisation']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Employee------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/employees', [EmployeeController::class, 'get_employees']);
+
+    Route::post('/add_employee', [EmployeeController::class, 'add_employee']);
 
     Route::post('/delete_organisation', [OrganisationController::class, 'delete_organisation']);
 

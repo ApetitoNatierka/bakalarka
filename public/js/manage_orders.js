@@ -13,7 +13,7 @@ document.getElementById('cancel_order').addEventListener('click', function() {
 
 document.getElementById('new_order').addEventListener('click', function() {
     var dialog = document.getElementById('order_dialog');
-    var par_customer = document.getElementById('customer').value;
+    var par_customer = $('#customer_select').val();
 
     $.ajax({
         type: 'post',
@@ -239,6 +239,33 @@ $(document).ready(function() {
                 console.error('Error searching orders:', error);
             }
         });
+    });
+});
+
+$(document).ready(function() {
+    $('#customer_select').select2({
+        ajax: {
+            url: '/select_users',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search_term: params.term,
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response.users.map(function(user) {
+                        return {id: user.id, text: user.name};
+                    })
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Select a customer',
+        minimumInputLength: 1,
+        minimumResultsForSearch: 0,
+        width: '100%',
     });
 });
 

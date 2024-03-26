@@ -97,7 +97,7 @@
             <form id="order_form">
                 @csrf
                 <label>
-                    <input type="text" name="customer" id="customer" placeholder="Customer">
+                    <select id="customer_select" name="customer"></select>
                 </label><br>
                 <button type="button" id="new_order">New</button>
                 <button type="button" id="cancel_order">Cancel</button>
@@ -105,7 +105,6 @@
         </div>
 
         <script src="{{ asset('js/manage_orders.js')}}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
 @endsection
