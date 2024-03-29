@@ -187,10 +187,10 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::post('/add_employee', [EmployeeController::class, 'add_employee']);
 
-    Route::post('/delete_organisation', [OrganisationController::class, 'delete_organisation']);
+    Route::post('/delete_employee', [EmployeeController::class, 'delete_employee']);
 
-    Route::post('/modify_organisation', [OrganisationController::class, 'modify_organisation']);
+    Route::post('/modify_employee', [EmployeeController::class, 'modify_employee']);
 
-    Route::get('/search_organisations', [OrganisationController::class, 'get_search_organisations']);
+    Route::get('/search_employees', [EmployeeController::class, 'get_search_employees']);
 
 });

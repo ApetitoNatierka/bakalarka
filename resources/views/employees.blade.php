@@ -71,7 +71,7 @@
                                                    value="{{ $employee->id }}" disabled></td>
                                         <td><input type="text" class="form-control" name="surname"
                                                    value="{{ $employee->surname }}" ></td>
-                                        <td><input type="text" class="form-control" name="lasr_name"
+                                        <td><input type="text" class="form-control" name="last_name"
                                                    value="{{ $employee->last_name }}" ></td>
                                         @if($user->role == 'admin')
                                             <td><input type="text" class="form-control" name="position"
