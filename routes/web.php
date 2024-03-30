@@ -9,6 +9,7 @@ use App\Http\Controllers\Organisations\EmployeeController;
 use App\Http\Controllers\Organisations\OrganisationController;
 use App\Http\Controllers\UserComp\CompanyController;
 use App\Http\Controllers\UserComp\UserController;
+use App\Http\Controllers\Warehouses\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -205,5 +206,23 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::post('/modify_employee', [EmployeeController::class, 'modify_employee']);
 
     Route::get('/search_employees', [EmployeeController::class, 'get_search_employees']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Warehouse-------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/warehouses', [WarehouseController::class, 'get_warehouses']);
+
+    Route::post('/add_warehouse', [WarehouseController::class, 'add_warehouse']);
+
+    Route::post('/delete_warehouse', [WarehouseController::class, 'delete_warehouse']);
+
+    Route::post('/modify_warehouse', [WarehouseController::class, 'modify_warehouse']);
+
+    Route::get('/search_warehouses', [WarehouseController::class, 'get_search_warehouses']);
 
 });

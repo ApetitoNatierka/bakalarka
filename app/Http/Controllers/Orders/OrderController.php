@@ -227,7 +227,8 @@ class OrderController extends Controller
         $filledTemplate = str_replace('%CUSTOMER_ADDRESS_STREET%', $customer_address_line->street, $filledTemplate);
         $filledTemplate = str_replace('%CUSTOMER_ADDRESS_HOUSE_NUMBER%', $customer_address_line->house_number, $filledTemplate);
         $filledTemplate = str_replace('%CUSTOMER_POSTAL_CODE%', $customer_address_line->postal_code, $filledTemplate);
-        //$filledTemplate = str_replace('%CUSTOMER_ICO%', $customer_address_line->id, $templateContent);
+        $filledTemplate = str_replace('%CUSTOMER_ICO%', $company ? $customer->ICO : '', $filledTemplate);
+        $filledTemplate = str_replace('%CUSTOMER_DIC%', $company ? $customer->DIC : '', $filledTemplate);
 
         //created
         $filledTemplate = str_replace('%CREATED_DATE%', $order->get_created(), $filledTemplate);

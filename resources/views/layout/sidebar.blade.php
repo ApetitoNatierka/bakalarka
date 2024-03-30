@@ -37,10 +37,9 @@
             <div class="collapse" id="warehouse-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="/suppliers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Suppliers</a></li>
-                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Warehouses</a></li>
+                    <li><a href="/warehouses" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Warehouses</a></li>
                     <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animals</a></li>
                     <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supplies</a></li>
-                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Manufacture</a></li>
                 </ul>
             </div>
         </li>
