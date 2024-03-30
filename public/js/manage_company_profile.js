@@ -5,6 +5,8 @@ $(document).ready(function() {
         var par_email = document.getElementById('email').value;
         var par_phone_number = document.getElementById('phone_number').value;
         var par_type = document.getElementById('type').value;
+        var par_ico = document.getElementById('ico').value;
+        var par_dic = document.getElementById('dic').value;
 
         $.ajax({
             type: 'post',
@@ -18,6 +20,8 @@ $(document).ready(function() {
                 email: par_email,
                 phone_number: par_phone_number,
                 type: par_type,
+                ICO: par_ico,
+                DIC: par_dic,
             },
             success: function(response) {
                 if(response.success) {
@@ -39,6 +43,8 @@ $(document).ready(function() {
         var par_phone_number = document.getElementById('phone_number').value;
         var par_type = document.getElementById('type').value;
         var par_company_id = document.getElementById('company_id').value;
+        var par_ico = document.getElementById('ico').value;
+        var par_dic = document.getElementById('dic').value;
 
         $.ajax({
             type: 'post',
@@ -53,6 +59,8 @@ $(document).ready(function() {
                 email: par_email,
                 phone_number: par_phone_number,
                 type: par_type,
+                ICO: par_ico,
+                DIC: par_dic,
             },
             success: function (response) {
                 console.log(response.message);

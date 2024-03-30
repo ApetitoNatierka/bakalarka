@@ -17,6 +17,8 @@ class Company extends Model
         'email',
         'type',
         'phone_number',
+        'ICO',
+        'DIC',
     ];
 
     public function address():BelongsTo

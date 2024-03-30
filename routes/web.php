@@ -83,6 +83,19 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::post('/add_company_info', [CompanyController::class, 'add_company_info']);
 
     Route::post('/modify_company_info', [CompanyController::class, 'modify_company_info']);
+
+    Route::get('/customers', [CompanyController::class, 'get_customers']);
+
+    Route::get('/suppliers', [CompanyController::class, 'get_suppliers']);
+
+    Route::post('/add_company', [CompanyController::class, 'add_company']);
+
+    Route::post('/delete_company', [CompanyController::class, 'delete_company']);
+
+    Route::post('/modify_company', [CompanyController::class, 'modify_company']);
+
+    Route::get('/search_companies', [CompanyController::class, 'get_search_companies']);
+
 });
 
 //---------------------------------------------------------------

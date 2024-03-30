@@ -76,6 +76,32 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            @if(isset($company) && $user->get_company_position() == 'admin')
+                                <label for="ico" class="col-form-label">ICO</label>
+                                <input type="text" class="form-control col custom-input" id="ico" name="ico" value="{{ $company->ICO }}" >
+                            @elseif(isset($company))
+                                <label for="ico" class="col-form-label">ICO</label>
+                                <input type="text" class="form-control col custom-input" id="ico" name="ico" value="{{ $company->ICO }}" disabled>
+                            @else
+                                <label for="ico" class="col-form-label">ICO</label>
+                                <input type="text" class="form-control col custom-input" id="ico" name="ico">
+                            @endif
+                        </div>
+                        <div class="col">
+                            @if(isset($company) && $user->get_company_position() == 'admin')
+                                <label for="dic" class="col-form-label">DIC</label>
+                                <input type="text" class="form-control col custom-input" id="dic" name="dic" value="{{ $company->DIC }}" >
+                            @elseif(isset($company))
+                                <label for="dic" class="col-form-label">DIC</label>
+                                <input type="text" class="form-control col custom-input" id="dic" name="dic" value="{{ $company->DIC }}" disabled>
+                            @else
+                                <label for="dic" class="col-form-label">DIC</label>
+                                <input type="text" class="form-control col custom-input" id="dic" name="dic">
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 @if(isset($company))
                     <div class="users-container mt-3">
@@ -278,7 +304,6 @@
     @endif
     <script src="{{ asset('js/manage_company_profile.js')}}"></script>
     <script src="{{ asset('js/add_address_line.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
 @endsection
