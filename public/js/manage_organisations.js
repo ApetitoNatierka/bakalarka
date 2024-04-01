@@ -84,7 +84,8 @@ document.getElementById('new_organisation').addEventListener('click', function()
     });
 });
 
-$('.dropdown-item.delete_organisation').on('click', function(e) {
+//$('.dropdown-item.delete_organisation').on('click', function(e) {
+$(document).on('click', '.dropdown-item.delete_organisation', function(e) {
     e.stopPropagation();
 
     var $this = $(this);
@@ -111,7 +112,8 @@ $('.dropdown-item.delete_organisation').on('click', function(e) {
     })
 });
 
-$('.dropdown-item.modify_organisation').on('click', function(e) {
+//$('.dropdown-item.modify_organisation').on('click', function(e) {
+    $(document).on('click', '.dropdown-item.modify_organisation', function(e) {
     e.stopPropagation();
 
     var par_organisation_id = $(this).data('organisation-id');

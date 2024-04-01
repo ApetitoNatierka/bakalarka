@@ -153,7 +153,8 @@ document.getElementById('new_employee').addEventListener('click', function() {
     });
 });
 
-$('.dropdown-item.delete_employee').on('click', function(e) {
+//$('.dropdown-item.delete_employee').on('click', function(e) {
+$(document).on('click', '.dropdown-item.delete_employee', function(e) {
     e.stopPropagation();
 
     var $this = $(this);
@@ -180,7 +181,8 @@ $('.dropdown-item.delete_employee').on('click', function(e) {
     })
 });
 
-$('.dropdown-item.modify_employee').on('click', function(e) {
+//$('.dropdown-item.modify_employee').on('click', function(e) {
+$(document).on('click', '.dropdown-item.modify_employee', function(e) {
     e.stopPropagation();
 
     var par_employee_id = $(this).data('employee-id');
@@ -275,6 +277,7 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 var employees = response.employees;
+                var user = response.user;
                 $('.card.p-3').remove();
 
                 var employeeHtml = ' <table class="employee_table" id="employee_table">\n' +

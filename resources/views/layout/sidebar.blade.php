@@ -38,7 +38,9 @@
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="/suppliers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Suppliers</a></li>
                     <li><a href="/warehouses" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Warehouses</a></li>
+                    <li><a href="/animal_numbers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animal numbers</a></li>
                     <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animals</a></li>
+                    <li><a href="/supply_numbers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supply numbers</a></li>
                     <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supplies</a></li>
                 </ul>
             </div>

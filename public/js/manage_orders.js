@@ -72,7 +72,8 @@ document.getElementById('new_order').addEventListener('click', function() {
     });
 });
 
-$('.dropdown-item.delete_order').on('click', function(e) {
+//$('.dropdown-item.delete_order').on('click', function(e) {
+    $(document).on('click', '.dropdown-item.delete_order', function(e) {
     e.stopPropagation();
 
     var $this = $(this);
@@ -99,7 +100,8 @@ $('.dropdown-item.delete_order').on('click', function(e) {
     })
 });
 
-$('.dropdown-item.modify_order').on('click', function(e) {
+//$('.dropdown-item.modify_order').on('click', function(e) {
+$(document).on('click', '.dropdown-item.modify_order', function(e) {
     e.stopPropagation();
 
     var par_order_id = $(this).data('order-id');

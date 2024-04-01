@@ -65,8 +65,10 @@ document.getElementById('new_address').addEventListener('click', function() {
     });
 });
 
-$('.dropdown-item.modify_address_line').on('click', function(e) {
-    e.stopPropagation();
+//$('.dropdown-item.modify_address_line').on('click', function(e) {
+$(document).on('click', '.dropdown-item.modify_address_line', function(e) {
+
+        e.stopPropagation();
 
     var par_address_line_id = $(this).data('address-line-id');
     var par_entity_type = document.getElementById('entity_type').value;
@@ -106,7 +108,9 @@ $('.dropdown-item.modify_address_line').on('click', function(e) {
     })
 });
 
-$('.dropdown-item.delete_address_line').on('click', function(e) {
+//$('.dropdown-item.delete_address_line').on('click', function(e) {
+$(document).on('click', '.dropdown-item.delete_address_line', function(e) {
+
     e.stopPropagation();
 
     var $this = $(this);

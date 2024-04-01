@@ -9,6 +9,8 @@ use App\Http\Controllers\Organisations\EmployeeController;
 use App\Http\Controllers\Organisations\OrganisationController;
 use App\Http\Controllers\UserComp\CompanyController;
 use App\Http\Controllers\UserComp\UserController;
+use App\Http\Controllers\Warehouses\AnimalNumberController;
+use App\Http\Controllers\Warehouses\SupplyNumberController;
 use App\Http\Controllers\Warehouses\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +33,10 @@ Route::get('/homepage', function () {
     return view('start_page');
 });
 
-Route::get('/intranet', function () {
-    return view('intranet');
+Route::middleware(['auth.redirect'])->group(function () {
+    Route::get('/intranet', function () {
+        return view('intranet');
+    });
 });
 
 
@@ -224,5 +228,41 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::post('/modify_warehouse', [WarehouseController::class, 'modify_warehouse']);
 
     Route::get('/search_warehouses', [WarehouseController::class, 'get_search_warehouses']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Animal No-------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/animal_numbers', [AnimalNumberController::class, 'get_animal_numbers']);
+
+    Route::post('/add_animal_number', [AnimalNumberController::class, 'add_animal_number']);
+
+    Route::post('/delete_animal_number', [AnimalNumberController::class, 'delete_animal_number']);
+
+    Route::post('/modify_animal_number', [AnimalNumberController::class, 'modify_animal_number']);
+
+    Route::get('/search_animal_numbers', [AnimalNumberController::class, 'get_search_animal_numbers']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Supply No-------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/supply_numbers', [SupplyNumberController::class, 'get_supply_numbers']);
+
+    Route::post('/add_supply_number', [SupplyNumberController::class, 'add_supply_number']);
+
+    Route::post('/delete_supply_number', [SupplyNumberController::class, 'delete_supply_number']);
+
+    Route::post('/modify_supply_number', [SupplyNumberController::class, 'modify_supply_number']);
+
+    Route::get('/search_supply_numbers', [SupplyNumberController::class, 'get_search_supply_numbers']);
 
 });

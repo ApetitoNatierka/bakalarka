@@ -110,7 +110,8 @@ document.getElementById('new_warehouse').addEventListener('click', function() {
     });
 });
 
-$('.dropdown-item.delete_warehouse').on('click', function(e) {
+//$('.dropdown-item.delete_warehouse').on('click', function(e) {
+$(document).on('click', '.dropdown-item.delete_warehouse', function(e) {
     e.stopPropagation();
 
     var $this = $(this);
@@ -137,7 +138,8 @@ $('.dropdown-item.delete_warehouse').on('click', function(e) {
     })
 });
 
-$('.dropdown-item.modify_warehouse').on('click', function(e) {
+//$('.dropdown-item.modify_warehouse').on('click', function(e) {
+$(document).on('click', '.dropdown-item.modify_warehouse', function(e) {
     e.stopPropagation();
 
     var par_warehouse_id = $(this).data('warehouse-id');
@@ -237,7 +239,7 @@ $(document).ready(function() {
                         <td>
                         <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle no-caret" type="button"
-                    id="dropdownMenuButton" data-company-id="${ warehouse.id }"
+                    id="dropdownMenuButton" data-warehouse-id="${ warehouse.id }"
                     data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                     fill="currentColor" class="bi bi-three-dots-vertical"
@@ -247,13 +249,13 @@ $(document).ready(function() {
                 </svg>
                 </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a href="/company/${ warehouse.id }"
-                               class="dropdown-item detail_company" id="detail_company"
-                               data-company-id="${ warehouse.id }">Detail</a></li>
-                        <li><p class="dropdown-item modify_company" id="modify_company"
-                               data-company-id="${ warehouse.id }">Modify</p></li>
-                        <li><p class="dropdown-item delete_company" id="delete_company"
-                               data-company-id="${ warehouse.id }">Delete</p></li>
+                        <li><a href="/warehouse/${ warehouse.id }"
+                               class="dropdown-item detail_warehouse" id="detail_warehouse"
+                               data-warehouse-id="${ warehouse.id }">Detail</a></li>
+                        <li><p class="dropdown-item modify_warehouse" id="modify_warehouse"
+                               data-warehouse-id="${ warehouse.id }">Modify</p></li>
+                        <li><p class="dropdown-item delete_warehouse" id="delete_warehouse"
+                               data-warehouse-id="${ warehouse.id }">Delete</p></li>
                     </ul>
                 </div>
                 <td><input type="text" class="form-control" name="warehouse_number"

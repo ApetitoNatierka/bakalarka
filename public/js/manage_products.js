@@ -155,7 +155,8 @@ document.getElementById('cancel_product').addEventListener('click', function() {
     dialog.style.display = 'none';
 });
 
-$('.dropdown-item.modify_product').on('click', function(e) {
+//$('.dropdown-item.modify_product').on('click', function(e) {
+$(document).on('click', '.dropdown-item.modify_product', function(e) {
     e.stopPropagation();
 
     var par_product_id = $(this).data('product-id');
@@ -199,7 +200,8 @@ $('.dropdown-item.modify_product').on('click', function(e) {
     })
 });
 
-$('.dropdown-item.delete_product').on('click', function(e) {
+//$('.dropdown-item.delete_product').on('click', function(e) {
+$(document).on('click', '.dropdown-item.delete_product', function(e) {
     e.stopPropagation();
 
     var $this = $(this);

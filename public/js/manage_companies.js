@@ -88,7 +88,8 @@ document.getElementById('new_company').addEventListener('click', function() {
     });
 });
 
-$('.dropdown-item.delete_company').on('click', function(e) {
+//$('.dropdown-item.delete_company').on('click', function(e) {
+$(document).on('click', '.dropdown-item.delete_company', function(e) {
     e.stopPropagation();
 
     var $this = $(this);
@@ -115,8 +116,10 @@ $('.dropdown-item.delete_company').on('click', function(e) {
     })
 });
 
-$('.dropdown-item.modify_company').on('click', function(e) {
-    e.stopPropagation();
+//$('.dropdown-item.modify_company').on('click', function(e) {
+$(document).on('click', '.dropdown-item.modify_company', function(e) {
+
+        e.stopPropagation();
 
     var par_company_id = $(this).data('company-id');
 
