@@ -9,7 +9,9 @@ use App\Http\Controllers\Organisations\EmployeeController;
 use App\Http\Controllers\Organisations\OrganisationController;
 use App\Http\Controllers\UserComp\CompanyController;
 use App\Http\Controllers\UserComp\UserController;
+use App\Http\Controllers\Warehouses\AnimalController;
 use App\Http\Controllers\Warehouses\AnimalNumberController;
+use App\Http\Controllers\Warehouses\ItemController;
 use App\Http\Controllers\Warehouses\SupplyNumberController;
 use App\Http\Controllers\Warehouses\WarehouseController;
 use Illuminate\Support\Facades\Route;
@@ -247,6 +249,9 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/search_animal_numbers', [AnimalNumberController::class, 'get_search_animal_numbers']);
 
+    Route::get('/select_animal_nos', [AnimalNumberController::class, 'select_animal_nos']);
+
+
 });
 
 //---------------------------------------------------------------
@@ -264,5 +269,39 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::post('/modify_supply_number', [SupplyNumberController::class, 'modify_supply_number']);
 
     Route::get('/search_supply_numbers', [SupplyNumberController::class, 'get_search_supply_numbers']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Animal----------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/animals', [AnimalController::class, 'get_animals']);
+
+    Route::post('/add_animal', [AnimalController::class, 'add_animal']);
+
+    Route::post('/delete_animal', [AnimalController::class, 'delete_animal']);
+
+    Route::post('/modify_animal', [AnimalController::class, 'modify_animal']);
+
+    Route::get('/search_animal', [AnimalController::class, 'get_search_animals']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Item------------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/items', [ItemController::class, 'get_items']);
+
+    Route::post('/delete_item', [ItemController::class, 'delete_item']);
+
+    Route::post('/modify_item', [ItemController::class, 'modify_item']);
+
+    Route::get('/search_items', [ItemController::class, 'get_search_items']);
 
 });

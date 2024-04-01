@@ -12,7 +12,7 @@
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#organisation-collapse" aria-expanded="true">
                 Organisation
             </button>
-            <div class="collapse show" id="organisation-collapse">
+            <div class="collapse" id="organisation-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="/organisations" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Organisations</a></li>
                     <li><a href="/employees" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Employees</a></li>
@@ -23,7 +23,7 @@
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="true">
                 Orders
             </button>
-            <div class="collapse show" id="orders-collapse">
+            <div class="collapse" id="orders-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="/orders" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Orders</a></li>
                     <li><a href="/customers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Customers</a></li>
@@ -38,8 +38,9 @@
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="/suppliers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Suppliers</a></li>
                     <li><a href="/warehouses" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Warehouses</a></li>
+                    <li><a href="/items" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Items</a></li>
                     <li><a href="/animal_numbers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animal numbers</a></li>
-                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animals</a></li>
+                    <li><a href="/animals" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animals</a></li>
                     <li><a href="/supply_numbers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supply numbers</a></li>
                     <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supplies</a></li>
                 </ul>

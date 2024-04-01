@@ -66,10 +66,15 @@
                                                 </ul>
                                             </div>
                                         </td>
-                                        <td><input type="text" class="form-control" name="animal_id"
+                                        <td><input type="number" class="form-control" name="animal_id"
                                                    value="{{ $animal->id }}" disabled></td>
-                                        <td><input type="text" class="form-control" name="animal number"
-                                                   value="{{ $animal->animal_no }}"></td>
+                                        <td>
+                                            <select class="form-control" name="animal_no_id">
+                                                @foreach($animal_nos as $animal_no)
+                                                    <option value="{{ $animal_no->id }}" {{ $animal_no->id == $animal->animal_number_id ? 'selected' : '' }}>{{ $animal_no->id . ' : ' .  $animal_no->animal_number }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td><input type="number" class="form-control" name="weight"
                                                    value="{{ $animal->weight }}"></td>
                                         <td><input type="number" class="form-control" name="height"
@@ -103,7 +108,7 @@
         <form id="animal_form">
             @csrf
             <label>
-                <input type="text" name="animal" id="new_animal_number" placeholder="Animal No">
+                <select id="animal_no_select" name="animal"></select>
             </label><br>
             <label>
                 <input type="number" name="weight" id="new_weight" placeholder="Weight">
@@ -127,7 +132,7 @@
         </form>
     </div>
 
-    <script src="{{ asset('js/manage_animalas.js')}}"></script>
+    <script src="{{ asset('js/manage_animals.js')}}"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
 @endsection

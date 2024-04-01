@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Warehouses;
 use App\Http\Controllers\Controller;
 use App\Models\AnimalNumber;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AnimalNumberController extends Controller
 {
@@ -16,7 +17,7 @@ class AnimalNumberController extends Controller
 
     public function add_animal_number(Request $request) {
         $validate_data = $request->validate([
-            'animal_number' => ['required'],
+            'animal_number' => ['required', Rule::unique('animal_numbers', 'animal_number')],
             'description' => ['required'],
         ]);
 
@@ -87,5 +88,12 @@ class AnimalNumberController extends Controller
             'message' => 'Animal numbers returned successfully',
             'animal_numbers' => $animal_numbers,
         ]);
+    }
+
+    public function select_animal_nos(Request $request) {
+        $search_term = $request->search_term;
+        $animal_nos = AnimalNumber::where('animal_number', 'like', '%' . $search_term . '%')->get();
+
+        return response()->json(['animal_nos' => $animal_nos]);
     }
 }

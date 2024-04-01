@@ -11,7 +11,7 @@
                     <div class="card">
                         <img src="{{ asset('images/bull.png') }}" class="card-img-top" alt="Placeholder image">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title">Animals</h5>
                             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="card">
                             <img src="{{ asset('images/services.jpg') }}" class="card-img-top" alt="Placeholder image">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h5 class="card-title">Services</h5>
                                 <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             </div>
                         </div>

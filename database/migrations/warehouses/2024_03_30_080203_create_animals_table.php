@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
-            $table->string('animal_no');
             $table->double('weight');
             $table->double('height');
             $table->date('born');
