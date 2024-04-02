@@ -85,4 +85,11 @@ class SupplyNumberController extends Controller
         ]);
     }
 
+    public function select_supply_nos(Request $request) {
+        $search_term = $request->search_term;
+        $supply_nos = SupplyNumber::where('supply_number', 'like', '%' . $search_term . '%')->get();
+
+        return response()->json(['supply_nos' => $supply_nos]);
+    }
+
 }

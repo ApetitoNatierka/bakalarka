@@ -42,7 +42,7 @@
                     <li><a href="/animal_numbers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animal numbers</a></li>
                     <li><a href="/animals" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Animals</a></li>
                     <li><a href="/supply_numbers" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supply numbers</a></li>
-                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supplies</a></li>
+                    <li><a href="/supplies" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Supplies</a></li>
                 </ul>
             </div>
         </li>

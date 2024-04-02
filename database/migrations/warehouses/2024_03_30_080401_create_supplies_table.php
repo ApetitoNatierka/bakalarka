@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('supplies', function (Blueprint $table) {
             $table->id();
-            $table->string('supply_no');
             $table->string('description');
             $table->double('quantity');
             $table->string('status');
+            $table->string('units');
+            $table->string('weight');
+            $table->string('height');
             $table->timestamps();
         });
     }

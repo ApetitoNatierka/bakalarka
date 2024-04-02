@@ -12,6 +12,7 @@ use App\Http\Controllers\UserComp\UserController;
 use App\Http\Controllers\Warehouses\AnimalController;
 use App\Http\Controllers\Warehouses\AnimalNumberController;
 use App\Http\Controllers\Warehouses\ItemController;
+use App\Http\Controllers\Warehouses\SupplyController;
 use App\Http\Controllers\Warehouses\SupplyNumberController;
 use App\Http\Controllers\Warehouses\WarehouseController;
 use Illuminate\Support\Facades\Route;
@@ -251,7 +252,6 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/select_animal_nos', [AnimalNumberController::class, 'select_animal_nos']);
 
-
 });
 
 //---------------------------------------------------------------
@@ -270,6 +270,8 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/search_supply_numbers', [SupplyNumberController::class, 'get_search_supply_numbers']);
 
+    Route::get('/select_supply_nos', [SupplyNumberController::class, 'select_supply_nos']);
+
 });
 
 //---------------------------------------------------------------
@@ -286,7 +288,7 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::post('/modify_animal', [AnimalController::class, 'modify_animal']);
 
-    Route::get('/search_animal', [AnimalController::class, 'get_search_animals']);
+    Route::get('/search_animals', [AnimalController::class, 'get_search_animals']);
 
 });
 
@@ -303,5 +305,23 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::post('/modify_item', [ItemController::class, 'modify_item']);
 
     Route::get('/search_items', [ItemController::class, 'get_search_items']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Supply----------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/supplies', [SupplyController::class, 'get_supplies']);
+
+    Route::post('/add_supply', [SupplyController::class, 'add_supply']);
+
+    Route::post('/delete_supply', [SupplyController::class, 'delete_supply']);
+
+    Route::post('/modify_supply', [SupplyController::class, 'modify_supply']);
+
+    Route::get('/search_supplies', [SupplyController::class, 'get_search_supplies']);
 
 });

@@ -66,12 +66,12 @@
                                         <td>
                                             <select class="form-control" name="warehouse_id">
                                                 @foreach($warehouses as $warehouse)
-                                                    <option value="{{ $warehouse->id }}" {{ $warehouse->id == $item->warehouseid ? 'selected' : '' }}>{{ $warehouse->id . ' : ' .  $warehouse->warehouse }}</option>
+                                                    <option value="{{ $warehouse->id }}" {{ $warehouse->id == $item->warehouse_id ? 'selected' : '' }}>{{ $warehouse->id . ' : ' .  $warehouse->warehouse }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
                                     </tr>
-                                @endforeachš
+                                @endforeach
                             @endif
                             </tbody>
                         </table>

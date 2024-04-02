@@ -48,7 +48,8 @@ $(document).on('click', '.dropdown-item.modify_item', function(e) {
             warehouse_id: par_warehouse_id,
         },
         success: function (response) {
-            console.log(response.message);
+            console.log(response.item);
+            console.log(par_warehouse_id, par_item_id);
         },
         error: function (response) {
             console.error('Error modifying item data:');
@@ -57,7 +58,7 @@ $(document).on('click', '.dropdown-item.modify_item', function(e) {
 });
 
 $(document).ready(function() {
-    $('#search_animal_numbers').click(function() {
+    $('#search_items').click(function() {
         var search = $('#search_inputs');
         var inputs = '<div class="form-group"><input type="text" id="search_id" name="search_id" class="form-control" placeholder="item id" /></div>\n' +
             '<div class="form-group"><input type="text" id="search_item_no" name="search_item_no" class="form-control" placeholder="item no"/></div>\n' +

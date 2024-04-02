@@ -147,8 +147,8 @@ class AnimalController extends Controller
         }
 
         if ($animal_number) {
-            $animalQuery->where(function ($query) use ($animal_number) {
-                $query->where('gender', 'like', '%' . $animal_number . '%');
+            $animalQuery->wherehas('animal_number',function ($query) use ($animal_number) {
+                $query->where('animal_number', 'like', '%' . $animal_number . '%');
             });
         }
 
@@ -158,7 +158,7 @@ class AnimalController extends Controller
 
 
         return response()->json([
-            'message' => 'Warehouses returned successfully',
+            'message' => 'animals returned successfully',
             'animals' => $animals,
             'animal_nos' => $animal_nos,
         ]);

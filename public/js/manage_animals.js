@@ -235,6 +235,7 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response.message);
                 var animals = response.animals;
+                var animal_nos = response.animal_nos;
                 $('.card.p-3').remove();
 
                 var animalHtml = '<div class="card p-3">' +
@@ -301,6 +302,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.error('Error searching animals:', error);
+                console.log(par_born_from, par_born_to);
             }
         });
     });
@@ -309,7 +311,7 @@ $(document).ready(function() {
 function createAnimalNosSelect(animal_nos, selectedId) {
     var optionsHtml = animal_nos.map(function(animal_no) {
         var isSelected = animal_no.id === selectedId ? 'selected' : '';
-        return `<option value="${animal_no.id}" ${isSelected}>${animal_no.id} : ${animal_no.animal_no}</option>`;
+        return `<option value="${animal_no.id}" ${isSelected}>${animal_no.id} : ${animal_no.animal_number}</option>`;
     }).join('');
 
     return `<select class="form-control" name="animal_no_id">${optionsHtml}</select>`;
