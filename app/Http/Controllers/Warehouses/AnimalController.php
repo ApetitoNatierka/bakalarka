@@ -71,9 +71,22 @@ class AnimalController extends Controller
 
         $animal= Animal::find($validate_data['animal_id']);
 
+        $animal_no = $animal->animal_number;
+
+        $item = Item::where('item_no', '=', $animal_no->animal_number)->where('item_type', '=', 'animal')->where('warehouse_id', '=', $animal->warehouse_id)->first();
+
+        if (!is_null($item)) {
+            $item->quantity = $item->quantity - 1;
+            $item->save();
+
+            if ($item->quantity == 0) {
+                $item->delete();
+            }
+        }
+
         $animal->delete();
 
-        return response()->json(['message' => 'Animal deleted successfully']);
+        return response()->json(['message' => 'Animal deleted successfully', 'item'=> $item, 'item_quantity' => $item->quantity]);
     }
 
     public function modify_animal(Request $request)
@@ -86,12 +99,44 @@ class AnimalController extends Controller
             'born' => ['required'],
             'condition' => ['required'],
             'gender' => ['required'],
+            'warehouse_id' => ['required'],
         ]);
 
         $animal = Animal::find($validate_data['animal_id']);
+        $animal_numbr = AnimalNumber::find($validate_data['animal_number_id']);
+        $animal_numbr_no = $animal_numbr->animal_number;
+
+        if ($animal->warehouse_id !== $validate_data['warehouse_id']) {
+            $animal_no = $animal->animal_number;
+
+            $item_minus = Item::where('item_no', '=', $animal_no->animal_number)->where('item_type', '=', 'animal')->where('warehouse_id', '=', $animal->warehouse_id)->first();
+
+            $item_plus = Item::where('item_no', '=',  $animal_numbr_no)->where('item_type', '=', 'animal')->where('warehouse_id', '=', $validate_data['warehouse_id'])->first();
+
+            $item_minus->update([
+                'quantity' => $item_minus->quantity - 1,
+            ]);
+
+            if (is_null($item_plus)) {
+                $item_data['item_no'] = $animal_no->animal_number;
+                $item_data['item_type'] = 'animal';
+                $item_data['quantity'] = 1;
+                $item_data['warehouse_id'] = $validate_data['warehouse_id'];
+
+                $item_plus = Item::create($item_data);
+            } else {
+                $item_plus->update([
+                    'quantity' => $item_plus->quantity + 1,
+                ]);
+
+            }
+
+            if ($item_minus->quantity == 0) {
+                $item_minus->delete();
+            }
+        }
 
         unset($validate_data['animal_id']);
-
 
         $animal->update($validate_data);
 

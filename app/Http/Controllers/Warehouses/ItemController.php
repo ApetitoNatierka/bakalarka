@@ -28,18 +28,19 @@ class ItemController extends Controller
         $item = Item::find($validate_data['item_id']);
 
         $item_no = $item->item_no;
+        $item_warehouse_id = $item->warehouse_id;
 
         if ($item->item_type == 'animal') {
-            $animals = Animal::whereHas('animal_number', function ($query) use ($item_no) {
-                $query->where('animal_number', 'like', '%' . $item_no . '%');
+            $animals = Animal::whereHas('animal_number', function ($query) use ($item_no, $item_warehouse_id) {
+                $query->where('animal_number', 'like', '%' . $item_no . '%')->where('warehouse_id', '=', $item_warehouse_id);
             })->get();
 
             foreach ($animals as $animal) {
                 $animal->delete();
             }
         } else {
-            $supplies = Supply::whereHas('supply_number', function ($query) use ($item_no) {
-                $query->where('supply_number', 'like', '%' . $item_no . '%');
+            $supplies = Supply::whereHas('supply_number', function ($query) use ($item_no, $item_warehouse_id) {
+                $query->where('supply_number', 'like', '%' . $item_no . '%')->where('warehouse_id', '=', $item_warehouse_id);
             })->get();
 
             foreach ($supplies as $supply) {
@@ -63,6 +64,41 @@ class ItemController extends Controller
 
         unset($validate_data['item_id']);
 
+        $item_no = $item->item_no;
+        $item_warehouse_id = $item->warehouse_id;
+
+        if ($item->item_type == 'animal') {
+            $animals = Animal::whereHas('animal_number', function ($query) use ($item_no, $item_warehouse_id) {
+                $query->where('animal_number', 'like', '%' . $item_no . '%')->where('warehouse_id', '=', $item_warehouse_id);
+            })->get();
+
+            foreach ($animals as $animal) {
+                $animal->update([
+                    'warehouse_id' => $validate_data['warehouse_id'],
+                ]);
+            }
+        } else {
+            $supplies = Supply::whereHas('supply_number', function ($query) use ($item_no, $item_warehouse_id) {
+                $query->where('supply_number', 'like', '%' . $item_no . '%')->where('warehouse_id', '=', $item_warehouse_id);
+            })->get();
+
+            foreach ($supplies as $supply) {
+                $supply->update([
+                    'warehouse_id' => $validate_data['warehouse_id'],
+                ]);
+            }
+        }
+
+        $items = Item::where('item_no', '=', $item->item_no)->where('item_type', '=', $item->item_type)->where('warehouse_id', '=', $validate_data['warehouse_id'])->where('id', '<>', $item->id);
+        if (!is_null($items)) {
+            $quantity = 0;
+            foreach ($items as $itemN) {
+                $quantity = $quantity + $itemN->quantity;
+                $itemN->delete();
+            }
+
+            $validate_data['quantity'] = $quantity;
+        }
 
         $item->update($validate_data);
 

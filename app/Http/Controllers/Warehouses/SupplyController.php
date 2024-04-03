@@ -8,14 +8,17 @@ use App\Models\Supply;
 use App\Models\SupplyNumber;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isNull;
 
 class SupplyController extends Controller
 {
     public function get_supplies()
     {
         $supplies = Supply::all();
-        foreach ($supplies as $supply) {
-            $supply->supply_no = $supply->supply_number->supply_number;
+        if (!isNull($supplies)) {
+            foreach ($supplies as $supply) {
+                $supply->supply_no = $supply->supply_number->supply_number;
+            }
         }
 
         $warehouses = Warehouse::all();
@@ -68,6 +71,16 @@ class SupplyController extends Controller
 
         $supply = Supply::find($validate_data['supply_id']);
 
+        $supply_no  = $supply->supply_number;
+
+        $item = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $supply->warehouse_id)->first();
+
+        $item->quantity = $item->quantity - $supply->quantity;
+
+        if ($item->quantity == 0) {
+            $item->delete();
+        }
+
         $supply->delete();
 
         return response()->json(['message' => 'Supply deleted successfully']);
@@ -87,6 +100,35 @@ class SupplyController extends Controller
         ]);
 
         $supply = Supply::find($validate_data['supply_id']);
+
+        if ($supply->warehouse_id !== $validate_data['warehouse_id']) {
+            $supply_no = $supply->supply_number;
+
+            $item_minus = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $supply->warehouse_id)->first();
+
+            $item_plus = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $validate_data['warehouse_id'])->first();
+
+            $item_minus->update([
+                'quantity' => $item_minus->quantity + ($validate_data['quantity'] - $supply->quantity),
+            ]);
+
+            if (is_null($item_plus)) {
+                $item_data['item_no'] = $supply_no->supply_number;
+                $item_data['item_type'] = 'supply';
+                $item_data['quantity'] = $validate_data['quantity'];
+                $item_data['warehouse_id'] = $validate_data['warehouse_id'];
+
+                $item_plus = Item::create($item_data);
+            } else {
+                $item_plus->update([
+                    'quantity' => $item_plus->quantity - ($validate_data['quantity'] - $supply->quantity),
+                ]);
+            }
+
+            if ($item_minus->quantity == 0) {
+                $item_minus->delete();
+            }
+        }
 
         unset($validate_data['supply_id']);
 
