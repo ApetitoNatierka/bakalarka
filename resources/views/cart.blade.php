@@ -8,7 +8,7 @@
             <div class="card-body">
                 <h1 class="card-title">Cart</h1>
                 <hr>
-                @if(isset($cart_items))
+                @if(isset($cart_items) && $cart_items->count() > 0)
                     @foreach($cart_items as $cart_item)
                         <div class="cart_item" data-cart-item-id="{{ $cart_item->id }}">
                             <div class="card p-3">
@@ -48,9 +48,9 @@
                             </div>
                         </div>
                     @endforeach
-                    <div>
-                        <button class="btn btn-secondary dropdown-toggle no-caret" id="create_order" type="button">Create Order</button>
-                    </div>
+                        <div>
+                            <button class="btn btn-secondary dropdown-toggle no-caret" id="create_order" type="button">Create Order</button>
+                        </div>
                 @else
                     <div class="card p-3">
                         @csrf

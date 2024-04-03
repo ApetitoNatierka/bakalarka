@@ -14,15 +14,20 @@ class Supply extends Model
         'supply_number_id',
         'weight',
         'height',
-        'staus',
+        'status',
         'description',
         'quantity',
-        'unist',
-        'supply_no',
+        'units',
+        'warehouse_id',
     ];
 
     public function supply_number():BelongsTo
     {
         return $this->belongsTo(SupplyNumber::class);
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 }

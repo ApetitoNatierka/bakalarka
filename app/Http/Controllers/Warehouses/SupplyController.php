@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Supply;
 use App\Models\SupplyNumber;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
 class SupplyController extends Controller
@@ -17,9 +18,10 @@ class SupplyController extends Controller
             $supply->supply_no = $supply->supply_number->supply_number;
         }
 
+        $warehouses = Warehouse::all();
         $supply_nos = SupplyNumber::all();
 
-        return view('supplies', ['supplies' => $supplies, 'supply_nos' => $supply_nos]);
+        return view('supplies', ['supplies' => $supplies, 'supply_nos' => $supply_nos, 'warehouses' => $warehouses]);
     }
 
     public function add_supply(Request $request) {
@@ -31,13 +33,14 @@ class SupplyController extends Controller
             'units' => ['required'],
             'status' => ['required'],
             'quantity' => ['required'],
+            'warehouse_id' => ['required'],
         ]);
 
         $supply_no = SupplyNumber::find($validate_data['supply_number_id']);
 
         $supply =  Supply::create($validate_data);
 
-        $item = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->first();
+        $item = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $validate_data['warehouse_id'])->first();
 
         if(!is_null($item)) {
             $item->update([
@@ -47,13 +50,15 @@ class SupplyController extends Controller
             $item_data['item_no'] = $supply_no->supply_number;
             $item_data['item_type'] = 'supply';
             $item_data['quantity'] = $supply->quantity;
+            $item_data['warehouse_id'] = $validate_data['warehouse_id'];
 
             $newitem = Item::create($item_data);
         }
 
         $supply_nos = SupplyNumber::all();
+        $warehouses = Warehouse::all();
 
-        return response()->json(['message' => 'Supply added successfully', 'supply' => $supply, 'supply_nos' => $supply_nos]);
+        return response()->json(['message' => 'Supply added successfully', 'supply' => $supply, 'supply_nos' => $supply_nos, 'warehouses' => $warehouses]);
     }
 
     public function delete_supply(Request $request) {
@@ -72,7 +77,13 @@ class SupplyController extends Controller
     {
         $validate_data = $request->validate([
             'supply_id' => ['required'],
-            // Prípadné ďalšie validácie pre dodávky
+            'supply_number_id' => ['required', 'exists:supply_numbers,id'],
+            'weight' => ['required'],
+            'height' => ['required'],
+            'description' => ['required'],
+            'units' => ['required'],
+            'status' => ['required'],
+            'quantity' => ['required'],
         ]);
 
         $supply = Supply::find($validate_data['supply_id']);
@@ -85,17 +96,83 @@ class SupplyController extends Controller
     }
 
     public function get_search_supplies(Request $request) {
-        // Implementácia vyhľadávania pre dodávky
-        // Podobný prístup ako u zvierat, no s atribútmi relevantnými pre dodávky
+        $supply_id = $request->input('supply_id', null);
+        $supply_number = $request->input('supply_number_id', null);
+        $weight = $request->input('weight', null);
+        $height = $request->input('height', null);
+        $description = $request->input('description', null);
+        $units = $request->input('units', null);
+        $status = $request->input('status', null);
+        $quantity = $request->input('quantity', null);
+        $warehouse = $request->input('warehouse', null);
+
+        $supplyQuery = Supply::query();
+
+        if ($supply_id) {
+            $supplyQuery->where(function ($query) use ($supply_id) {
+                $query->where('id', 'like', '%' . $supply_id . '%');
+            });
+        }
+
+        if ($weight) {
+            $supplyQuery->where(function ($query) use ($weight) {
+                $query->where('weight', 'like', '%' . $weight . '%');
+            });
+        }
+
+        if ($height) {
+            $supplyQuery->where(function ($query) use ($height) {
+                $query->where('height', 'like', '%' . $height . '%');
+            });
+        }
+
+
+        if ($description) {
+            $supplyQuery->where(function ($query) use ($description) {
+                $query->where('description', 'like', '%' . $description . '%');
+            });
+        }
+
+        if ($units) {
+            $supplyQuery->where(function ($query) use ($units) {
+                $query->where('units', 'like', '%' . $units . '%');
+            });
+        }
+
+        if ($status) {
+            $supplyQuery->where(function ($query) use ($status) {
+                $query->where('status', 'like', '%' . $status . '%');
+            });
+        }
+
+        if ($quantity) {
+            $supplyQuery->where(function ($query) use ($quantity) {
+                $query->where('quantity', 'like', '%' . $quantity . '%');
+            });
+        }
+
+        if ($supply_number) {
+            $supplyQuery->wherehas('supply_number',function ($query) use ($supply_number) {
+                $query->where('supply_number', 'like', '%' . $supply_number . '%');
+            });
+        }
+
+        if ($warehouse) {
+            $supplyQuery->wherehas('warehouse',function ($query) use ($warehouse) {
+                $query->where('warehouse', 'like', '%' . $warehouse . '%');
+            });
+        }
 
         $supplies = $supplyQuery->get();
 
         $supply_nos = SupplyNumber::all();
+        $warehouses = Warehouse::all();
 
         return response()->json([
             'message' => 'Supplies returned successfully',
             'supplies' => $supplies,
             'supply_nos' => $supply_nos,
+            'warehouses' => $warehouses
         ]);
     }
 }

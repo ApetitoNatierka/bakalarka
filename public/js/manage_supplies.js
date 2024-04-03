@@ -38,10 +38,38 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $('#warehouse_select').select2({
+        ajax: {
+            url: '/select_warehouses',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search_term: params.term,
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response.warehouses.map(function(warehouse) {
+                        return {id: warehouse.id, text: warehouse.warehouse};
+                    })
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Select warehouse',
+        minimumInputLength: 1,
+        minimumResultsForSearch: 0,
+        width: '100%',
+    });
+});
+
 document.getElementById('new_supply').addEventListener('click', function() {
     var dialog = document.getElementById('supply_dialog');
 
     var par_supply_no = $('#supply_no_select').val();
+    var par_warehouse_id = $('#warehouse_select').val();
 
     var par_quantity = document.getElementById('new_quantity').value;
     var par_weight = document.getElementById('new_weight').value;
@@ -64,11 +92,14 @@ document.getElementById('new_supply').addEventListener('click', function() {
             units: par_units,
             status: par_status,
             description: par_description,
+            warehouse_id: par_warehouse_id,
         },
         success: function (response) {
             dialog.style.display = 'none';
             console.log(response.supply);
             var supply = response.supply;
+            var supply_nos = response.supply_nos;
+            var warehouses = response.warehouses;
             var new_row = `
                 <tr>
                     <td>
@@ -105,15 +136,17 @@ document.getElementById('new_supply').addEventListener('click', function() {
                                value="${supply.weight}"></td>
                     <td><input type="number" class="form-control" name="height"
                                value="${supply.height}"></td>
-                    <td><input type="date" class="form-control" name="units"
+                    <td><input type="text" class="form-control" name="units"
                                value="${supply.units}"></td>
                     <td><input type="text" class="form-control" name="status"
                                value="${supply.status}"></td>
+                    <td>${createwarehousesSelect(warehouses, supply.warehouse_id)}</td>
                 </tr>`;
             $('.supplies_table tbody').append(new_row);
         },
         error: function (error) {
             console.error('Error adding supply:', error);
+            console.log(par_units,par_status,par_description,par_weight,par_height,par_supply_no,par_quantity,par_warehouse_id);
         }
     });
 });
@@ -150,6 +183,7 @@ $(document).on('click', '.dropdown-item.modify_supply', function(e) {
 
     var par_supply_id = $(this).data('supply-id');
     var $row = $(this).closest('tr');
+    var par_warehouse_id = $row.find('select[name="warehouse_id"]').val();
 
     var par_quantity = $row.find('input[name="quantity"]').val();
     var par_weight = $row.find('input[name="weight"]').val();
@@ -175,6 +209,7 @@ $(document).on('click', '.dropdown-item.modify_supply', function(e) {
             description: par_description,
             supply_number_id: par_supply_no,
             units: par_units,
+            warehouse_id: par_warehouse_id,
         },
         success: function (response) {
             console.log(response.message);
@@ -206,14 +241,14 @@ $(document).ready(function() {
             <div class="form-group"><input type="text" id="search_status" name="search_status" class="form-control" placeholder="status"/></div>
             <div class="form-group"><input type="text" id="search_description" name="search_description" class="form-control" placeholder="description"/></div>
             <div class="form-group"><input type="text" id="search_units" name="search_units" class="form-control" placeholder="units"/></div>
-
+            '<div class="form-group"><input type="text" id="search_warehouse" name="search_warehouse" class="form-control" placeholder="warehouse"/></div>\\n' +
             <div class="form-group"><button id="search_button" class="btn btn-primary" style="border-radius: 5px">Search</button></div>
         `;
 
         if (search.is(':empty')) {
             search.html(inputs);
         } else {
-            search.empty().html(inputs);
+            search.empty()
         }
     });
 });
@@ -228,6 +263,7 @@ $(document).ready(function() {
         var par_units = $('#search_units').val();
         var par_status = $('#search_status').val();
         var par_description = $('#search_description').val();
+        var par_warehouse = $('#search_warehouse').val();
 
         $.ajax({
             url: '/search_supplies',
@@ -244,11 +280,13 @@ $(document).ready(function() {
                 description: par_description,
                 status: par_status,
                 units: par_units,
+                warehouse: par_warehouse,
             },
             success: function(response) {
                 console.log(response.message);
                 var supplies = response.supplies;
                 var supply_nos = response.supply_nos;
+                var warehouses = response.warehouses;
                 $('.card.p-3').remove();
 
                 var suppliesHtml = '<div class="card p-3">' +
@@ -264,6 +302,7 @@ $(document).ready(function() {
                     '<th>Height</th>'+
                     '<th>Units</th>'+
                     '<th>Status</th>'+
+                    '<th>Warehouse</th>'+
                     '</tr>' +
                     '</thead>' +
                     '<tbody>';
@@ -303,10 +342,11 @@ $(document).ready(function() {
                                value="${supply.weight}"></td>
                     <td><input type="number" class="form-control" name="height"
                                value="${supply.height}"></td>
-                    <td><input type="date" class="form-control" name="units"
+                    <td><input type="text" class="form-control" name="units"
                                value="${supply.units}"></td>
                     <td><input type="text" class="form-control" name="status"
                                value="${supply.status}"></td>
+                    <td>${createwarehousesSelect(warehouses, supply.warehouse_id)}</td>
                 </tr>`;
                 });
 
@@ -320,3 +360,12 @@ $(document).ready(function() {
         });
     });
 });
+
+function createwarehousesSelect(warehouses, selectedId) {
+    var optionsHtml = warehouses.map(function(warehouse) {
+        var isSelected = warehouse.id === selectedId ? 'selected' : '';
+        return `<option value="${warehouse.id}" ${isSelected}>${warehouse.id} : ${warehouse.warehouse}</option>`;
+    }).join('');
+
+    return `<select class="form-control" name="warehouse_id">${optionsHtml}</select>`;
+}

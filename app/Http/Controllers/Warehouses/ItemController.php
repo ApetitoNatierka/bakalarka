@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Warehouses;
 use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use App\Models\Item;
+use App\Models\Supply;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
@@ -26,18 +27,24 @@ class ItemController extends Controller
 
         $item = Item::find($validate_data['item_id']);
 
-        $animal_mo = $item->item_no;
+        $item_no = $item->item_no;
 
         if ($item->item_type == 'animal') {
-            $animals = Animal::whereHas('animal_number', function ($query) use ($animal_mo) {
-                $query->where('animal_number', 'like', '%' . $animal_mo . '%');
+            $animals = Animal::whereHas('animal_number', function ($query) use ($item_no) {
+                $query->where('animal_number', 'like', '%' . $item_no . '%');
             })->get();
 
             foreach ($animals as $animal) {
                 $animal->delete();
             }
         } else {
-            null;
+            $supplies = Supply::whereHas('supply_number', function ($query) use ($item_no) {
+                $query->where('supply_number', 'like', '%' . $item_no . '%');
+            })->get();
+
+            foreach ($supplies as $supply) {
+                $supply->delete();
+            }
         }
 
         $item->delete();

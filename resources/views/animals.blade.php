@@ -85,6 +85,13 @@
                                                    value="{{ $animal->condition }}"></td>
                                         <td><input type="text" class="form-control" name="gender"
                                                    value="{{ $animal->gender }}"></td>
+                                        <td>
+                                            <select class="form-control" name="warehouse_id">
+                                                @foreach($warehouses as $warehouse)
+                                                    <option value="{{ $warehouse->id }}" {{ $warehouse->id == $animal->warehouse_id ? 'selected' : '' }}>{{ $warehouse->id . ' : ' .  $warehouse->warehouse }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -124,6 +131,9 @@
             </label><br>
             <label>
                 <input type="text" name="gender" id="new_gender" placeholder="Gender">
+            </label><br>
+            <label>
+                <select id="warehouse_select" name="warehouse"></select>
             </label><br>
 
             <button type="button" id="new_animal">New</button>

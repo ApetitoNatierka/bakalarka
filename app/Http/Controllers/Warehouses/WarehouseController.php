@@ -115,4 +115,11 @@ class WarehouseController extends Controller
             'warehouses' => $warehouses,
         ]);
     }
+
+    public function select_warehouses(Request $request) {
+        $search_term = $request->search_term;
+        $warehouses = Warehouse::where('warehouse', 'like', '%' . $search_term . '%')->get();
+
+        return response()->json(['warehouses' => $warehouses]);
+    }
 }

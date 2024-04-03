@@ -21,10 +21,10 @@ class AnimalController extends Controller
                 $animal->animal_no = $animal->animal_number->animal_number;
             }
         }
-
+        $warehouses = Warehouse::all();
         $animal_nos = AnimalNumber::all();
 
-        return view('animals', ['animals' => $animals, 'animal_nos' => $animal_nos]);
+        return view('animals', ['animals' => $animals, 'animal_nos' => $animal_nos, 'warehouses' => $warehouses]);
     }
 
     public function add_animal(Request $request) {
@@ -35,13 +35,14 @@ class AnimalController extends Controller
             'born' => ['required'],
             'condition' => ['required'],
             'gender' => ['required'],
+            'warehouse_id' => ['required'],
         ]);
 
         $animal_no = AnimalNumber::find($validate_data['animal_number_id']);
 
         $animal =  Animal::create($validate_data);
 
-        $item = Item::where('item_no', '=', $animal_no->animal_number)->where('item_type', '=', 'animal')->first();
+        $item = Item::where('item_no', '=', $animal_no->animal_number)->where('item_type', '=', 'animal')->where('warehouse_id', '=', $validate_data['warehouse_id'])->first();
 
         if(!is_null($item)) {
             $item->update([
@@ -51,13 +52,15 @@ class AnimalController extends Controller
             $item_data['item_no'] = $animal_no->animal_number;
             $item_data['item_type'] = 'animal';
             $item_data['quantity'] = 1;
+            $item_data['warehouse_id'] = $validate_data['warehouse_id'];
 
             $newitem = Item::create($item_data);
         }
 
         $animal_nos = AnimalNumber::all();
+        $warehouses = Warehouse::all();
 
-        return response()->json(['message' => 'Animal deleted successfully', 'animal' => $animal, 'animal_nos' => $animal_nos]);
+        return response()->json(['message' => 'Animal deleted successfully', 'animal' => $animal, 'animal_nos' => $animal_nos, 'warehouses' => $warehouses]);
 
     }
 
@@ -104,6 +107,7 @@ class AnimalController extends Controller
         $born_from = $request->input('born_from', null);
         $condition = $request->input('condition', null);
         $gender = $request->input('gender', null);
+        $warehouse = $request->input('warehouse', null);
 
 
         $animalQuery = Animal::query();
@@ -152,15 +156,22 @@ class AnimalController extends Controller
             });
         }
 
+        if ($warehouse) {
+            $animalQuery->wherehas('warehouse',function ($query) use ($warehouse) {
+                $query->where('warehouse', 'like', '%' . $warehouse . '%');
+            });
+        }
+
         $animals = $animalQuery->get();
 
         $animal_nos = AnimalNumber::all();
-
+        $warehouses = Warehouse::all();
 
         return response()->json([
             'message' => 'animals returned successfully',
             'animals' => $animals,
             'animal_nos' => $animal_nos,
+            'warehouses' => $warehouses
         ]);
     }
 }

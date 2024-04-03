@@ -42,6 +42,7 @@ document.getElementById('new_animal').addEventListener('click', function() {
     var dialog = document.getElementById('animal_dialog');
 
     var par_animal_no = $('#animal_no_select').val();
+    var par_warehouse_id = $('#warehouse_select').val();
 
     var par_weight = document.getElementById('new_weight').value;
     var par_height = document.getElementById('new_height').value;
@@ -63,12 +64,14 @@ document.getElementById('new_animal').addEventListener('click', function() {
             born: par_born,
             condition: par_condition,
             gender: par_gender,
+            warehouse_id: par_warehouse_id,
         },
         success: function (response) {
             dialog.style.display = 'none';
             console.log(response.animal_nos);
             var animal = response.animal;
             var animal_nos = response.animal_nos;
+            var warehouses = response.warehouses;
             var new_row = `
                 <tr>
                     <td>
@@ -107,6 +110,7 @@ document.getElementById('new_animal').addEventListener('click', function() {
                                                    value="${animal.condition}"></td>
                                        <td><input type="text" class="form-control" name="gender"
                                                    value="${animal.gender}"></td>
+                                       <td>${createwarehousesSelect(warehouses, animal.warehouse_id)}</td>
                 </tr>`;
             $('.animals_table tbody').append(new_row);
         },
@@ -150,6 +154,7 @@ $(document).on('click', '.dropdown-item.modify_animal', function(e) {
     var par_animal_id = $(this).data('animal-id');
 
     var $row = $(this).closest('tr');
+    var par_warehouse_id = $row.find('select[name="warehouse_id"]').val();
 
     var par_animal_number_id = $row.find('select[name="animal_no_id"]').val();
     var par_weight = $row.find('input[name="weight"]').val();
@@ -173,6 +178,7 @@ $(document).on('click', '.dropdown-item.modify_animal', function(e) {
             born: par_born,
             condition: par_condition,
             gender: par_gender,
+            warehouse_id: par_warehouse_id,
         },
         success: function (response) {
             console.log(response.message);
@@ -194,6 +200,7 @@ $(document).ready(function() {
             '<div class="form-group"><input type="date" id="search_born_to" name="search_born_to" class="form-control" placeholder="born to"/></div>\n' +
             '<div class="form-group"><input type="text" id="search_condition" name="search_condition" class="form-control" placeholder="condition"/></div>\n' +
             '<div class="form-group"><input type="text" id="search_gender" name="search_gender" class="form-control" placeholder="gender"/></div>\n' +
+            '<div class="form-group"><input type="text" id="search_warehouse" name="search_warehouse" class="form-control" placeholder="warehouse"/></div>\n' +
             '<div class="form-group"><button id="search_button" class="btn btn-primary" style="border-radius: 5px">Search</button></div>';
 
         if (search.is(':empty')) {
@@ -214,6 +221,7 @@ $(document).ready(function() {
         var par_born_from = $('#search_born_from').val();
         var par_condition = $('#search_condition').val();
         var par_gender = $('#search_gender').val();
+        var par_warehouse = $('#search_warehouse').val();
 
         $.ajax({
             url: '/search_animals',
@@ -230,12 +238,13 @@ $(document).ready(function() {
                 born_from: par_born_from,
                 condition: par_condition,
                 gender: par_gender,
-
+                warehouse: par_warehouse,
             },
             success: function(response) {
                 console.log(response.message);
                 var animals = response.animals;
                 var animal_nos = response.animal_nos;
+                var warehouses = response.warehouses;
                 $('.card.p-3').remove();
 
                 var animalHtml = '<div class="card p-3">' +
@@ -250,6 +259,7 @@ $(document).ready(function() {
                     '<th>Born</th>'+
                     '<th>Condition</th>'+
                     '<th>Gender</th>'+
+                    '<th>Warehouse</th>'+
                     '</tr>' +
                     '</thead>' +
                     '<tbody>';
@@ -291,6 +301,7 @@ $(document).ready(function() {
                                                    value="${animal.condition}"></td>
                                        <td><input type="text" class="form-control" name="gender"
                                                    value="${animal.gender}"></td>
+                                       <td>${createwarehousesSelect(warehouses, animal.warehouse_id)}</td>
                 </tr>`;
                 });
 
@@ -315,4 +326,40 @@ function createAnimalNosSelect(animal_nos, selectedId) {
     }).join('');
 
     return `<select class="form-control" name="animal_no_id">${optionsHtml}</select>`;
+}
+
+$(document).ready(function() {
+    $('#warehouse_select').select2({
+        ajax: {
+            url: '/select_warehouses',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search_term: params.term,
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response.warehouses.map(function(warehouse) {
+                        return {id: warehouse.id, text: warehouse.warehouse};
+                    })
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Select warehouse',
+        minimumInputLength: 1,
+        minimumResultsForSearch: 0,
+        width: '100%',
+    });
+});
+
+function createwarehousesSelect(warehouses, selectedId) {
+    var optionsHtml = warehouses.map(function(warehouse) {
+        var isSelected = warehouse.id === selectedId ? 'selected' : '';
+        return `<option value="${warehouse.id}" ${isSelected}>${warehouse.id} : ${warehouse.warehouse}</option>`;
+    }).join('');
+
+    return `<select class="form-control" name="warehouse_id">${optionsHtml}</select>`;
 }

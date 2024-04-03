@@ -232,6 +232,8 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/search_warehouses', [WarehouseController::class, 'get_search_warehouses']);
 
+    Route::get('/select_warehouses', [WarehouseController::class, 'select_warehouses']);
+
 });
 
 //---------------------------------------------------------------

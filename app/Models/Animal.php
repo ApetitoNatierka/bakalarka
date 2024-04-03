@@ -17,11 +17,17 @@ class Animal extends Model
         'born',
         'condition',
         'gender',
+        'warehouse_id',
     ];
 
     public function animal_number():BelongsTo
     {
         return $this->belongsTo(AnimalNumber::class);
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 
 }

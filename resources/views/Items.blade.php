@@ -60,7 +60,7 @@
                                         <td><input type="text" class="form-control" name="item_no"
                                                    value="{{ $item->item_no }}" disabled></td>
                                         <td><input type="text" class="form-control" name="item_type"
-                                                   value="{{ $item->item_tyoe }}" disabled></td>
+                                                   value="{{ $item->item_type }}" disabled></td>
                                         <td><input type="number" class="form-control" name="quantity"
                                                    value="{{ $item->quantity }}" disabled></td>
                                         <td>

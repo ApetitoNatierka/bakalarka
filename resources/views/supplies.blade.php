@@ -72,11 +72,11 @@
                                         <td>
                                             <select class="form-control" name="supply_no_id">
                                                 @foreach($supply_nos as $supply_no)
-                                                    <option value="{{ $supply_no->id }}" {{ $supply_no->id == $supply->item_no_id ? 'selected' : '' }}>{{ $supply_no->id . ' : ' .  $supply_no->item_no }}</option>
+                                                    <option value="{{ $supply_no->id }}" {{ $supply_no->id == $supply->supply_number_id ? 'selected' : '' }}>{{ $supply_no->id . ' : ' .  $supply_no->supply_number }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input type="number" class="form-control" name="description"
+                                        <td><input type="text" class="form-control" name="description"
                                                    value="{{ $supply->description }}"></td>
                                         <td><input type="number" class="form-control" name="quantity"
                                                    value="{{ $supply->quantity }}"></td>
@@ -88,6 +88,13 @@
                                                    value="{{ $supply->units }}"></td>
                                         <td><input type="text" class="form-control" name="status"
                                                    value="{{ $supply->status }}"></td>
+                                        <td>
+                                            <select class="form-control" name="warehouse_id">
+                                                @foreach($warehouses as $warehouse)
+                                                    <option value="{{ $warehouse->id }}" {{ $warehouse->id == $supply->warehouse_id ? 'selected' : '' }}>{{ $warehouse->id . ' : ' .  $warehouse->warehouse }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -130,6 +137,9 @@
             </label><br>
             <label>
                 <input type="text" name="status" id="new_status" placeholder="status">
+            </label><br>
+            <label>
+                <select id="warehouse_select" name="warehouse"></select>
             </label><br>
             <button type="button" id="new_supply">New</button>
             <button type="button" id="cancel_supply">Cancel</button>
