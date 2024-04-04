@@ -184,6 +184,7 @@ $(document).on('click', '.dropdown-item.modify_animal', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            console.log(par_warehouse_id);
         },
         error: function (response) {
             console.error('Error modifying animal data:');

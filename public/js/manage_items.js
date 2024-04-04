@@ -48,7 +48,7 @@ $(document).on('click', '.dropdown-item.modify_item', function(e) {
             warehouse_id: par_warehouse_id,
         },
         success: function (response) {
-            console.log(response.item);
+            console.log(response.items);
             console.log(par_warehouse_id, par_item_id);
         },
         error: function (response) {

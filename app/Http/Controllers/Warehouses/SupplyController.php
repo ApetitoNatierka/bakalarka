@@ -77,7 +77,7 @@ class SupplyController extends Controller
 
         $item->quantity = $item->quantity - $supply->quantity;
 
-        if ($item->quantity == 0) {
+        if ($item->quantity <= 0) {
             $item->delete();
         }
 
@@ -97,23 +97,34 @@ class SupplyController extends Controller
             'units' => ['required'],
             'status' => ['required'],
             'quantity' => ['required'],
+            'warehouse_id' => ['required'],
         ]);
 
         $supply = Supply::find($validate_data['supply_id']);
+        $supply_numbr = SupplyNumber::find($validate_data['supply_number_id']);
+        $new_supply_numbr_no = $supply_numbr->supply_number;
 
-        if ($supply->warehouse_id !== $validate_data['warehouse_id']) {
+        if ($supply->quantity != $validate_data['quantity']) {
+            $supply_no = $supply->supply_number;
+            $item_temp = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $supply->warehouse_id)->first();
+            $item_temp->update([
+                'quantity' => $item_temp->quantity + ($validate_data['quantity'] - $supply->quantity),
+            ]);
+        }
+
+        if ($supply->warehouse_id != $validate_data['warehouse_id'] || $supply->supply_number_id != $validate_data['supply_number_id']) {
             $supply_no = $supply->supply_number;
 
             $item_minus = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $supply->warehouse_id)->first();
 
-            $item_plus = Item::where('item_no', '=', $supply_no->supply_number)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $validate_data['warehouse_id'])->first();
+            $item_plus = Item::where('item_no', '=', $new_supply_numbr_no)->where('item_type', '=', 'supply')->where('warehouse_id', '=', $validate_data['warehouse_id'])->first();
 
             $item_minus->update([
-                'quantity' => $item_minus->quantity + ($validate_data['quantity'] - $supply->quantity),
+                'quantity' => $item_minus->quantity - ($supply->quantity + ($validate_data['quantity'] - $supply->quantity)),
             ]);
 
             if (is_null($item_plus)) {
-                $item_data['item_no'] = $supply_no->supply_number;
+                $item_data['item_no'] = $new_supply_numbr_no;
                 $item_data['item_type'] = 'supply';
                 $item_data['quantity'] = $validate_data['quantity'];
                 $item_data['warehouse_id'] = $validate_data['warehouse_id'];
@@ -121,11 +132,11 @@ class SupplyController extends Controller
                 $item_plus = Item::create($item_data);
             } else {
                 $item_plus->update([
-                    'quantity' => $item_plus->quantity - ($validate_data['quantity'] - $supply->quantity),
+                    'quantity' => $item_plus->quantity + $validate_data['quantity'],
                 ]);
             }
 
-            if ($item_minus->quantity == 0) {
+            if ($item_minus->quantity <= 0) {
                 $item_minus->delete();
             }
         }

@@ -89,7 +89,7 @@ class ItemController extends Controller
             }
         }
 
-        $items = Item::where('item_no', '=', $item->item_no)->where('item_type', '=', $item->item_type)->where('warehouse_id', '=', $validate_data['warehouse_id'])->where('id', '<>', $item->id);
+        $items = Item::where('item_no', '=', $item->item_no)->where('item_type', '=', $item->item_type)->where('warehouse_id', '=', $validate_data['warehouse_id'])->where('id', '<>', $item->id)->get();
         if (!is_null($items)) {
             $quantity = 0;
             foreach ($items as $itemN) {
@@ -97,12 +97,12 @@ class ItemController extends Controller
                 $itemN->delete();
             }
 
-            $validate_data['quantity'] = $quantity;
+            $validate_data['quantity'] = $quantity + $item->quantity;
         }
 
         $item->update($validate_data);
 
-        return response()->json(['message' => 'item modified successfully', 'item' => $item]);
+        return response()->json(['message' => 'item modified successfully', 'items' => $items]);
     }
 
     public function get_search_items(Request $request) {
