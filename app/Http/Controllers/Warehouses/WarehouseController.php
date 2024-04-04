@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Warehouses;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,18 @@ class WarehouseController extends Controller
         }
 
         return view('warehouses', ['warehouses' => $warehouses]);
+    }
+
+    public function get_warehouse(Warehouse $warehouse) {
+        $users = User::all();
+
+        $warehouses = Warehouse::all();
+
+        foreach ($warehouses as $warehousec) {
+            $warehousec->manager_id = $warehousec->user->id;
+        }
+
+        return view('warehouse', ['warehouse' => $warehouse, 'users' => $users, 'warehouses' => $warehouses]);
     }
 
     public function add_warehouse(Request $request) {
@@ -121,5 +134,41 @@ class WarehouseController extends Controller
         $warehouses = Warehouse::where('warehouse', 'like', '%' . $search_term . '%')->get();
 
         return response()->json(['warehouses' => $warehouses]);
+    }
+
+    public function add_warehouse_form(Request $request) {
+        $validate_data = $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'warehouse' => ['required'],
+            'location' => ['required'],
+            'capacity' => ['required'],
+        ]);
+
+        $warehouse =  Warehouse::create($validate_data);
+
+        $users = User::all();
+
+        $warehouses = Warehouse::all();
+
+        return view('warehouse', ['warehouse' => $warehouse, 'users' => $users, 'warehouses' => $warehouses]);
+
+    }
+
+    public function delete_warehouse_form(Request $request) {
+        $validate_data = $request->validate([
+            'warehouse_id' => ['required'],
+        ]);
+
+        $warehouse = Warehouse::find($validate_data['warehouse_id']);
+
+        $warehouse->delete();
+
+        $warehouses = Warehouse::all();
+
+        foreach ($warehouses as $warehouse) {
+            $warehouse->manager_id = $warehouse->user->id;
+        }
+
+        return view('warehouses', ['warehouses' => $warehouses]);
     }
 }

@@ -224,9 +224,15 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/warehouses', [WarehouseController::class, 'get_warehouses']);
 
+    Route::get('/warehouse/{warehouse}', [WarehouseController::class, 'get_warehouse']);
+
     Route::post('/add_warehouse', [WarehouseController::class, 'add_warehouse']);
 
+    Route::post('/add_warehouse_form', [WarehouseController::class, 'add_warehouse_form']);
+
     Route::post('/delete_warehouse', [WarehouseController::class, 'delete_warehouse']);
+
+    Route::post('/delete_warehouse_form', [WarehouseController::class, 'delete_warehouse_form']);
 
     Route::post('/modify_warehouse', [WarehouseController::class, 'modify_warehouse']);
 
