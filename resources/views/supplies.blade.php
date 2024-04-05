@@ -38,6 +38,7 @@
                                 <th>Height</th>
                                 <th>Units</th>
                                 <th>Status</th>
+                                <th>Warehouse</th>
                             </tr>
                             </thead>
                             <tbody>

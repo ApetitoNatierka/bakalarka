@@ -7,7 +7,7 @@
     <div class="container text-center">
         <div class="row">
             <div class="col">
-                <a href="/animals">
+                <a href="/prod_animals">
                     <div class="card">
                         <img src="{{ asset('images/bull.png') }}" class="card-img-top" alt="Placeholder image">
                         <div class="card-body">

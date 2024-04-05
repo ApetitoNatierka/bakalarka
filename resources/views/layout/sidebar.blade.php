@@ -46,6 +46,16 @@
                 </ul>
             </div>
         </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#service-collapse" aria-expanded="false">
+               Services
+            </button>
+            <div class="collapse" id="service-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/services" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sevices</a></li>
+                </ul>
+            </div>
+        </li>
         <li class="border-top my-3"></li>
     </ul>
 </div>

@@ -12,6 +12,7 @@ use App\Http\Controllers\UserComp\UserController;
 use App\Http\Controllers\Warehouses\AnimalController;
 use App\Http\Controllers\Warehouses\AnimalNumberController;
 use App\Http\Controllers\Warehouses\ItemController;
+use App\Http\Controllers\Warehouses\ServiceController;
 use App\Http\Controllers\Warehouses\SupplyController;
 use App\Http\Controllers\Warehouses\SupplyNumberController;
 use App\Http\Controllers\Warehouses\WarehouseController;
@@ -114,7 +115,7 @@ Route::get('/products', [ProductController::class, 'get_products']);
 
 Route::get('/services', [ProductController::class, 'get_services']);
 
-Route::get('/animals', [ProductController::class, 'get_animals']);
+Route::get('/prod_animals', [ProductController::class, 'get_animals']);
 
 Route::get('/search_products', [ProductController::class, 'get_search_products']);
 
@@ -333,5 +334,24 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::post('/modify_supply', [SupplyController::class, 'modify_supply']);
 
     Route::get('/search_supplies', [SupplyController::class, 'get_search_supplies']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Service---------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/services', [ServiceController::class, 'get_services']);
+
+    Route::post('/add_service', [ServiceController::class, 'add_service']);
+
+    Route::post('/delete_service', [ServiceController::class, 'delete_service']);
+
+    Route::post('/modify_service', [ServiceController::class, 'modify_service']);
+
+    Route::get('/search_services', [ServiceController::class, 'get_search_services']);
+
 
 });
