@@ -69,7 +69,7 @@ class ItemController extends Controller
 
         if ($item->item_type == 'animal') {
             $animals = Animal::whereHas('animal_number', function ($query) use ($item_no, $item_warehouse_id) {
-                $query->where('animal_number', 'like', '%' . $item_no . '%')->where('warehouse_id', '=', $item_warehouse_id);
+                $query->where('animal_number', '=',$item_no)->where('warehouse_id', '=', $item_warehouse_id);
             })->get();
 
             foreach ($animals as $animal) {
@@ -79,7 +79,7 @@ class ItemController extends Controller
             }
         } else {
             $supplies = Supply::whereHas('supply_number', function ($query) use ($item_no, $item_warehouse_id) {
-                $query->where('supply_number', 'like', '%' . $item_no . '%')->where('warehouse_id', '=', $item_warehouse_id);
+                $query->where('supply_number', '=',$item_no )->where('warehouse_id', '=', $item_warehouse_id);
             })->get();
 
             foreach ($supplies as $supply) {

@@ -1,7 +1,7 @@
 @extends('layout.navigator_intra')
 @section('content')
 
-    <link href="{{ asset('css/styles_organisations.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles_table.css') }}" rel="stylesheet">
     <div class="container">
         <div class="card shadow">
             <div class="card-body">

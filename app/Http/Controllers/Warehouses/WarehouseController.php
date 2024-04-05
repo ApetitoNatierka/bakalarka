@@ -150,7 +150,7 @@ class WarehouseController extends Controller
 
         $warehouses = Warehouse::all();
 
-        return view('warehouse', ['warehouse' => $warehouse, 'users' => $users, 'warehouses' => $warehouses]);
+        return response()->json(['message' => 'Warehouse created successfully', 'warehouse' => $warehouse]);
 
     }
 
@@ -169,6 +169,6 @@ class WarehouseController extends Controller
             $warehouse->manager_id = $warehouse->user->id;
         }
 
-        return view('warehouses', ['warehouses' => $warehouses]);
+        return response()->json(['message' => 'Warehouse deleted successfully']);
     }
 }

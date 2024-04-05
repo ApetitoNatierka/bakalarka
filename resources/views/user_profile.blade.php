@@ -2,7 +2,7 @@
 @extends('layout.navigator')
 @section('content')
 
-    <link href="{{ asset('css/styles_user_profile.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles_form.css') }}" rel="stylesheet">
     <div class="container">
         <div class="card shadow">
             <div class="card-body">

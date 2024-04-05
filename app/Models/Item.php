@@ -22,6 +22,23 @@ class Item extends Model
         return $this->belongsTo(Warehouse::class);
     }
 
+    public function item_things()
+    {
+        if ($this->item_type === 'animal') {
+            return Animal::whereHas('animal_number', function ($query) {
+                $query->where('animal_number', '=',$this->item_no )
+                    ->where('warehouse_id', '=', $this->warehouse_id);
+            })->get();
+        } elseif ($this->item_type === 'supply') {
+            return Supply::whereHas('supply_number', function ($query) {
+                $query->where('supply_number', '=',$this->item_no )
+                    ->where('warehouse_id', '=', $this->warehouse_id);
+            })->get();
+        }
+
+        return null;
+    }
+
 
 
 

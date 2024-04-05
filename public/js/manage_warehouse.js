@@ -90,6 +90,7 @@ document.getElementById('new_warehouse').addEventListener('click', function() {
         success: function (response) {
             dialog.style.display = 'none';
             console.log(response.warehouse);
+            window.location.replace('/warehouse/' + response.warehouse.id);
         },
         error: function (error) {
             console.error('Error adding warehouse:', error);
@@ -147,7 +148,7 @@ $('#delete_warehouse').on('click', function(e) {
         },
         success: function (response) {
             console.log(response.message);
-            window.location.replace('/order');
+            window.location.replace('/warehouses');
         },
         error: function (response) {
             console.error('Error deleting product data:');
@@ -155,37 +156,44 @@ $('#delete_warehouse').on('click', function(e) {
     })
 });
 
-$(document).on('click', '.dropdown-item.delete_item', function(e) {
-    e.stopPropagation();
 
-    var $this = $(this);
-    var par_item_id = $(this).data('item-id');
+$(document).ready(function() {
+    //$(document).on('click', '.dropdown-item.delete_item', function(e) {
+    $('.dropdown-item.delete_item').on('click', function(e) {
+        e.stopPropagation();
 
-    $.ajax({
-        url: '/delete_item',
-        type: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        data: {
-            item_id: par_item_id,
-        },
-        success: function (response) {
-            console.log(response.message);
-            $this.closest('tr').fadeOut(500, function() {
-                $(this).remove();
-            });
-        },
-        error: function (response) {
-            console.error('Error deleting item data:');
-        }
-    })
+        var $this = $(this);
+        var par_item_id = $(this).data('item-id');
+
+        $.ajax({
+            url: '/delete_item',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            data: {
+                item_id: par_item_id,
+            },
+            success: function (response) {
+                console.log(response.message);
+                $this.closest('tr').fadeOut(500, function() {
+                    $(this).remove();
+                });
+            },
+            error: function (response) {
+                console.error('Error deleting item data:');
+            }
+        })
+    });
 });
 
 //$('.dropdown-item.modify_animal_number').on('click', function(e) {
-    $(document).on('click', '.dropdown-item.modify_item', function (e) {
+
+$('.dropdown-item.modify_item').on('click', function(e) {
 
         e.stopPropagation();
+        e.preventDefault();
+
         var par_item_id = $(this).data('item-id');
 
         var $row = $(this).closest('tr');
