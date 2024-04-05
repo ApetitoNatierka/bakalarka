@@ -1,38 +1,37 @@
-@extends('layout.navigator')
+@extends('layout.navigator_intra')
 @section('content')
 
     <link href="{{ asset('css/styles_form.css') }}" rel="stylesheet">
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
-                <h1 class="card-title">Organisation</h1>
-                @if(isset($orgaisation))
-                    <button type="button" class="btn btn-secondary custom-btn" id="modify_organisation_info">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-save" viewBox="0 0 16 16">
-                            <path
-                                d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"></path>
-                        </svg>
-                    </button>
-                @else
-                    <button type="button" class="btn btn-secondary custom-btn" id="add_organisation_info">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-plus-lg" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
-                        </svg>
-                    </button>
+                @if(isset($organisation))
+                    <h1 class="card-title">Organisation - {{$organisation->id}}</h1>
                 @endif
+                <button type="button" class="btn btn-secondary custom-btn" id="add_organisation_info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
+                    </svg>
+                </button>
+                <button type="button" class="btn btn-secondary custom-btn" id="modify_organisation_info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-save" viewBox="0 0 16 16">
+                        <path
+                            d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"></path>
+                    </svg>
+                </button>
                 <hr>
                 <div class="card p-3">
                     @csrf
                     <div class="row mb-3">
                         <div class="col">
                             <label for="name" class="col-form-label">Organisation name</label>
-                            @if(isset($orgaisation))
+                            @if(isset($organisation))
                                 <input type="text" class="form-control col custom-input" id="organisation"
                                        name="organisation"
-                                       value="{{ $orgaisation->get_organisation() }}">
+                                       value="{{ $organisation->organisation }}">
                             @else
                                 <input type="text" class="form-control col custom-input" id="organisation"
                                        name="organisation">
@@ -40,9 +39,9 @@
                         </div>
                         <div class="col">
                             <label for="email" class="col-form-label">Email</label>
-                            @if(isset($orgaisation))
+                            @if(isset($organisation))
                                 <input type="email" class="form-control col custom-input" id="email" name="email"
-                                       value="{{ $orgaisation->get_email() }}">
+                                       value="{{ $organisation->email }}">
                             @else
                                 <input type="email" class="form-control col custom-input" id="email" name="email">
                             @endif
@@ -51,9 +50,9 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label for="phone_number" class="col-form-label">Phone Number</label>
-                            @if(isset($orgaisation))
+                            @if(isset($organisation))
                                 <input type="tel" class="form-control col custom-input" id="phone_number"
-                                       name="phone_number" value="{{ $orgaisation->get_phone_number() }}">
+                                       name="phone_number" value="{{ $organisation->phone_number }}">
                             @else
                                 <input type="tel" class="form-control col custom-input" id="phone_number"
                                        name="phone_number">
@@ -61,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                @if(isset($orgaisation))
+                @if(isset($organisation))
                     <div class="employee-container mt-3">
                         <div class="dropdown mt-3">
                             <button class="btn btn-secondary dropdown-toggle w-100" type="button"
@@ -71,7 +70,7 @@
                             <div class="dropdown-menu w-100" id="dropdownMenu" aria-labelledby="dropdownMenuButton">
                                 <div class="card p-3">
                                     <h5 class="card-title">Emplyees</h5>
-                                    <button type="button" class="btn btn-secondary custom-btn" id="add_emplyee_line">
+                                    <button type="button" class="btn btn-secondary custom-btn" id="add_employee_line">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd"
@@ -79,19 +78,23 @@
                                         </svg>
                                     </button>
                                     <hr>
-                                    <table class="emplyee_line_table" id="employee_lines_table">
+                                    <table class="employee_line_table" id="employee_lines_table">
                                         <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Name</th>
+                                            <th>Employee No</th>
+                                            <th>Surname</th>
+                                            <th>Last Name</th>
+                                            <th>Position</th>
+                                            <th>Identification No</th>
+                                            <th>Department</th>
                                             <th>Email</th>
-                                            <th>Phnoe number</th>
-                                            <th>Organisation position</th>
+                                            <th>Phone Number</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(isset($orgaisation->employees))
-                                            @foreach($orgaisation->employees as $employee)
+                                        @if(isset($organisation->employees))
+                                            @foreach($organisation->employees as $employee)
                                                 <tr>
                                                     <td>
                                                         <div class="dropdown">
@@ -122,14 +125,22 @@
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td><input type="text" class="form-control" name="name"
-                                                               value="{{ $employee->get_name() }}"></td>
+                                                    <td><input type="text" class="form-control" name="employee_number"
+                                                               value="{{ $employee->id }}" disabled></td>
+                                                    <td><input type="text" class="form-control" name="surname"
+                                                               value="{{ $employee->surname }}" ></td>
+                                                    <td><input type="text" class="form-control" name="last_name"
+                                                               value="{{ $employee->last_name }}" ></td>
+                                                        <td><input type="text" class="form-control" name="position"
+                                                                   value="{{ $employee->position }}" ></td>
+                                                    <td><input type="text" class="form-control" name="identification_number"
+                                                               value="{{ $employee->identification_number }}" ></td>
+                                                        <td><input type="text" class="form-control" name="department"
+                                                                   value="{{ $employee->department }}" ></td>
                                                     <td><input type="text" class="form-control" name="email"
-                                                               value="{{ $employee->get_email() }}"></td>
+                                                               value="{{ $employee->email }}" ></td>
                                                     <td><input type="text" class="form-control" name="phone_number"
-                                                               value="{{ $employee->get_phone_number() }}"></td>
-                                                    <td><input type="text" class="form-control" name="company_position"
-                                                               value="{{ $employee->get_company_position() }}"></td>
+                                                               value="{{ $employee->phone_number }}" ></td>
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -140,7 +151,7 @@
                         </div>
                     </div>
                 @endif
-                @if(isset($orgaisation))
+                @if(isset($organisation))
                     <div class="addresses-container mt-3">
                         <div class="dropdown mt-3">
                             <button class="btn btn-secondary dropdown-toggle w-100" type="button"
@@ -150,14 +161,14 @@
                             <div class="dropdown-menu w-100" id="dropdownMenu" aria-labelledby="dropdownMenuButton">
                                 <div class="card p-3">
                                     <h5 class="card-title">Address lines</h5>
-                                        <button type="button" class="btn btn-secondary custom-btn"
-                                                id="add_address_line">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
-                                            </svg>
-                                        </button>
+                                    <button type="button" class="btn btn-secondary custom-btn"
+                                            id="add_address_line">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
+                                        </svg>
+                                    </button>
                                     <hr>
                                     <table class="address_line_table" id="address_lines_table">
                                         <thead>
@@ -172,8 +183,8 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(isset($orgaisation->address->addresses))
-                                            @foreach($orgaisation->address->addresses as $address)
+                                        @if(isset($organisation->address->addresses))
+                                            @foreach($organisation->address->addresses as $address)
                                                 <tr>
                                                     <td>
                                                         <div class="dropdown">
@@ -228,6 +239,25 @@
         </div>
     </div>
 
+    <div id="organisation_dialog" class="dialog" style="display: none;">
+        <form id="organisation_form">
+            @csrf
+            <label>
+                <input type="text" name="new_organisation_input" id="new_organisation_input" placeholder="Name">
+            </label><br>
+            <label>
+                <input type="email" name="new_email" id="new_email" placeholder="Email">
+            </label><br>
+            <label>
+                <input type="text" name="new_phone_number" id="new_phone_number" placeholder="Phone No">
+            </label><br>
+
+            <button type="button" id="new_organisation">New</button>
+            <button type="button" id="cancel_organisation">Cancel</button>
+
+        </form>
+    </div>
+
     <div id="address_dialog" class="dialog" style="display: none;">
         <form id="address_form">
             @csrf
@@ -259,33 +289,40 @@
         <form id="employee_form">
             @csrf
             <label>
-                <input type="text" name="name" id="name" placeholder="Name">
+                <select id="user_select" name="user"></select>
             </label><br>
             <label>
-                <input type="text" name="email" id="email" placeholder="Email">
+                <input type="text" name="new_surname" id="new_surname" placeholder="surname">
             </label><br>
             <label>
-                <input type="text" name="password" id="password" placeholder="Password">
+                <input type="text" name="new_last_name" id="new_last_name" placeholder="last name">
             </label><br>
             <label>
-                <input type="text" name="phone_number" id="phone_number" placeholder="Phone number">
+                <input type="text" name="new_position" id="new_position" placeholder="position">
             </label><br>
             <label>
-                <input type="text" name="company_position" id="company_position" placeholder="Company position">
+                <input type="text" name="new_identification_number" id="new_identification_number" placeholder="identification number">
             </label><br>
+            <label>
+                <input type="text" name="new_department" id="new_department" placeholder="department">
+            </label><br>
+            <label>
+                <input type="date" name="new_birth_date" id="new_birth_date" placeholder="birth date">
+            </label><br><label>
+                <input type="date" name="new_start_date" id="new_start_date" placeholder="start date">
+            </label><br>
+
             <button type="button" id="new_employee">New</button>
             <button type="button" id="cancel_employee">Cancel</button>
-
         </form>
     </div>
 
     <input id="entity_type" type="hidden" value="company">
-    @if(isset($orgaisation))
-        <input id="organisation_id" type="hidden" value={{$orgaisation->id}}>
+    @if(isset($organisation))
+        <input id="organisation_id" type="hidden" value={{$organisation->id}}>
     @endif
     <script src="{{ asset('js/manage_organisation_profile.js')}}"></script>
     <script src="{{ asset('js/add_address_line.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
 @endsection

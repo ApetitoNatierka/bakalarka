@@ -1,3 +1,11 @@
+:root {
+    --primary-color: #FDAD34;
+    --secondary-color: #303030;
+    --tercial-color: #404040;
+    --text-color: #E0E0E0;
+    --text-secondary-dark: #202020;
+}
+
 .custom-input {
     max-width: 300px;
 }

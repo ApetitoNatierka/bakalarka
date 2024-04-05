@@ -20,6 +20,14 @@ class OrganisationController extends Controller
         return view('organisations', ['organisations' => $organisations]);
     }
 
+    public function get_organisation(Organisation $organisation) {
+        foreach ($organisation->employees as $employee) {
+            $employee->email = $employee->user->email;
+            $employee->phone_number = $employee->user->phone_number;
+        }
+        return view('organisation', ['organisation' => $organisation]);
+    }
+
     public function add_organisation(Request $request) {
         $validate_data = $request->validate([
             'organisation' => ['required'],

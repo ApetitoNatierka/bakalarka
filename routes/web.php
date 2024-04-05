@@ -186,6 +186,8 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/organisations', [OrganisationController::class, 'get_organisations']);
 
+    Route::get('/organisation/{organisation}', [OrganisationController::class, 'get_organisation']);
+
     Route::get('/select_organisations', [OrganisationController::class, 'select_organisations']);
 
     Route::get('/search_organisations', [OrganisationController::class, 'get_search_organisations']);
