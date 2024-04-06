@@ -28,16 +28,16 @@ class ServiceController extends Controller
 
     }
 
-    public function delete_animal_number(Request $request) {
+    public function delete_service(Request $request) {
         $validate_data = $request->validate([
-            'animal_number_id' => ['required'],
+            'service_id' => ['required'],
         ]);
 
-        $animal_number = AnimalNumber::find($validate_data['animal_number_id']);
+        $service = Service::find($validate_data['service_id']);
 
-        $animal_number->delete();
+        $service->delete();
 
-        return response()->json(['message' => 'Animal number deleted successfully']);
+        return response()->json(['message' => 'service_id number deleted successfully']);
     }
 
     public function modify_service(Request $request)

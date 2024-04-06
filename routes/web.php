@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Address\AddressLineController;
+use App\Http\Controllers\MedicalExaminationController;
 use App\Http\Controllers\Orders\CartController;
 use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\Orders\OrderLineController;
@@ -353,5 +354,25 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/search_services', [ServiceController::class, 'get_search_services']);
 
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Medical Examination-------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/medical_examinations', [MedicalExaminationController::class, 'get_medical_examinations']);
+
+    Route::post('/add_medical_examination', [MedicalExaminationController::class, 'add_medical_examination']);
+
+    Route::post('/delete_medical_examination', [MedicalExaminationController::class, 'delete_medical_examination']);
+
+    Route::post('/modify_medical_examination', [MedicalExaminationController::class, 'modify_medical_examination']);
+
+    Route::get('/search_medical_examinations', [MedicalExaminationController::class, 'get_search_medical_examinations']);
+
+    Route::get('/select_medical_examinations', [MedicalExaminationController::class, 'select_medical_examinations']);
 
 });

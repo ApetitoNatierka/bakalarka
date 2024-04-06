@@ -33,14 +33,14 @@ document.getElementById('new_service').addEventListener('click', function() {
         success: function (response) {
             dialog.style.display = 'none';
             console.log(response.service);
-            var animal_number = response.service;
+            var service = response.service;
             var new_row = `
                 <tr>
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle no-caret" type="button"
                                     id="dropdownMenuButton"
-                                    data-service-id="${animal_number.id}"
+                                    data-service-id="${service.id}"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                      fill="currentColor" class="bi bi-three-dots-vertical"
@@ -70,11 +70,11 @@ document.getElementById('new_service').addEventListener('click', function() {
                     <td><input type="number" class="form-control" name="price"
                                value="${service.price}"></td>
                 </tr>`;
-            $('.animal_number_table tbody').append(new_row);
+            $('.service_table tbody').append(new_row);
         },
         error: function (error) {
             console.error('Error adding animal number:', error);
-            console.log(par_animal_no, par_description);
+            console.log(par_name, par_description, par_price);
         }
     });
 });
@@ -121,7 +121,7 @@ $(document).on('click', '.dropdown-item.modify_service', function(e) {
 
     $.ajax({
         type: 'post',
-        url: '/modify_animal_number',
+        url: '/modify_service',
         method: 'post',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -142,7 +142,7 @@ $(document).on('click', '.dropdown-item.modify_service', function(e) {
 });
 
 $(document).ready(function() {
-    $('#search_animal_numbers').click(function() {
+    $('#search_services').click(function() {
         var search = $('#search_inputs');
         var inputs = '<div class="form-group"><input type="text" id="search_id" name="search_id" class="form-control" placeholder="service" /></div>\n' +
             '<div class="form-group"><input type="text" id="search_name" name="search_name" class="form-control" placeholder="name"/></div>\n' +
@@ -169,7 +169,7 @@ $(document).ready(function() {
 
 
         $.ajax({
-            url: '/search_animal_numbers',
+            url: '/search_services',
             type: 'GET',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -206,7 +206,7 @@ $(document).ready(function() {
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle no-caret" type="button"
                                     id="dropdownMenuButton"
-                                    data-service-id="${animal_number.id}"
+                                    data-service-id="${service.id}"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                      fill="currentColor" class="bi bi-three-dots-vertical"

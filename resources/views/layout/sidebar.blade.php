@@ -56,6 +56,16 @@
                 </ul>
             </div>
         </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#medical-collapse" aria-expanded="false">
+                Medical
+            </button>
+            <div class="collapse" id="medical-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/medical_examinations" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Medical examinations</a></li>
+                </ul>
+            </div>
+        </li>
         <li class="border-top my-3"></li>
     </ul>
 </div>
