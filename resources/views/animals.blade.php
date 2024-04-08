@@ -37,6 +37,7 @@
                                 <th>Born</th>
                                 <th>Condition</th>
                                 <th>Gender</th>
+                                <th>Warehouse</th>
                             </tr>
                             </thead>
                             <tbody>

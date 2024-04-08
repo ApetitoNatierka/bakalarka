@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Address\AddressLineController;
 use App\Http\Controllers\MedicalExaminationController;
+use App\Http\Controllers\MedicalTreatmentController;
 use App\Http\Controllers\Orders\CartController;
 use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\Orders\OrderLineController;
@@ -294,6 +295,8 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/animals', [AnimalController::class, 'get_animals']);
 
+    Route::get('/animal/{animal}', [AnimalController::class, 'get_animal']);
+
     Route::post('/add_animal', [AnimalController::class, 'add_animal']);
 
     Route::post('/delete_animal', [AnimalController::class, 'delete_animal']);
@@ -374,5 +377,19 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::get('/search_medical_examinations', [MedicalExaminationController::class, 'get_search_medical_examinations']);
 
     Route::get('/select_medical_examinations', [MedicalExaminationController::class, 'select_medical_examinations']);
+
+});
+
+//---------------------------------------------------------------
+//-----------------------Medical Treatment-----------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::post('/add_medical_treatment', [MedicalTreatmentController::class, 'add_medical_treatment']);
+
+    Route::post('/delete_medical_treatment', [MedicalTreatmentController::class, 'delete_medical_treatment']);
+
+    Route::post('/modify_medical_treatment', [MedicalTreatmentController::class, 'modify_medical_treatment']);
 
 });

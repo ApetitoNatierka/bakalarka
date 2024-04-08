@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use App\Models\AnimalNumber;
 use App\Models\Item;
+use App\Models\MedicalExamination;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isNull;
@@ -25,6 +26,16 @@ class AnimalController extends Controller
         $animal_nos = AnimalNumber::all();
 
         return view('animals', ['animals' => $animals, 'animal_nos' => $animal_nos, 'warehouses' => $warehouses]);
+    }
+
+    public function get_animal(Animal $animal)
+    {
+        $animal->animal_no = $animal->animal_number->animal_number;
+        $medical_examination_nos = MedicalExamination::all();
+        $warehouses = Warehouse::all();
+        $animal_nos = AnimalNumber::all();
+
+        return view('animal', ['animal' => $animal, 'medical_examination_nos' => $medical_examination_nos, 'animal_nos' => $animal_nos, 'warehouses' => $warehouses]);
     }
 
     public function add_animal(Request $request) {
