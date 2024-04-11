@@ -57,7 +57,7 @@
                                         <p>Price - {{$product->get_price() * 1.2}}€</p>
                                         <p>Type - {{$product->get_type()}}</p>
                                         <p>Units - {{$product->get_units()}}</p>
-                                    <button id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
+                                    <button class="add_to_cart_button" id="add_to_cart_button" style="border-radius: 5px" >add to cart</button>
                                     @else
                                         <div class="col-8">
                                             <h3>Name - {{$product->get_name()}}</h3>

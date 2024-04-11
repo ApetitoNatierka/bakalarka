@@ -40,7 +40,6 @@ class CompanyController extends Controller
 
         $user->update(['company_id' => $company->id, 'company_position' => 'admin']);
 
-
         return response()->json([
             'success' => true,
             'message' => 'Company information added successfully.',
