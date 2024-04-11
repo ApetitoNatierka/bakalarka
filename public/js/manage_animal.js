@@ -151,7 +151,7 @@ document.getElementById('cancel_medical_treatment').addEventListener('click', fu
 });
 
 document.getElementById('new_medical_treatment').addEventListener('click', function() {
-    var dialog = document.getElementById('medical_treatment_dialog_dialog');
+    var dialog = document.getElementById('medical_treatment_dialog');
 
     var par_medical_examination_id = $('#medical_examination_select').val();
     var par_note = document.getElementById('new_note').value;
@@ -185,7 +185,7 @@ document.getElementById('new_medical_treatment').addEventListener('click', funct
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle no-caret" type="button"
                                     id="dropdownMenuButton"
-                                    data-$medical_treatment-id="${$medical_treatment.id}"
+                                    data-$medical_treatment-id="${medical_treatment.id}"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                      fill="currentColor" class="bi bi-three-dots-vertical"
@@ -196,21 +196,21 @@ document.getElementById('new_medical_treatment').addEventListener('click', funct
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><p class="dropdown-item modify_medical_treatment" id="modify_medical_treatment"
-                                       data-medical_treatment-id="${$medical_treatment.id}">Modify</p></li>
+                                       data-medical_treatment-id="${medical_treatment.id}">Modify</p></li>
                                 <li><p class="dropdown-item delete_medical_treatment" id="delete_medical_treatment"
-                                       data-medical_treatment-id="${$medical_treatment.id}">Delete</p></li>
+                                       data-medical_treatment-id="${medical_treatment.id}">Delete</p></li>
                             </ul>
                         </div>
                     </td>
                     <td><input type="text" class="form-control" name="medical_treatment_id"
-                               value="${$medical_treatment.id}" disabled></td>
+                               value="${medical_treatment.id}" disabled></td>
                     <td>${createMedicalExaminationSelect(medical_examinations, medical_treatment.medical_examination_id)}</td>
                     <td><input type="text" class="form-control" name="note"
-                               value="${$medical_treatment.note}" ></td>
+                               value="${medical_treatment.note}" ></td>
                     <td><input type="date" class="form-control" name="start"
-                               value="${$medical_treatment.start}" disabled></td>
+                               value="${medical_treatment.start}" disabled></td>
                     <td><input type="date" class="form-control" name="end"
-                               value="${$medical_treatment.end}" disabled></td>
+                               value="${medical_treatment.end}" disabled></td>
                 </tr>`;
             $('.medical_treatment_table tbody').append(new_row);
         },
@@ -232,20 +232,21 @@ function createMedicalExaminationSelect(medical_examinations, selectedId) {
 
 $(document).ready(function() {
     //$(document).on('click', '.dropdown-item.delete_item', function(e) {
-    $('.dropdown-item.delete_medical_examination').on('click', function(e) {
+    $('.dropdown-item.delete_medical_treatment').on('click', function(e) {
         e.stopPropagation();
+        e.preventDefault();
 
         var $this = $(this);
-        var par_medical_examination_id = $(this).data('medical_examination-id');
+        var par_medical_treatment_id = $(this).data('medical_treatment-id');
 
         $.ajax({
-            url: '/delete_medical_examination',
+            url: '/delete_medical_treatment',
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             data: {
-                medical_examination: par_medical_examination_id,
+                medical_treatment: par_medical_treatment_id,
             },
             success: function (response) {
                 console.log(response.message);
@@ -260,34 +261,36 @@ $(document).ready(function() {
     });
 });
 
-$('.dropdown-item.modify_medical_examination').on('click', function(e) {
+$('.dropdown-item.modify_medical_treatment').on('click', function(e) {
 
     e.stopPropagation();
     e.preventDefault();
 
-    var par_medical_examination = $(this).data('medical_examination-id');
+    var par_medical_treatment = $(this).data('medical_treatment-id');
 
     var $row = $(this).closest('tr');
 
+    var par_medical_examination_id =  $row.find('select[name="medical_examination_id"]').val();
     var par_note =  $row.find('input[name="note"]').val();
     var par_start =  $row.find('input[name="start"]').val();
     var par_end =  $row.find('input[name="end"]').val();
 
     $.ajax({
         type: 'post',
-        url: '/modify_medical_examination',
+        url: '/modify_medical_treatment',
         method: 'post',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
         data: {
-            medical_examination_id: par_medical_examination,
+            medical_treatment_id: par_medical_treatment,
+            medical_examination_id: par_medical_examination_id,
             note: par_note,
             start: par_start,
             end: par_end,
         },
         success: function (response) {
-            console.log(response.medical_examination);
+            console.log('Medical treatment modified sucessfully');
         },
         error: function (response) {
             console.error('Error modifying item data:');
@@ -346,5 +349,15 @@ $(document).ready(function() {
         minimumInputLength: 1,
         minimumResultsForSearch: 0,
         width: '100%',
+    });
+});
+
+$(document).ready(function() {
+    $('.dropdown-menu').on('click', function(event) {
+        event.stopPropagation();
+    });
+
+    $('.dropdown-item').on('click', function() {
+        $(this).closest('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('hide');
     });
 });

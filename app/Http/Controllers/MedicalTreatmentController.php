@@ -39,6 +39,7 @@ class MedicalTreatmentController extends Controller
     public function modify_medical_treatment(Request $request) {
         $validate_data = $request->validate([
             'medical_treatment_id' => ['required'],
+            'medical_examination_id' => ['required', 'exists:medical_examinations,id'],
             'note' => ['required'],
             'start' => ['required'],
             'end' => ['required'],

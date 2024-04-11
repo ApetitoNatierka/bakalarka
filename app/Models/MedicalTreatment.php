@@ -12,6 +12,7 @@ class MedicalTreatment extends Model
 
     protected $fillable = [
         'medical_examination_id',
+        'animal_id',
         'note',
         'start',
         'end',

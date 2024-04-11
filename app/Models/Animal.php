@@ -31,7 +31,7 @@ class Animal extends Model
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function medical_examinations(): HasMany
+    public function medical_treatments(): HasMany
     {
         return $this->hasMany(MedicalTreatment::class);
     }
