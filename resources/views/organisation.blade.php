@@ -306,9 +306,10 @@
             <label>
                 <input type="text" name="new_department" id="new_department" placeholder="department">
             </label><br>
-            <label>
+            <label>Birth<br>
                 <input type="date" name="new_birth_date" id="new_birth_date" placeholder="birth date">
-            </label><br><label>
+            </label><br>
+            <label>Start<br>
                 <input type="date" name="new_start_date" id="new_start_date" placeholder="start date">
             </label><br>
 

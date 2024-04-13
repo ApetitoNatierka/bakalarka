@@ -124,7 +124,7 @@
             <label>
                 <input type="number" name="height" id="new_height" placeholder="Height">
             </label><br>
-            <label>
+            <label>Born<br>
                 <input type="date" name="born" id="new_born" placeholder="Born">
             </label><br>
             <label>

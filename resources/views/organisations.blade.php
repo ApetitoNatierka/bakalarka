@@ -102,7 +102,7 @@
                 <input type="text" name="organisation" id="organisation" placeholder="Organisation name">
             </label><br>
             <label>
-                <input type="text" name="email" id="email" placeholder="Email">
+                <input type="email" name="email" id="email" placeholder="Email">
             </label><br>
             <label>
                 <input type="text" name="phone_number" id="phone_number" placeholder="Phone number">

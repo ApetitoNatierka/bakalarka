@@ -281,7 +281,7 @@
                 <input type="text" name="name" id="name" placeholder="Name">
             </label><br>
             <label>
-                <input type="text" name="email" id="email" placeholder="Email">
+                <input type="email" name="email" id="email" placeholder="Email">
             </label><br>
             <label>
                 <input type="text" name="password" id="password" placeholder="Password">

@@ -107,7 +107,7 @@
                 <input type="text" name="company" id="new_company_name" placeholder="Company">
             </label><br>
             <label>
-                <input type="text" name="email" id="new_email" placeholder="Email">
+                <input type="email" name="email" id="new_email" placeholder="Email">
             </label><br>
             <label>
                 <input type="text" name="phone_number" id="new_phone_number" placeholder="Phone number">

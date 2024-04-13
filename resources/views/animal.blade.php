@@ -202,7 +202,7 @@
             <label>
                 <input type="number" name="height" id="new_height" placeholder="Height">
             </label><br>
-            <label>
+            <label>Born<br>
                 <input type="date" name="born" id="new_born" placeholder="Born">
             </label><br>
             <label>
@@ -230,10 +230,10 @@
             <label>
                 <input type="text" name="note" id="new_note" placeholder="Note">
             </label><br>
-            <label>
+            <label>Start<br>
                 <input type="date" name="start" id="new_start" placeholder="Start">
             </label><br>
-            <label>
+            <label>End<br>
                 <input type="date" name="end" id="new_end" placeholder="End">
             </label><br>
 
