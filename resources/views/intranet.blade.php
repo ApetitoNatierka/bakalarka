@@ -1,6 +1,6 @@
 @extends('layout.navigator_intra')
 @section('content')
-
-    <p>Welcome</p>
+    <link href="{{ asset('css/styles_welcome.css') }}" rel="stylesheet">
+    <p class="welcome-message">Welcome</p>
 
 @endsection

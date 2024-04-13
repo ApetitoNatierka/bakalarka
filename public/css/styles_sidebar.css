@@ -1,6 +1,68 @@
+:root {
+    --primary-color: #FDAD34;
+    --secondary-color: #303030;
+    --tercial-color: #404040;
+    --text-color: #E0E0E0;
+    --text-secondary-dark: #202020;
+}
+
 .flex-shrink-0 {
+    background-color: var(--tercial-color);  /* Svetlá sivá farba pozadia */
+    color: var(--text-color);               /* Tmavosivá farba textu */
+    border-right: 1px solid #dee2e6; /* Pravý okraj pre oddelenie od obsahu */
+
     min-height: calc(100vh - 60px);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+}
+
+.link-body-emphasis, .btn-toggle {
+    color: var(--primary-color);           /* Modrá farba pre odkazy a tlačidlá */
+    font-weight: bold;        /* Tučné písmo pre lepšiu viditeľnosť */
+}
+
+.link-body-emphasis:hover, .btn-toggle:hover {
+    text-decoration: none;    /* Odstráni podčiarknutie pri hover */
+    background-color: #e7f1ff; /* Svetlomodré pozadie pri hover */
+}
+
+.btn-toggle {
+    width: 100%;              /* Plná šírka tlačidla pre jednoduchšie klikanie */
+    text-align: left;         /* Text zarovnaný doľava */
+    padding: 10px;            /* Priestor okolo textu v tlačidle */
+}
+
+.btn-toggle.collapsed::after {
+    content: '+';             /* Pridá plus znak pre zatvorené menu */
+    float: right;             /* Posunie na pravú stranu */
+}
+
+.btn-toggle:not(.collapsed)::after {
+    content: '-';             /* Pridá mínus znak pre otvorené menu */
+    float: right;
+}
+
+
+.border-top {
+    border-top: 2px solid #dee2e6; /* Vytvorí horizontálny oddelovací pruh */
+}
+
+.my-3 {
+    margin-top: 1rem;        /* Vytvorí vertikálny priestor */
+    margin-bottom: 1rem;
+}
+
+.btn-toggle-nav {
+    margin-top: 0;            /* Odstráni horný okraj */
+    padding-left: 20px;       /* Pridá odsadenie pre vnútorné položky */
+}
+
+.btn-toggle-nav a {
+    display: block;           /* Zobrazí odkazy ako blok pre ľahšie klikanie */
+    padding: 5px 10px;        /* Vytvorí priestor okolo textu */
+}
+
+.btn-toggle-nav a:hover {
+    background-color: #d1e9ff; /* Zvýraznenie pri prechode myšou */
 }
