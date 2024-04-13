@@ -41,6 +41,8 @@ $(document).ready(function() {
 document.getElementById('new_animal').addEventListener('click', function() {
     var dialog = document.getElementById('animal_dialog');
 
+    var errors = [];
+
     var par_animal_no = $('#animal_no_select').val();
     var par_warehouse_id = $('#warehouse_select').val();
 
@@ -50,6 +52,18 @@ document.getElementById('new_animal').addEventListener('click', function() {
     var par_condition = document.getElementById('new_condition').value;
     var par_gender = document.getElementById('new_gender').value;
 
+    if (!par_animal_no) errors.push("Animal number is required.");
+    if (!par_warehouse_id) errors.push("Warehouse ID is required.");
+    if (!par_weight) errors.push("Weight is required.");
+    if (!par_height) errors.push("Height is required.");
+    if (!par_born) errors.push("Date of birth is required.");
+    if (!par_condition) errors.push("Condition is required.");
+    if (!par_gender) errors.push("Gender is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
 
     $.ajax({
         type: 'post',

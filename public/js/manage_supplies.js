@@ -78,6 +78,21 @@ document.getElementById('new_supply').addEventListener('click', function() {
     var par_status = document.getElementById('new_status').value;
     var par_description = document.getElementById('new_description').value;
 
+    var errors = [];
+
+    if (!par_quantity) errors.push("Quantity is required.");
+    if (!par_weight) errors.push("Weight is required.");
+    if (!par_height) errors.push("Height is required.");
+    if (!par_units) errors.push("Units is required.");
+    if (!par_status) errors.push("Status is required.");
+    if (!par_description) errors.push("Description is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
     $.ajax({
         type: 'post',
         url: '/add_supply',

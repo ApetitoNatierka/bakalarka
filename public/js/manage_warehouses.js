@@ -48,6 +48,17 @@ document.getElementById('new_warehouse').addEventListener('click', function() {
     var par_capacity = document.getElementById('new_capacity').value;
     var par_location = document.getElementById('new_location').value;
 
+    var errors = [];
+
+    if (!par_warehouse) errors.push("Warehouse name is required.");
+    if (!par_capacity) errors.push("Capacity is required.");
+    if (!par_location) errors.push("Location is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
 
     $.ajax({
         type: 'post',

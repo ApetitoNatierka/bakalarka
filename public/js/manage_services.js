@@ -18,6 +18,18 @@ document.getElementById('new_service').addEventListener('click', function() {
     var par_description = document.getElementById('new_description').value;
     var par_price = document.getElementById('new_price').value;
 
+    var errors = [];
+
+    if (!par_name) errors.push("Name is required.");
+    if (!par_description) errors.push("Description is required.");
+    if (!par_price) errors.push("Price is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
 
     $.ajax({
         type: 'post',

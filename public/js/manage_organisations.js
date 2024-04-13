@@ -17,6 +17,17 @@ document.getElementById('new_organisation').addEventListener('click', function()
     var par_email = document.getElementById('email').value;
     var par_phone_number = document.getElementById('phone_number').value;
 
+    var errors = [];
+
+    if (!par_organisation) errors.push("Organisation is required.");
+    if (!par_email) errors.push("Email is required.");
+    if (!par_phone_number) errors.push("Phone number is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
 
     $.ajax({
         type: 'post',

@@ -20,6 +20,20 @@ document.getElementById('new_company').addEventListener('click', function() {
     var par_dic = document.getElementById('new_dic').value;
     var par_company_type = document.getElementById('new_company_type').value;
 
+    var errors = [];
+
+    if (!par_company) errors.push("Company name is required.");
+    if (!par_email) errors.push("Email is required.");
+    if (!par_phone_number) errors.push("Phone number is required.");
+    if (!par_ico) errors.push("ICO is required.");
+    if (!par_dic) errors.push("DIC is required.");
+    if (!par_company_type) errors.push("Company type is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
     $.ajax({
         type: 'post',
         url: '/add_company',

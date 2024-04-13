@@ -66,6 +66,15 @@ document.getElementById('new_order').addEventListener('click', function() {
     var dialog = document.getElementById('order_dialog');
     var par_customer = $('#customer_select').val();
 
+    var errors = [];
+
+    if (!par_customer) errors.push("Customer is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
     $.ajax({
         type: 'post',
         url: '/add_order',
@@ -93,6 +102,18 @@ document.getElementById('new_order_line').addEventListener('click', function() {
     var par_product_id = document.getElementById('new_product_id_select').value;
     var par_quantity = document.getElementById('new_quantity').value;
     var par_vat_percentage = document.getElementById('new_vat_percentage').value;
+
+    var errors = [];
+
+    if (!par_product_id) errors.push("Product is required.");
+    if (!par_quantity) errors.push("Quantity is required.");
+    if (!par_vat_percentage) errors.push("VAT percentage is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
 
     $.ajax({
         type: 'post',

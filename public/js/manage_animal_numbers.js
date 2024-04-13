@@ -13,10 +13,17 @@ document.getElementById('cancel_animal_number').addEventListener('click', functi
 
 document.getElementById('new_animal_number').addEventListener('click', function() {
     var dialog = document.getElementById('animal_number_dialog');
-
+    var errors = [];
     var par_animal_no = document.getElementById('new_animal_number_no').value;
     var par_description = document.getElementById('new_description').value;
 
+    if (!par_animal_no) errors.push("Animal number is required.");
+    if (!par_description) errors.push("Description is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
 
     $.ajax({
         type: 'post',

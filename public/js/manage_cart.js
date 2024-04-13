@@ -49,6 +49,7 @@ $('.dropdown-item.delete_cart_item').on('click', function(e) {
         },
         error: function (response) {
             console.error('Error deleting product data:');
+
         }
     })
 });

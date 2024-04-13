@@ -79,6 +79,21 @@ document.getElementById('new_employee').addEventListener('click', function() {
     var par_birth_date = document.getElementById('birth_date').value;
     var par_start_date = document.getElementById('start_date').value;
 
+    var errors = [];
+
+    if (!par_surname) errors.push("Surname is required.");
+    if (!par_last_name) errors.push("Last name is required.");
+    if (!par_position) errors.push("Position is required.");
+    if (!par_identification_number) errors.push("Identification number is required.");
+    if (!par_department) errors.push("Department is required.");
+    if (!par_birth_date) errors.push("Birth date is required.");
+    if (!par_start_date) errors.push("Start date is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
 
     $.ajax({
         type: 'post',

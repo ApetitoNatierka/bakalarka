@@ -17,6 +17,17 @@ document.getElementById('new_supply_number').addEventListener('click', function(
     var par_supply_no = document.getElementById('new_supply_number_no').value;
     var par_description = document.getElementById('new_description').value;
 
+    var errors = [];
+
+    if (!par_supply_no) errors.push("Supply number is required.");
+    if (!par_description) errors.push("Description is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
     $.ajax({
         type: 'post',
         url: '/add_supply_number',

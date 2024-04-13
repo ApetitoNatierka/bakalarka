@@ -8,6 +8,19 @@ $(document).ready(function() {
         var par_ico = document.getElementById('ico').value;
         var par_dic = document.getElementById('dic').value;
 
+        var errors = [];
+
+        if (!par_company) errors.push("Company name is required.");
+        if (!par_email) errors.push("Email is required.");
+        if (!par_phone_number) errors.push("Phone number is required.");
+        if (!par_ico) errors.push("ICO is required.");
+        if (!par_dic) errors.push("DIC is required.");
+
+        if (errors.length > 0) {
+            alert("Please fill out all fields.\n" + errors.join("\n"));
+            return;
+        }
+
         $.ajax({
             type: 'post',
             url: '/add_company_info',

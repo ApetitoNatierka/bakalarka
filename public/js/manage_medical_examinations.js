@@ -17,6 +17,16 @@ document.getElementById('new_medical_examination').addEventListener('click', fun
     var par_medical_no = document.getElementById('new_medical_examination_no').value;
     var par_description = document.getElementById('new_description').value;
 
+    var errors = [];
+
+    if (!par_medical_no) errors.push("Medical number is required.");
+    if (!par_description) errors.push("Description is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
     $.ajax({
         type: 'post',
         url: '/add_medical_examination',

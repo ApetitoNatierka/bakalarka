@@ -5,6 +5,7 @@ $('#add_address_line').click(function() {
 
 document.getElementById('new_address').addEventListener('click', function() {
     var dialog = document.getElementById('address_dialog');
+    var errors = [];
     var par_country = document.getElementById('country').value;
     var par_postal_code = document.getElementById('postal_code').value;
     var par_region = document.getElementById('region').value;
@@ -12,6 +13,18 @@ document.getElementById('new_address').addEventListener('click', function() {
     var par_house_number = document.getElementById('house_number').value;
     var par_street = document.getElementById('street').value;
     var par_entity_type = document.getElementById('entity_type').value;
+
+    if (!par_country) errors.push("Country is required.");
+    if (!par_postal_code) errors.push("Postal code is required.");
+    if (!par_city) errors.push("City is required.");
+    if (!par_region) errors.push("Region is required.");
+    if (!par_house_number) errors.push("House number is required.");
+    if (!par_street) errors.push("Street is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
 
     $.ajax({
         type: 'post',

@@ -15,6 +15,15 @@ document.getElementById('new_order').addEventListener('click', function() {
     var dialog = document.getElementById('order_dialog');
     var par_customer = $('#customer_select').val();
 
+    var errors = [];
+
+    if (!par_customer) errors.push("Customer is required.");
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
     $.ajax({
         type: 'post',
         url: '/add_order',

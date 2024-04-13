@@ -29,6 +29,18 @@ document.getElementById('new_organisation').addEventListener('click', function()
     var par_email = document.getElementById('new_email').value;
     var par_phone_number = document.getElementById('new_phone_number').value;
 
+    var errors = [];
+
+    if (!par_organisation) errors.push("Organisation is required.");
+    if (!par_email) errors.push("Email is required.");
+    if (!par_phone_number) errors.push("Phone number is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
+
 
     $.ajax({
         type: 'post',
@@ -203,6 +215,22 @@ document.getElementById('new_employee').addEventListener('click', function() {
     var par_department = document.getElementById('new_department').value;
     var par_birth_date = document.getElementById('new_birth_date').value;
     var par_start_date = document.getElementById('new_start_date').value;
+
+    var errors = [];
+
+    if (!par_surname) errors.push("Surname is required.");
+    if (!par_last_name) errors.push("Last name is required.");
+    if (!par_position) errors.push("Position is required.");
+    if (!par_identification_number) errors.push("Identification number is required.");
+    if (!par_department) errors.push("Department is required.");
+    if (!par_birth_date) errors.push("Birth date is required.");
+    if (!par_start_date) errors.push("Start date is required.");
+
+
+    if (errors.length > 0) {
+        alert("Please fill out all fields.\n" + errors.join("\n"));
+        return;
+    }
 
 
     $.ajax({
