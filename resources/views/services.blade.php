@@ -54,6 +54,8 @@
                                                     </svg>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <li> <p class="dropdown-item offer_service" id="offer_service"
+                                                            data-service-id="{{ $service->id }}">Offer</p></li>
                                                     <li><p class="dropdown-item modify_service"
                                                            id="modify_service"
                                                            data-service-id="{{ $service->id }}">Modify</p>
@@ -108,6 +110,17 @@
             <button type="button" id="new_service">New</button>
             <button type="button" id="cancel_service">Cancel</button>
 
+        </form>
+    </div>
+
+    <div id="price_dialog" class="dialog" style="display: none;" data-service-id="">
+        <form id="price_form">
+            @csrf
+            <label>
+                <input type="number" name="price" id="new_price_offer" placeholder="price">
+            </label><br>
+            <button type="button" id="offer">Offer</button>
+            <button type="button" id="cancel_offer">Cancel</button>
         </form>
     </div>
 

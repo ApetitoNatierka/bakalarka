@@ -33,7 +33,13 @@
                         <div class="dropdown-menu w-100" id="dropdownMenu" aria-labelledby="dropdownMenuButton">
                             <div class="card p-3">
                                 <h5 class="card-title">Commands</h5>
-
+                                <button type="button" class="btn btn-primary command-btn offer_animal" id="offer_animal" data-animal-id="{{ $animal->id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                        <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1"></path>
+                                        <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"></path>
+                                    </svg>
+                                    Offer
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -240,6 +246,17 @@
             <button type="button" id="new_medical_treatment">New</button>
             <button type="button" id="cancel_medical_treatment">Cancel</button>
 
+        </form>
+    </div>
+
+    <div id="price_dialog" class="dialog" style="display: none;" data-supply-id="">
+        <form id="price_form">
+            @csrf
+            <label>
+                <input type="number" name="price" id="new_price" placeholder="price">
+            </label><br>
+            <button type="button" id="offer">Offer</button>
+            <button type="button" id="cancel_offer">Cancel</button>
         </form>
     </div>
 

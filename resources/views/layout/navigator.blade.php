@@ -38,7 +38,7 @@
                     <a class="nav-link" aria-current="page" href="/products">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/services">Services</a>
+                    <a class="nav-link" aria-current="page" href="/prod_services">Services</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">Cart</a>

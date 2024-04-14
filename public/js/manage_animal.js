@@ -375,3 +375,47 @@ $(document).ready(function() {
         $(this).closest('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('hide');
     });
 });
+
+document.getElementById('offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    var par_animal_id = dialog.getAttribute('data-animal-id');
+    var par_price = document.getElementById('new_price').value;
+
+    console.log("Sending animal ID:", par_animal_id);
+    console.log("Sending price:", par_price);
+
+    $.ajax({
+        url: '/offer_animal',
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        data: {
+            animal_id: par_animal_id,
+            price: par_price,
+        },
+        success: function (response) {
+            console.log(response.message);
+            alert('Animal offered sucessfully');
+        },
+        error: function(xhr) {
+            console.error("Error:", xhr.responseText);
+            alert('Error: ' + xhr.responseJSON.error + "\nMessage: " + xhr.responseJSON.message);
+        }
+    });
+    dialog.style.display = 'none';
+});
+
+document.getElementById('cancel_offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    dialog.style.display = 'none';
+});
+
+$('#offer_animal').on('click', function() {
+
+    var par_animal_id = $(this).data('animal-id');
+    var dialog = document.getElementById('price_dialog');
+    dialog.setAttribute('data-animal-id', par_animal_id);
+    dialog.style.display = 'block';
+
+});

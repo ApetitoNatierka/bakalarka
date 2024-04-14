@@ -4,7 +4,6 @@ $(document).ready(function() {
         var inputs = '<div class="form-group"><input type="text" id="search_name" name="search_name" class="form-control" placeholder="product" /></div>\n' +
             '<div class="form-group"><input type="number" id="search_min_price" name="search_min_price" class="form-control" placeholder="min. price"/></div>\n' +
             '<div class="form-group"><input type="number" id="search_max_price" name="search_max_price" class="form-control" placeholder="max. price"/></div>\n' +
-            '<div class="form-group"><input type="text" id="search_type" name="search_type" class="form-control" placeholder="type"/></div>\n' +
             '<div class="form-group"><input type="text" id="search_units" name="search_units" class="form-control" placeholder="units"/></div>\n' +
             '<div class="form-group"><button id="search_button" class="btn btn-primary" style="border-radius: 5px">Search</button></div>';
 
@@ -22,7 +21,7 @@ $(document).ready(function() {
         var par_name = $('#search_name').val();
         var par_min_price = $('#search_min_price').val();
         var par_max_price = $('#search_max_price').val();
-        var par_type = $('#search_type').val();
+        var par_type = document.getElementById('entity_type').value;
         var par_units = $('#search_units').val();
 
         $.ajax({
@@ -51,7 +50,45 @@ $(document).ready(function() {
                         '    </div>' +
                         '</div>';
                     $('#search_inputs').after(noProductsHtml);
-                } else {
+                } else if(response.user.role === 'admin') {
+                    response.products.forEach(function(product) {
+                        var productHtml = '<div class="row mb-3">' +
+                            '    <div class="col-4">' +
+                            '        <img src="' + productImagePath + '" class="card-img-top" alt="Product image">' +
+                            '    </div>' +
+                            '<div class="col-8">\n' +
+'                                        <label>\n' +
+'                                            <input name="product_name" value="' + product.name + '">\n' +
+'                                        </label>\n' +
+'                                        <label>\n' +
+'                                            <textarea name="product_description">' + product.description + '</textarea>\n' +
+'                                        </label>\n' +
+'                                        <label>\n' +
+'                                            <input name="product_price" value="' + product.price * 1.2 + '€">\n' +
+'                                        </label>\n' +
+'                                        <label>\n' +
+'                                            <input name="product_type" value="' + product.type + '">\n' +
+'                                        </label>\n' +
+'                                        <label>\n' +
+'                                            <input name="product_units" value="' + product.units + '">\n' +
+'                                        </label>' +
+                            '</div> ' +
+                            '<div class="dropdown">\n' +
+            '                                        <button class="btn btn-secondary dropdown-toggle no-caret" type="button" id="dropdownMenuButton" data-product-id="' + product.id + '" data-bs-toggle="dropdown" aria-expanded="false">\n' +
+            '                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">\n' +
+            '                                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>\n' +
+            '                                            </svg>\n' +
+            '                                        </button>\n' +
+            '                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">\n' +
+            '                                            <li><p class="dropdown-item modify_product" id="modify_product" data-product-id="' + product.id + '">Modify</p></li>\n' +
+            '                                            <li><p class="dropdown-item delete_product" id="delete_product" data-product-id="' + product.id + '">Delete</p></li>\n' +
+            '                                        </ul>\n' +
+            '                                    </div>'
+                        '</div>';
+                        $('#search_inputs').after(productHtml);
+                });
+                }
+                else{
                     response.products.forEach(function(product) {
                         var productHtml = '<div class="card p-3">' +
                             '<div class="row mb-3">' +
@@ -169,8 +206,8 @@ document.getElementById('cancel_product').addEventListener('click', function() {
     dialog.style.display = 'none';
 });
 
-//$('.dropdown-item.modify_product').on('click', function(e) {
-$(document).on('click', '.dropdown-item.modify_product', function(e) {
+$('.dropdown-item.modify_product').on('click', function(e) {
+//$(document).on('click', '.dropdown-item.modify_product', function(e) {
     e.stopPropagation();
 
     var par_product_id = $(this).data('product-id');
@@ -214,8 +251,8 @@ $(document).on('click', '.dropdown-item.modify_product', function(e) {
     })
 });
 
-//$('.dropdown-item.delete_product').on('click', function(e) {
-$(document).on('click', '.dropdown-item.delete_product', function(e) {
+$('.dropdown-item.delete_product').on('click', function(e) {
+//$(document).on('click', '.dropdown-item.delete_product', function(e) {
     e.stopPropagation();
 
     var $this = $(this);

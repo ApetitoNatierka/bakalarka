@@ -15,9 +15,11 @@ class ProductController extends Controller
         $productsQuery = Product::query();
         $productsQuery->where('type', '=', 'product');
 
+        $entity_type = 'product';
+
         $products = $productsQuery->get();
 
-        return view('products', ['user' => $user, 'products' => $products]);
+        return view('products', ['user' => $user, 'products' => $products, 'entity_type' => $entity_type]);
     }
 
     public function get_animals() {
@@ -27,19 +29,21 @@ class ProductController extends Controller
         $productsQuery->where('type', '=', 'animal');
 
         $products = $productsQuery->get();
+        $entity_type = 'animal';
 
-        return view('products', ['user' => $user, 'products' => $products]);
+        return view('products', ['user' => $user, 'products' => $products, 'entity_type' => $entity_type]);
     }
 
     public function get_services() {
         $user = User::find(auth()->id());
 
         $productsQuery = Product::query();
-        $productsQuery->where('type', '=', 'services');
+        $productsQuery->where('type', '=', 'service');
 
         $products = $productsQuery->get();
 
-        return view('products', ['user' => $user, 'products' => $products]);
+        $entity_type = 'service';
+        return view('products', ['user' => $user, 'products' => $products, 'entity_type' => $entity_type]);
     }
 
     public function get_search_products(Request $request) {

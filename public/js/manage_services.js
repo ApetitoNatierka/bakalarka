@@ -62,6 +62,8 @@ document.getElementById('new_service').addEventListener('click', function() {
                                 </svg>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li> <p class="dropdown-item offer_service" id="offer_service"
+                                                            data-service-id="${service.id}">Offer</p></li>
                                 <li><p class="dropdown-item modify_service"
                                        id="modify_service"
                                        data-service-id="${service.id}">Modify</p>
@@ -228,6 +230,8 @@ $(document).ready(function() {
                                 </svg>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li> <p class="dropdown-item offer_service" id="offer_service"
+                                                            data-service-id="${service.id}">Offer</p></li>
                                 <li><p class="dropdown-item modify_service"
                                        id="modify_service"
                                        data-service-id="${service.id}">Modify</p>
@@ -263,3 +267,45 @@ $(document).ready(function() {
     });
 });
 
+document.getElementById('offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    var par_service_id = dialog.getAttribute('data-service-id');
+    var par_price = document.getElementById('new_price_offer').value;
+
+    $.ajax({
+        url: '/offer_service',
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        data: {
+            service_id: par_service_id,
+            price: par_price,
+        },
+        success: function (response) {
+            console.log(response.message);
+            alert('Service offered sucessfully');
+        },
+        error: function (response) {
+            console.error('Error offering service:');
+            console.log('price -> ' + par_price);
+        }
+    });
+    dialog.style.display = 'none';
+});
+
+document.getElementById('cancel_offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    dialog.style.display = 'none';
+});
+
+$(document).on('click', '.dropdown-item.offer_service', function(e) {
+    e.stopPropagation();
+
+    var $this = $(this);
+    var par_service_id = $(this).data('service-id');
+    var dialog = document.getElementById('price_dialog');
+    dialog.setAttribute('data-service-id', par_service_id);
+    dialog.style.display = 'block';
+
+});

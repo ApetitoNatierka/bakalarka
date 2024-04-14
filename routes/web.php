@@ -119,6 +119,8 @@ Route::get('/services', [ProductController::class, 'get_services']);
 
 Route::get('/prod_animals', [ProductController::class, 'get_animals']);
 
+Route::get('/prod_services', [ProductController::class, 'get_services']);
+
 Route::get('/search_products', [ProductController::class, 'get_search_products']);
 
 Route::get('/select_products', [ProductController::class, 'select_products']);
