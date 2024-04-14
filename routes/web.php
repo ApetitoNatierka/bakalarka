@@ -386,6 +386,9 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::get('/select_medical_examinations', [MedicalExaminationController::class, 'select_medical_examinations']);
 
+    Route::get('/get-examination-stats', [MedicalExaminationController::class, 'getExaminationStats']);
+
+
 });
 
 //---------------------------------------------------------------

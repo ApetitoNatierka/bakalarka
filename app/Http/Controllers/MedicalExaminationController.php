@@ -93,4 +93,19 @@ class MedicalExaminationController extends Controller
         return response()->json(['medical_examinations' => $medical_examinations]);
     }
 
+    public function getExaminationStats() {
+        $examinations = MedicalExamination::all();
+        $total = $examinations->count();
+        $data = [];
+
+        foreach ($examinations as $exam) {
+            $count = $exam->medical_treatments->count();
+            $data[] = [
+                'name' => $exam->medical_examination,
+                'percentage' => $total > 0 ? ($count / $total) * 100 : 0
+            ];
+        }
+
+        return response()->json($data);
+    }
 }
