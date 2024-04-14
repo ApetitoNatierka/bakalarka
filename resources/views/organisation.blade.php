@@ -318,7 +318,10 @@
         </form>
     </div>
 
-    <input id="entity_type" type="hidden" value="company">
+    <input id="entity_type" type="hidden" value="organisation">
+    @if(isset($organisation))
+        <input id="address_item_id" type="hidden" value={{$organisation->id}}>
+    @endif
     @if(isset($organisation))
         <input id="organisation_id" type="hidden" value={{$organisation->id}}>
     @endif

@@ -302,6 +302,9 @@
     @if(isset($company))
         <input id="company_id" type="hidden" value={{$company->id}}>
     @endif
+    @if(isset($company))
+        <input id="address_item_id" type="hidden" value={{$company->id}}>
+    @endif
     <script src="{{ asset('js/manage_company_profile.js')}}"></script>
     <script src="{{ asset('js/add_address_line.js')}}"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">

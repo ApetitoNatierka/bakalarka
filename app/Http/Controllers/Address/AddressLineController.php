@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Address;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddressLine;
+use App\Models\Company;
+use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,6 +13,7 @@ class AddressLineController extends Controller
 {
     public function add_new_address_line(Request $request) {
         $validatedData = $request->validate([
+            'address_item_id' => ['required'],
             'entity_type' => ['required'],
             'street' => ['required', 'string'],
             'house_number' => ['required', 'string'],
@@ -20,13 +23,19 @@ class AddressLineController extends Controller
             'country' => ['required', 'string'],
         ]);
 
-        $user = User::find(auth()->id());
 
-        if ($validatedData['entity_type'] = 'user') {
+        if ($validatedData['entity_type'] == 'user') {
+            $user = User::find($validatedData['address_item_id']);
             $address = $user->address;
-        } else
+        }
+        else if ($validatedData['entity_type'] == 'organisation')
         {
-            $company = $user->company;
+            $organisation = Organisation::find($validatedData['address_item_id']);
+            $address = $organisation->address;
+        }
+        else
+        {
+            $company = Company::find($validatedData['address_item_id']);
             $address = $company->address;
         }
 
@@ -44,6 +53,7 @@ class AddressLineController extends Controller
         return response()->json([
             'message' => 'Address line added successfully',
             'address_line' => $address_line,
+            'address'=> $address,
         ]);
     }
 

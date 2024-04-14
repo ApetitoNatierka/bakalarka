@@ -212,6 +212,17 @@
         </form>
     </div>
 
+    <div id="organisation_dialog" class="dialog" style="display: none;" data-order-id="">
+        <form id="organisation_form">
+            @csrf
+            <label>
+                <select id="organisation_select" name="organisation"></select>
+            </label><br>
+            <button type="button" id="print_the_order">Print</button>
+            <button type="button" id="cancel_organisation">Cancel</button>
+        </form>
+    </div>
+
     <script src="{{ asset('js/manage_order_lines.js')}}"></script>
     <script src="{{ asset('js/manage_order.js')}}"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">

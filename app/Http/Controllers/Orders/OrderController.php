@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\AddressLine;
 use App\Models\Order;
 use App\Models\OrderLine;
+use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -200,8 +201,19 @@ class OrderController extends Controller
         ]);
     }
 
-    public function download_order(Order $order)
+    public function download_order(Order $order, Request $request)
     {
+        $organisation_id = $request->query('organisation');
+
+        $organisation = Organisation::find($organisation_id);
+        $organisation_address = Address::find($organisation->address_id);
+
+        if ($organisation_address->addresses) {
+            $organisation_address_line = $organisation_address->addresses->first();
+        }else {
+            $organisation_address_line = null;
+        }
+
         $order->customer_name = $order->customer ? ($order->customer->company ? $order->customer->company->company : $order->customer->name) : '';
 
         $company = (bool)$order->customer->company;
@@ -229,6 +241,16 @@ class OrderController extends Controller
         $filledTemplate = str_replace('%CUSTOMER_POSTAL_CODE%', $customer_address_line->postal_code, $filledTemplate);
         $filledTemplate = str_replace('%CUSTOMER_ICO%', $company ? $customer->ICO : '', $filledTemplate);
         $filledTemplate = str_replace('%CUSTOMER_DIC%', $company ? $customer->DIC : '', $filledTemplate);
+
+        if ($organisation_address_line) {
+            $filledTemplate = str_replace('%ORGANISATION_NAME%', $organisation->organisation, $filledTemplate);
+            $filledTemplate = str_replace('%ORGANISATION_ADDRESS_COUNTRY%', $organisation_address_line->country, $filledTemplate);
+            $filledTemplate = str_replace('%ORGANISATION_ADDRESS_REGION%', $organisation_address_line->region, $filledTemplate);
+            $filledTemplate = str_replace('%ORGANISATION_ADDRESS_CITY%', $organisation_address_line->city, $filledTemplate);
+            $filledTemplate = str_replace('%ORGANISATION_ADDRESS_STREET%', $organisation_address_line->street, $filledTemplate);
+            $filledTemplate = str_replace('%ORGANISATION_ADDRESS_HOUSE_NUMBER%', $organisation_address_line->house_number, $filledTemplate);
+            $filledTemplate = str_replace('%ORGANISATION_POSTAL_CODE%', $organisation_address_line->postal_code, $filledTemplate);
+        }
 
         //created
         $filledTemplate = str_replace('%CREATED_DATE%', $order->get_created(), $filledTemplate);

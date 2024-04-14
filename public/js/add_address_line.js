@@ -13,6 +13,7 @@ document.getElementById('new_address').addEventListener('click', function() {
     var par_house_number = document.getElementById('house_number').value;
     var par_street = document.getElementById('street').value;
     var par_entity_type = document.getElementById('entity_type').value;
+    var par_address_item_id = document.getElementById('address_item_id').value;
 
     if (!par_country) errors.push("Country is required.");
     if (!par_postal_code) errors.push("Postal code is required.");
@@ -41,10 +42,12 @@ document.getElementById('new_address').addEventListener('click', function() {
             region: par_region,
             postal_code: par_postal_code,
             country: par_country,
+            address_item_id: par_address_item_id,
         },
         success: function (response) {
             dialog.style.display = 'none';
-            console.log(response.address_line);
+            console.log(response.address);
+            console.log(par_entity_type);
             var address_line = response.address_line;
 
             var new_row =

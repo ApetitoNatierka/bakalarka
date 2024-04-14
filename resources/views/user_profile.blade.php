@@ -177,6 +177,9 @@
 
 
     <input id="entity_type" type="hidden" value="user">
+    @if(isset($user))
+        <input id="address_item_id" type="hidden" value={{$user->id}}>
+    @endif
 
     <script src="{{ asset('js/manage_user_profile.js')}}"></script>
     <script src="{{ asset('js/add_address_line.js')}}"></script>

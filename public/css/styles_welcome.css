@@ -9,11 +9,12 @@
 .welcome-message {
     font-size: 80px;
     text-align: center;
-    width: 100%;
+    width: 50%;
     margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--text-color);
+    z-index: 1 !important;
 }

@@ -19,6 +19,7 @@ class Company extends Model
         'phone_number',
         'ICO',
         'DIC',
+        'address_id',
     ];
 
     public function address():BelongsTo

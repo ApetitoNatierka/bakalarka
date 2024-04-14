@@ -280,3 +280,45 @@ $(document).ready(function() {
     });
 });
 
+document.getElementById('cancel_organisation').addEventListener('click', function() {
+    var dialog = document.getElementById('organisation_dialog');
+    dialog.style.display = 'none';
+});
+
+document.getElementById('print_the_order').addEventListener('click', function() {
+    var dialog = document.getElementById('organisation_dialog');
+    var par_organisation = $('#organisation_select').val();
+    var orderId = dialog.getAttribute('data-order-id');
+
+    window.location.href = "/download_order/" + orderId + "?organisation=" + encodeURIComponent(par_organisation);
+
+    dialog.style.display = 'none';
+});
+
+$(document).ready(function() {
+    $('#organisation_select').select2({
+        ajax: {
+            url: '/select_organisations',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search_term: params.term,
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response.organisations.map(function(organisation) {
+                        return {id: organisation.id, text: organisation.organisation};
+                    })
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Select a organisation',
+        minimumInputLength: 1,
+        minimumResultsForSearch: 0,
+        width: '100%',
+    });
+});
+
