@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Warehouses;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\Product;
 use App\Models\Supply;
 use App\Models\SupplyNumber;
 use App\Models\Warehouse;
@@ -226,6 +227,26 @@ class SupplyController extends Controller
             'supplies' => $supplies,
             'supply_nos' => $supply_nos,
             'warehouses' => $warehouses
+        ]);
+    }
+
+    public function offer_supply(Request $request) {
+        $validate_data = $request->validate([
+            'supply_id' => ['required'],
+            'price' => ['required'],
+        ]);
+
+        $supply = Supply::find($validate_data['supply_id']);
+        $supply_no  = $supply->supply_number;
+        $product_data['name'] = $supply_no->supply_number;
+        $product_data['description'] = $supply->description;
+        $product_data['price']= $validate_data['price'];
+        $product_data['type'] = 'product';
+        $product_data['units'] = $supply->units;
+        $product = Product::create($product_data);
+
+        return response()->json([
+            'message' => 'Supplly offered successfully',
         ]);
     }
 }

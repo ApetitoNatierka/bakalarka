@@ -130,9 +130,8 @@ document.getElementById('new_supply').addEventListener('click', function() {
                                 </svg>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a href="/supply/${supply.id}"
-                                       class="dropdown-item detail_supply" id="detail_supply"
-                                       data-supply-id="${supply.id}">Detail</a></li>
+                                <li> <p class="dropdown-item offer_supply" id="offer_supply"
+                                        data-supply-id="${supply.id}">Offer</p></li>
                                 <li><p class="dropdown-item modify_supply" id="modify_supply"
                                        data-supply-id="${supply.id}">Modify</p></li>
                                 <li><p class="dropdown-item delete_supply" id="delete_supply"
@@ -191,6 +190,17 @@ $(document).on('click', '.dropdown-item.delete_supply', function(e) {
             console.error('Error deleting supply data:');
         }
     });
+});
+
+$(document).on('click', '.dropdown-item.offer_supply', function(e) {
+    e.stopPropagation();
+
+    var $this = $(this);
+    var par_supply_id = $(this).data('supply-id');
+    var dialog = document.getElementById('price_dialog');
+    dialog.setAttribute('data-supply-id', par_supply_id);
+    dialog.style.display = 'block';
+
 });
 
 $(document).on('click', '.dropdown-item.modify_supply', function(e) {
@@ -337,9 +347,8 @@ $(document).ready(function() {
                 </svg>
                 </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a href="/supply/${supply.id}"
-                               class="dropdown-item detail_supply" id="detail_supply"
-                               data-supply-id="${supply.id}">Detail</a></li>
+                        <li> <p class="dropdown-item offer_supply" id="offer_supply"
+                               data-supply-id="${supply.id}">Offer</p></li>
                         <li><p class="dropdown-item modify_supply" id="modify_supply"
                                data-supply-id="${supply.id}">Modify</p></li>
                         <li><p class="dropdown-item delete_supply" id="delete_supply"
@@ -384,3 +393,34 @@ function createwarehousesSelect(warehouses, selectedId) {
 
     return `<select class="form-control" name="warehouse_id">${optionsHtml}</select>`;
 }
+
+document.getElementById('cancel_offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    dialog.style.display = 'none';
+});
+
+document.getElementById('offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    var par_supply_id = dialog.getAttribute('data-supply-id');
+    var par_price = document.getElementById('new_price').value;
+
+    $.ajax({
+        url: '/offer_supply',
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        data: {
+            supply_id: par_supply_id,
+            price: par_price,
+        },
+        success: function (response) {
+            console.log(response.message);
+            alert('Supply offered sucessfully');
+        },
+        error: function (response) {
+            console.error('Error deleting supply data:');
+        }
+    });
+    dialog.style.display = 'none';
+});

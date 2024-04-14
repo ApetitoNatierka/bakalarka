@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Warehouses;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -99,6 +100,25 @@ class ServiceController extends Controller
         return response()->json([
             'message' => 'Services returned successfully',
             'services' => $services,
+        ]);
+    }
+
+    public function offer_service(Request $request) {
+        $validate_data = $request->validate([
+            'service_id' => ['required'],
+            'price' => ['required'],
+        ]);
+
+        $service = Service::find($validate_data['service_id']);
+        $product_data['name'] = $service->name;
+        $product_data['description'] = $service->description;
+        $product_data['price']= $validate_data['price'];
+        $product_data['type'] = 'service';
+        $product_data['units'] = '-';
+        $product = Product::create($product_data);
+
+        return response()->json([
+            'message' => 'Service offered successfully',
         ]);
     }
 }

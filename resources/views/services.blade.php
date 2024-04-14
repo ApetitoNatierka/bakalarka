@@ -111,6 +111,7 @@
         </form>
     </div>
 
+
     <script src="{{ asset('js/manage_services.js')}}"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 

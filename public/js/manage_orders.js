@@ -52,7 +52,7 @@ document.getElementById('new_order').addEventListener('click', function() {
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a href="/order/${order.id}" class="dropdown-item detail_order" id="detail_order" data-order-id="${order.id}">Detail</a></li>
-                        <li><a href="/download_order/${order.id} " class="dropdown-item download_order" id="download_order" data-order-id="${order.id}">Print</a></li>
+                        <li><p class="dropdown-item print_order" id="print_order" data-order-id="${order.id}">Print</p></li>
                         <li><p class="dropdown-item modify_order" id="modify_order" data-order-id=" ${order.id} ">Modify</p></li>
                         <li><p class="dropdown-item delete_order" id="delete_order" data-order-id=" ${order.id} ">Delete</p></li>
                             </ul>
@@ -221,7 +221,7 @@ $(document).ready(function() {
                         '</button>' +
                         '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton' + order.id + '">' +
                         '<li><a href="/order/' + order.id + '" class="dropdown-item detail_order" id="detail_order" data-order-id="' + order.id + '">Detail</a></li>' +
-                        '<li><a href="/download_order/' + order.id + '" class="dropdown-item download_order" id="download_order" data-order-id="' + order.id + '">Print</a></li>\n' +
+                        '<li><p class="dropdown-item print_order" id="print_order" data-order-id="' + order.id + '">Print</p></li>\n' +
                         '<li><p class="dropdown-item modify_order" id="modify_order" data-order-id="' + order.id + '">Modify</p></li>' +
                         '<li><p class="dropdown-item delete_order" id="delete_order" data-order-id="' + order.id + '">Delete</p></li>' +
                         '</ul>' +
@@ -320,5 +320,16 @@ $(document).ready(function() {
         minimumResultsForSearch: 0,
         width: '100%',
     });
+});
+
+$(document).on('click', '.dropdown-item.print_order', function(e) {
+    e.stopPropagation();
+
+    var $this = $(this);
+    var par_order_id = $(this).data('order-id');
+
+    var dialog = document.getElementById('organisation_dialog');
+    dialog.setAttribute('data-order-id', par_order_id);
+    dialog.style.display = 'block';
 });
 

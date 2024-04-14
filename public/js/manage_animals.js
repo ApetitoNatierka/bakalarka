@@ -104,6 +104,8 @@ document.getElementById('new_animal').addEventListener('click', function() {
                                 <li><a href="/animal/${animal.id}"
                                        class="dropdown-item detail_animal" id="detail_animal"
                                        data-animal-id="${animal.id}">Detail</a></li>
+                                <li> <p class="dropdown-item offer_animal" id="offer_animal"
+                                       data-animal-id="${animal.id}">Offer</p></li>
                                 <li><p class="dropdown-item modify_animal" id="modify_animal"
                                        data-animal-id="${animal.id}">Modify</p></li>
                                 <li><p class="dropdown-item delete_animal" id="delete_animal"
@@ -299,6 +301,8 @@ $(document).ready(function() {
                         <li><a href="/animal/${ animal.id }"
                                class="dropdown-item detail_animal" id="detail_animal"
                                data-animal-id="${ animal.id }">Detail</a></li>
+                        <li> <p class="dropdown-item offer_animal" id="offer_animal"
+                                                            data-animal-id="${animal.id}">Offer</p></li>
                         <li><p class="dropdown-item modify_animal" id="modify_animal"
                                data-animal-id="${ animal.id }">Modify</p></li>
                         <li><p class="dropdown-item delete_animal" id="delete_animal"
@@ -380,3 +384,50 @@ function createwarehousesSelect(warehouses, selectedId) {
 
     return `<select class="form-control" name="warehouse_id">${optionsHtml}</select>`;
 }
+
+
+document.getElementById('offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    var par_animal_id = dialog.getAttribute('data-animal-id');
+    var par_price = document.getElementById('new_price').value;
+
+    console.log("Sending animal ID:", par_animal_id);
+    console.log("Sending price:", par_price);
+
+    $.ajax({
+        url: '/offer_animal',
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        data: {
+            animal_id: par_animal_id,
+            price: par_price,
+        },
+        success: function (response) {
+            console.log(response.message);
+            alert('Animal offered sucessfully');
+        },
+        error: function(xhr) {
+            console.error("Error:", xhr.responseText);
+            alert('Error: ' + xhr.responseJSON.error + "\nMessage: " + xhr.responseJSON.message);
+        }
+    });
+    dialog.style.display = 'none';
+});
+
+document.getElementById('cancel_offer').addEventListener('click', function() {
+    var dialog = document.getElementById('price_dialog');
+    dialog.style.display = 'none';
+});
+
+$(document).on('click', '.dropdown-item.offer_animal', function(e) {
+    e.stopPropagation();
+
+    var $this = $(this);
+    var par_animal_id = $(this).data('animal-id');
+    var dialog = document.getElementById('price_dialog');
+    dialog.setAttribute('data-animal-id', par_animal_id);
+    dialog.style.display = 'block';
+
+});

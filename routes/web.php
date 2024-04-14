@@ -299,6 +299,8 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::post('/add_animal', [AnimalController::class, 'add_animal']);
 
+    Route::post('/offer_animal', [AnimalController::class, 'offer_animal']);
+
     Route::post('/delete_animal', [AnimalController::class, 'delete_animal']);
 
     Route::post('/modify_animal', [AnimalController::class, 'modify_animal']);
@@ -335,6 +337,8 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     Route::post('/delete_supply', [SupplyController::class, 'delete_supply']);
 
+    Route::post('/offer_supply', [SupplyController::class, 'offer_supply']);
+
     Route::post('/modify_supply', [SupplyController::class, 'modify_supply']);
 
     Route::get('/search_supplies', [SupplyController::class, 'get_search_supplies']);
@@ -350,6 +354,8 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::get('/services', [ServiceController::class, 'get_services']);
 
     Route::post('/add_service', [ServiceController::class, 'add_service']);
+
+    Route::post('/offer_service', [ServiceController::class, 'offer_service']);
 
     Route::post('/delete_service', [ServiceController::class, 'delete_service']);
 

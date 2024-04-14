@@ -58,9 +58,8 @@
                                                     </svg>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <li><a href="/supply/{{$supply->id}}"
-                                                           class="dropdown-item detail_supply" id="detail_supply"
-                                                           data-supply-id="{{ $supply->id }}">Detail</a></li>
+                                                    <li> <p class="dropdown-item offer_supply" id="offer_supply"
+                                                           data-supply-id="{{ $supply->id }}">Offer</p></li>
                                                     <li><p class="dropdown-item modify_supply" id="modify_supply"
                                                            data-supply-id="{{ $supply->id }}">Modify</p></li>
                                                     <li><p class="dropdown-item delete_supply" id="delete_supply"
@@ -144,6 +143,17 @@
             </label><br>
             <button type="button" id="new_supply">New</button>
             <button type="button" id="cancel_supply">Cancel</button>
+        </form>
+    </div>
+
+    <div id="price_dialog" class="dialog" style="display: none;" data-supply-id="">
+        <form id="price_form">
+            @csrf
+            <label>
+                <input type="number" name="price" id="new_price" placeholder="price">
+            </label><br>
+            <button type="button" id="offer">Offer</button>
+            <button type="button" id="cancel_offer">Cancel</button>
         </form>
     </div>
 

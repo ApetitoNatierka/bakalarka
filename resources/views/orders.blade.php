@@ -51,7 +51,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <li><a href="/order/{{$order->id}}" class="dropdown-item detail_order" id="detail_order" data-order-id="{{ $order->id }}">Detail</a></li>
-                                                    <li><a href="/download_order/{{$order->id}}" class="dropdown-item download_order" id="download_order" data-order-id="{{ $order->id }}">Print</a></li>
+                                                    <li><p class="dropdown-item print_order" id="print_order" data-order-id="{{ $order->id }}">Print</p></li>
                                                     <li><p class="dropdown-item modify_order" id="modify_order" data-order-id="{{ $order->id }}">Modify</p></li>
                                                     <li><p class="dropdown-item delete_order" id="delete_order" data-order-id="{{ $order->id }}">Delete</p></li>
                                                 </ul>
