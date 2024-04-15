@@ -1,0 +1,15 @@
+.card-body label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.card-body input[type="text"],
+.card-body input[type="number"],
+.card-body textarea,
+.card-body select {
+    width: 100%; /* Šírka na celú šírku kontajnera */
+    padding: 8px; /* Vnútorný okraj */
+    box-sizing: border-box; /* Box sizing */
+    border: 1px solid #ccc; /* Ohraničenie */
+    border-radius: 4px; /* Zaoblené rohy */
+}

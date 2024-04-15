@@ -3,6 +3,8 @@
 @section('content')
 
     <link href="{{ asset('css/styles_table.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles_products.css') }}" rel="stylesheet">
+
     <div class="container" data-product-image-path="{{ asset('images/products.webp') }}">
         <div class="card shadow">
             <div class="card-body">

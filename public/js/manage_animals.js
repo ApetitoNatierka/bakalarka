@@ -432,37 +432,58 @@ $(document).on('click', '.dropdown-item.offer_animal', function(e) {
 
 });
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    var statsModal = document.getElementById('statsModal');
-    statsModal.addEventListener('show.bs.modal', function () {
-        fetch('/get-examination-stats')
-            .then(response => response.json())
-            .then(data => {
-                var ctx = document.getElementById('examinationsChart').getContext('2d');
-                var chart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: data.map(item => item.name),
-                        datasets: [{
-                            label: 'Medical Examination Usage',
-                            data: data.map(item => item.percentage),
-                            backgroundColor: [
-                                'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'cyan'
-                            ],
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                        }
-                    }
-                });
-            })
-            .catch(error => console.error('Error loading the data:', error));
-    });
+document.getElementById('show_date_dialog').addEventListener('click', function() {
+    var dialog = document.getElementById('date_dialog');
+    dialog.style.display = 'block';
 });
+
+document.getElementById('cancel_date_button').addEventListener('click', function() {
+    var dialog = document.getElementById('date_dialog');
+    dialog.style.display = 'none';
+});
+
+let my_chart = null;
+document.getElementById('date_button').addEventListener('click', function() {
+    document.getElementById('date_dialog').style.display = 'none';
+    var date_from = document.getElementById('date_from').value;
+    var date_to = document.getElementById('date_to').value;
+
+    fetch('/get-examination-stats?date_from=' + date_from + '&date_to=' + date_to)
+        .then(response => response.json())
+        .then(data => {
+            showGraphModal(data);
+        })
+        .catch(error => console.error('Error fetching the data:', error));
+
+});
+
+function showGraphModal(data) {
+    var ctx = document.getElementById('examinationsChart').getContext('2d');
+    if (my_chart) {
+        my_chart.destroy();
+    }
+    my_chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: data.map(item => item.name),
+            datasets: [{
+                label: 'Medical Examination Usage',
+                data: data.map(item => item.percentage),
+                backgroundColor: [
+                    'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'cyan'
+                ],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            }
+        }
+    });
+
+    $('#statsModal').modal('show');
+}

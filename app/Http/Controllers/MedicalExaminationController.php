@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\MedicalExamination;
+use App\Models\MedicalTreatment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class MedicalExaminationController extends Controller
 {
-    public function get_medical_examinations() {
+    public function get_medical_examinations()
+    {
         $medical_examinations = MedicalExamination::all();
 
         return view('medical_examinations', ['medical_examinations' => $medical_examinations]);
     }
 
-    public function add_medical_examination(Request $request) {
+    public function add_medical_examination(Request $request)
+    {
         $validate_data = $request->validate([
             'medical_examination' => ['required', Rule::unique('medical_examinations', 'medical_examination')],
             'description' => ['required'],
@@ -25,7 +29,8 @@ class MedicalExaminationController extends Controller
         return response()->json(['message' => 'Medical examination created successfully', 'medical_examination' => $medical_examination]);
     }
 
-    public function delete_medical_examination(Request $request) {
+    public function delete_medical_examination(Request $request)
+    {
         $validate_data = $request->validate([
             'medical_examination_id' => ['required'],
         ]);
@@ -37,7 +42,8 @@ class MedicalExaminationController extends Controller
         return response()->json(['message' => 'Medical examination deleted successfully']);
     }
 
-    public function modify_medical_examination(Request $request) {
+    public function modify_medical_examination(Request $request)
+    {
         $validate_data = $request->validate([
             'medical_examination_id' => ['required'],
             'medical_examination' => ['required'],
@@ -53,7 +59,8 @@ class MedicalExaminationController extends Controller
         return response()->json(['message' => 'Medical examination modified successfully']);
     }
 
-    public function get_search_medical_examinations(Request $request) {
+    public function get_search_medical_examinations(Request $request)
+    {
         $medical_examination_id = $request->input('medical_examination_id', null);
         $medical_examination = $request->input('medical_examination', null);
         $description = $request->input('description', null);
@@ -86,26 +93,46 @@ class MedicalExaminationController extends Controller
         ]);
     }
 
-    public function select_medical_examinations(Request $request) {
+    public function select_medical_examinations(Request $request)
+    {
         $search_term = $request->search_term;
         $medical_examinations = MedicalExamination::where('medical_examination', 'like', '%' . $search_term . '%')->get();
 
         return response()->json(['medical_examinations' => $medical_examinations]);
     }
 
-    public function getExaminationStats() {
-        $examinations = MedicalExamination::all();
-        $total = $examinations->count();
-        $data = [];
 
-        foreach ($examinations as $exam) {
-            $count = $exam->medical_treatments->count();
-            $data[] = [
-                'name' => $exam->medical_examination,
-                'percentage' => $total > 0 ? ($count / $total) * 100 : 0
-            ];
-        }
+    public function getExaminationStats(Request $request) {
 
-        return response()->json($data);
+            $date_from = $request->query('date_from');
+            $date_to = $request->query('date_to');
+
+            $query = MedicalTreatment::query();
+
+            if ($date_from && $date_to) {
+                $query->whereBetween('start', [$date_from, $date_to]);
+            } elseif ($date_from) {
+                $query->where('start', '>=', $date_from);
+            } elseif ($date_to){
+                $query->where('start', '<=', $date_to);
+            }
+
+            $treatments = $query->get();
+            $examination_ids = $treatments->pluck('medical_examination_id')->unique();
+            $examinations = MedicalExamination::whereIn('id', $examination_ids)->get();
+            $total = $treatments->count();
+            $data = [];
+            $examination_counts = $treatments->countBy('medical_examination_id');
+
+            foreach ($examinations as $exam) {
+                $count = $examination_counts[$exam->id] ?? 0;
+                $data[] = [
+                    'name' => $exam->medical_examination,
+                    'percentage' => $total > 0 ? ($count / $total) * 100 : 0
+                ];
+            }
+
+            return response()->json($data);
     }
+
 }

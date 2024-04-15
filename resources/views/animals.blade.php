@@ -20,7 +20,7 @@
                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                     </svg>
                 </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#statsModal">
+                <button type="button" class="btn btn-primary" id="show_date_dialog">
                     Show Stats
                 </button>
                 <hr>
@@ -159,21 +159,29 @@
         </form>
     </div>
 
+    <div id="date_dialog" class="dialog" style="display: none;">
+        <form id="date_form">
+            @csrf
+            <label>Date from<br>
+                <input type="date" name="date_from" id="date_from" placeholder="Date from">
+            </label><br>
+            <label>Date to<br>
+                <input type="date" name="date_to" id="date_to" placeholder="Date to">
+            </label><br>
+            <button type="button" id="date_button">Show</button>
+            <button type="button" id="cancel_date_button">Cancel</button>
+        </form>
+    </div>
+
     <!-- Modal -->
     <div class="modal fade" id="statsModal" tabindex="-1" role="dialog" aria-labelledby="statsModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="statsModalLabel">Medical Examination Usage</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <canvas id="examinationsChart"></canvas>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
