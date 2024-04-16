@@ -146,7 +146,6 @@
 
             <input id="entity_type" type="hidden" value="{{$entity_type}}">
     <script src="{{ asset('js/manage_products.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
 @endsection

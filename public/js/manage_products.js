@@ -206,10 +206,12 @@ document.getElementById('cancel_product').addEventListener('click', function() {
     dialog.style.display = 'none';
 });
 
-//$('.dropdown-item.modify_product').on('click', function(e) {
-$(document).on('click', '.dropdown-item.modify_product', function(e) {
+
+$('.dropdown-item.modify_product').on('click', function(e) {
+//$(document).on('click', '.dropdown-item.modify_product', function(e) {
     e.stopPropagation();
 
+    console.log('jjj');
     var par_product_id = $(this).data('product-id');
 
     var $productContainer = $(this).closest('.product[data-product-id="' + par_product_id + '"]');
@@ -251,9 +253,11 @@ $(document).on('click', '.dropdown-item.modify_product', function(e) {
     })
 });
 
-//$('.dropdown-item.delete_product').on('click', function(e) {
-$(document).on('click', '.dropdown-item.delete_product', function(e) {
+$('.dropdown-item.delete_product').on('click', function(e) {
+//$(document).on('click', '.dropdown-item.delete_product', function(e) {
     e.stopPropagation();
+
+    console.log('nnn');
 
     var $this = $(this);
     var par_product_id = $(this).data('product-id');
@@ -278,6 +282,7 @@ $(document).on('click', '.dropdown-item.delete_product', function(e) {
         }
     })
 });
+
 
 $(document).ready(function() {
 
