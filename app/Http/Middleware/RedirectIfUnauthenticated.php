@@ -16,7 +16,6 @@ class RedirectIfUnauthenticated
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            // Presmerovanie na stránku prihlásenia
             return redirect('/sign_in');
         }
 

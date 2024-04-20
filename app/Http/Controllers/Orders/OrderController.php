@@ -228,7 +228,6 @@ class OrderController extends Controller
         $templatePath = resource_path('tex/order_template.tex');
         $templateContent = file_get_contents($templatePath);
 
-        // Nahradenie placeholderov reálnymi dátami
         $filledTemplate = str_replace('%ORDER_ID%', $order->id, $templateContent);
 
         //Customer Address
@@ -257,18 +256,7 @@ class OrderController extends Controller
 
         $orderLinesLatex = "";
         $line_no = 0;
-        /*
-        foreach ($order_lines as $order_line) {
-            $line_no++;
-            $product = $order_line->product;
 
-            $orderLinesLatex .= "\\hline\n";
-            $orderLinesLatex .= "\\multicolumn{1}{|c|}{$line_no} & \multicolumn{2}{c|}{$product->id} & \multicolumn{2}{c|}{$product->description} & {$product->name} \\";
-            $orderLinesLatex .= "\\hline\n";
-            $orderLinesLatex .= "{$order_line->quantity} & {$order_line->units} & {$order_line->unit_price} & {$order_line->vat_percentage} & {$order_line->get_total_net_amount()} & {$order_line->get_total_gross_amount()} \\";
-            $orderLinesLatex .= "\\hline\n";
-        }
-        */
         foreach ($order_lines as $order_line) {
             $line_no++;
             $product = $order_line->product;
@@ -292,29 +280,24 @@ class OrderController extends Controller
         $filledTemplate = str_replace('%TOTAL_NET_AMOUNT%', $order->get_total_net_amount(), $filledTemplate);
         $filledTemplate = str_replace('%TOTAL_GROSS_AMOUNT%', $order->get_total_gross_amount(), $filledTemplate);
 
-        // Uloženie dočasného LaTeX súboru
         $texFilePath = 'order_' . time() . '.tex';
+
         Storage::disk('pdfs')->put($texFilePath, $filledTemplate);
 
-        // Cesta k dočasnému LaTeX súboru
         $texFileFullPath = Storage::disk('pdfs')->path($texFilePath);
 
-        // Spustenie LaTeX kompilátora a generovanie PDF
-       // $command = "pdflatex -interaction=nonstopmode -output-directory=" . escapeshellarg(dirname($texFileFullPath)) . " " . escapeshellarg($texFileFullPath);
-        //$command .= " 2>&1";
         $command = "C:\\texlive\\2024\\bin\\windows\\pdflatex -interaction=nonstopmode -output-directory=" . escapeshellarg(dirname($texFileFullPath)) . " " . escapeshellarg($texFileFullPath);
         $command .= " 2>&1";
 
         exec($command, $output, $returnVar);
         if ($returnVar !== 0) {
-            // Kompilácia zlyhala, vypíšte chyby
             return response()->json(['error' => 'LaTeX compilation failed', 'details' => implode("\n", $output)], 500);
         }
 
         // Odstránenie dočasného .tex súboru
         Storage::disk('pdfs')->delete($texFilePath);
 
-        // Názov generovaného PDF súboru (predpokladáme rovnaký názov ako .tex s výnimkou prípony)
+        // Názov generovaného PDF súboru
         $pdfFileName = str_replace('.tex', '.pdf', $texFilePath);
 
         // Vrátenie PDF súboru užívateľovi

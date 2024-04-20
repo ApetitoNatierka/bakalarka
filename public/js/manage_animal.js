@@ -260,7 +260,7 @@ $(document).ready(function() {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             data: {
-                medical_treatment: par_medical_treatment_id,
+                medical_treatment_id: par_medical_treatment_id,
             },
             success: function (response) {
                 console.log(response.message);
@@ -269,6 +269,7 @@ $(document).ready(function() {
                 });
             },
             error: function (response) {
+                console.log(par_medical_treatment_id);
                 console.error('Error deleting employee data:');
             }
         })

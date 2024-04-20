@@ -223,7 +223,6 @@
         </form>
     </div>
 
-    <script src="{{ asset('js/manage_order_lines.js')}}"></script>
     <script src="{{ asset('js/manage_order.js')}}"></script>
     <meta name="csrf-token" content="tu_je_vasho_csrf_tokenu">
 
