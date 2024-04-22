@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Warehouses;
 use App\Http\Controllers\Controller;
 use App\Models\AnimalNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class AnimalNumberController extends Controller
@@ -16,12 +17,19 @@ class AnimalNumberController extends Controller
     }
 
     public function add_animal_number(Request $request) {
-        $validate_data = $request->validate([
+        $validator = Validator::make($request->all(), [
             'animal_number' => ['required', Rule::unique('animal_numbers', 'animal_number')],
             'description' => ['required'],
         ]);
 
-        $animal_number =  AnimalNumber::create($validate_data);
+        if ($validator->fails()) {
+            if ($validator->errors()->has('animal_number')) {
+                return response()->json(['message' => 'Animal number already exists', 'errors' => $validator->errors()], 422);
+            }
+            return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
+        }
+
+        $animal_number = AnimalNumber::create($validator->validated());
 
         return response()->json(['message' => 'Animal number created successfully', 'animal_number' => $animal_number]);
 

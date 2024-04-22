@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Warehouses;
 use App\Http\Controllers\Controller;
 use App\Models\SupplyNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class SupplyNumberController extends Controller
 {
@@ -15,12 +17,19 @@ class SupplyNumberController extends Controller
     }
 
     public function add_supply_number(Request $request) {
-        $validate_data = $request->validate([
-            'supply_number' => ['required'],
+        $validator = Validator::make($request->all(), [
+            'supply_number' => ['required', Rule::unique('supply_numbers', 'supply_number')],
             'description' => ['required'],
         ]);
 
-        $supply_number = SupplyNumber::create($validate_data);
+        if ($validator->fails()) {
+            if ($validator->errors()->has('supply_number')) {
+                return response()->json(['message' => 'Supply number already exists', 'errors' => $validator->errors()], 422);
+            }
+            return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
+        }
+
+        $supply_number = SupplyNumber::create($validator->validated());
 
         return response()->json(['message' => 'Supply number created successfully', 'supply_number' => $supply_number]);
     }

@@ -70,9 +70,14 @@ document.getElementById('new_animal_number').addEventListener('click', function(
                 </tr>`;
             $('.animal_number_table tbody').append(new_row);
         },
-        error: function (error) {
-            console.error('Error adding animal number:', error);
-            console.log(par_animal_no, par_description);
+        error: function (xhr) {
+            console.error('Error adding animal number:', xhr);
+            if (xhr.status === 422) {
+                var response = JSON.parse(xhr.responseText);
+                alert(response.message);
+            } else {
+                alert('An unexpected error occurred.');
+            }
         }
     });
 });

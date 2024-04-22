@@ -73,9 +73,14 @@ document.getElementById('new_supply_number').addEventListener('click', function(
                 </tr>`;
             $('.supply_number_table tbody').append(new_row);
         },
-        error: function(error) {
-            console.error('Error adding supply number:', error);
-            console.log(par_supply_no, par_description);
+        error: function (xhr) {
+            console.error('Error adding supply number:', xhr);
+            if (xhr.status === 422) {
+                var response = JSON.parse(xhr.responseText);
+                alert(response.message);
+            } else {
+                alert('An unexpected error occurred.');
+            }
         }
     });
 });

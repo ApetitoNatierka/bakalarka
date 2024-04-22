@@ -9,6 +9,11 @@
     <title>Sign in</title>
 </head>
 <body>
+@if (session('loginError'))
+    <div class="alert alert-danger">
+        {{ session('loginError') }}
+    </div>
+@endif
 <div class="container-fluid">
     <div class="card login-card">
         <div class="card-body">
