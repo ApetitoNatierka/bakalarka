@@ -234,19 +234,16 @@ class AnimalController extends Controller
 
     public function offer_animal(Request $request) {
         try {
-            // Validácia vstupov
             $validate_data = $request->validate([
                 'animal_id' => ['required', 'exists:animals,id'],
-                'price' => ['required', 'numeric', 'min:0']
+                'price' => ['required', 'numeric', 'min:1']
             ]);
 
-            // Načítanie zvieraťa z databázy
             $animal = Animal::find($validate_data['animal_id']);
             if (!$animal) {
                 throw new \Exception('Animal not found.');
             }
 
-            // Priradenie hodnôt pre nový produkt
             $animal_no = $animal->animal_number;
             $product_data = [
                 'name' => $animal_no->animal_number,
@@ -256,22 +253,18 @@ class AnimalController extends Controller
                 'units' => '-'
             ];
 
-            // Vytvorenie nového produktu
             $product = Product::create($product_data);
             if (!$product) {
                 throw new \Exception('Failed to create product.');
             }
 
-            // Úspešná odpoveď
             return response()->json([
                 'message' => 'Animal offered successfully',
             ]);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Chyba pri validácii
             return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
         } catch (\Exception $e) {
-            // Všeobecná chyba
             return response()->json(['error' => 'An error occurred', 'message' => $e->getMessage()], 500);
         }
     }

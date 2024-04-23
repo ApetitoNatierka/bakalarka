@@ -317,8 +317,15 @@ $(document).ready(function() {
                 var show_cart_dialog = document.getElementById('show_cart_dialog');
                 show_cart_dialog.style.display = 'block';
             },
-            error: function (response) {
-                console.error('Error adding product to cart:');
+            error: function (xhr) {
+                var response = JSON.parse(xhr.responseText);
+                console.error('Error adding product to cart:', response.errors);
+
+                if (response.errors.quantity) {
+                    alert('Error: ' + response.errors.quantity[0]);
+                } else {
+                    alert('Error: ' + response.message);
+                }
             }
         });
     });

@@ -7,6 +7,7 @@ use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -22,10 +23,25 @@ class CartController extends Controller
 
     public function add_to_cart(Request $request)
     {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'product_id' => ['required'],
-            'quantity' => ['required'],
+            'quantity' => ['required', 'numeric', 'min:1'],
         ]);
+
+        if ($validator->fails()) {
+            if ($validator->errors()->has('quantity')) {
+                return response()->json([
+                    'message' => 'The quantity must be greater than zero.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $validatedData = $validator->validated();
 
         $user = User::find(auth()->id());
 
