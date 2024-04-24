@@ -119,6 +119,33 @@ class UserController extends Controller
 
     }
 
+    public function add_new_user(Request $request) {
+        $incoming_fields_ = $request->validate([
+            'name' => ['required', 'min:3', 'max:15', Rule::unique('users', 'name')],
+            'email' => ['required', 'email', Rule::unique('users', 'email')],
+            'phone_number' => ['required', 'string'],
+            'company_position' => ['required', 'string'],
+            'password' => ['required', 'min:8', 'max:200', Rule::unique('users', 'password')],
+        ]);
+
+        $incoming_fields_['password'] = bcrypt($incoming_fields_['password']);
+
+        $address_vales['name'] = '';
+
+        $address = Address::create($address_vales);
+
+        $incoming_fields_['address_id'] = $address->id;
+
+
+        $user_line = User::create($incoming_fields_);
+
+        return response()->json([
+            'message' => 'User added successfully',
+            'user_line' => $user_line,
+        ]);
+
+    }
+
     public function modify_user_line(Request $request) {
         $validatedData = $request->validate([
             'user_line_id' => ['required'],
@@ -155,6 +182,12 @@ class UserController extends Controller
         $users = User::where('name', 'like', '%' . $search_term . '%')->get();
 
         return response()->json(['users' => $users]);
+    }
+
+    public function get_users() {
+        $users = User::all();
+
+        return view('users', ['users' => $users]);
     }
 
 }

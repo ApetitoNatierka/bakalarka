@@ -43,6 +43,8 @@ class EmployeeController extends Controller
         $employee->phone_number = $employee->user->phone_number;
 
         $user = $employee->user;
+        $user->role = 'employee';
+        $user->save();
 
         return response()->json(['message' => 'Employee created successfully', 'employee' => $employee, 'user' => $user]);
 

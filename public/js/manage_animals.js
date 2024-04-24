@@ -410,7 +410,7 @@ document.getElementById('offer').addEventListener('click', function() {
         },
         error: function(xhr) {
             console.error("Error:", xhr.responseText);
-            alert('Error: ' + xhr.responseJSON.error + "\nMessage: " + xhr.responseJSON.message);
+            alert(xhr.responseJSON.message);
         }
     });
     dialog.style.display = 'none';
@@ -447,6 +447,11 @@ document.getElementById('date_button').addEventListener('click', function() {
     document.getElementById('date_dialog').style.display = 'none';
     var date_from = document.getElementById('date_from').value;
     var date_to = document.getElementById('date_to').value;
+
+    if (date_from > date_to) {
+        alert('Date from cannot be greater than date to !');
+        return;
+    }
 
     fetch('/get-examination-stats?date_from=' + date_from + '&date_to=' + date_to)
         .then(response => response.json())

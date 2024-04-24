@@ -10,6 +10,7 @@ use App\Models\MedicalExamination;
 use App\Models\Product;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use function PHPUnit\Framework\isNull;
 use function Symfony\Component\String\b;
 
@@ -233,13 +234,29 @@ class AnimalController extends Controller
     }
 
     public function offer_animal(Request $request) {
-        try {
-            $validate_data = $request->validate([
-                'animal_id' => ['required', 'exists:animals,id'],
-                'price' => ['required', 'numeric', 'min:1']
-            ]);
+
+        $validator = Validator::make($request->all(), [
+            'animal_id' => ['required', 'exists:animals,id'],
+            'price' => ['required', 'numeric', 'min:1']
+        ]);
+
+        if ($validator->fails()) {
+            if ($validator->errors()->has('price')) {
+                return response()->json([
+                    'message' => 'The price must be greater than zero.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $validate_data = $validator->validated();
 
             $animal = Animal::find($validate_data['animal_id']);
+
             if (!$animal) {
                 throw new \Exception('Animal not found.');
             }
@@ -262,10 +279,5 @@ class AnimalController extends Controller
                 'message' => 'Animal offered successfully',
             ]);
 
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred', 'message' => $e->getMessage()], 500);
-        }
     }
 }

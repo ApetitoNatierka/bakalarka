@@ -404,3 +404,15 @@ Route::middleware(['auth.redirect'])->group(function () {
     Route::post('/modify_medical_treatment', [MedicalTreatmentController::class, 'modify_medical_treatment']);
 
 });
+
+//---------------------------------------------------------------
+//-----------------------Users-----------------------------------
+//---------------------------------------------------------------
+
+Route::middleware(['auth.redirect'])->group(function () {
+
+    Route::get('/users', [UserController::class, 'get_users']);
+
+    Route::post('/add_new_user', [UserController::class, 'add_new_user']);
+
+});

@@ -66,6 +66,18 @@
                 </ul>
             </div>
         </li>
+        @if(auth()->user()->get_role() == 'admin')
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
+                Users
+            </button>
+            <div class="collapse" id="user-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/users" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Users</a></li>
+                </ul>
+            </div>
+        </li>
+        @endauth
         <li class="border-top my-3"></li>
     </ul>
 </div>
