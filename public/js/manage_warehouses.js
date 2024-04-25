@@ -113,6 +113,7 @@ document.getElementById('new_warehouse').addEventListener('click', function() {
                                                    value="${warehouse.manager_name}"></td>
                 </tr>`;
             $('.warehouse_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (error) {
             console.error('Error adding warehouse:', error);
@@ -142,6 +143,7 @@ $(document).on('click', '.dropdown-item.delete_warehouse', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting warehouse data:');
@@ -178,6 +180,7 @@ $(document).on('click', '.dropdown-item.modify_warehouse', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying warehouse data:');

@@ -174,6 +174,7 @@ $(document).ready(function() {
                                     '</div>';
 
                 $('.card-body').append(new_row);
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error saving user data:');
@@ -242,6 +243,7 @@ $('.dropdown-item.modify_product').on('click', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying product data:');
@@ -276,6 +278,7 @@ $('.dropdown-item.delete_product').on('click', function(e) {
             $this.closest('.product[data-product-id="' + par_product_id + '"]').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting product data:');

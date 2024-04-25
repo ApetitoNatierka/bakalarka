@@ -73,6 +73,8 @@ document.getElementById('new_address').addEventListener('click', function() {
                     <td><input type="text" class="form-control" name="country" value="${address_line.country}"></td>
                 </tr>`;
 
+            alert(response.message);
+
             $('.address_line_table tbody').append(new_row);
         },
         error: function (response) {
@@ -81,10 +83,11 @@ document.getElementById('new_address').addEventListener('click', function() {
     });
 });
 
-//$('.dropdown-item.modify_address_line').on('click', function(e) {
-$(document).on('click', '.dropdown-item.modify_address_line', function(e) {
+$('.dropdown-item.modify_address_line').on('click', function(e) {
+//$(document).on('click', '.dropdown-item.modify_address_line', function(e) {
 
-        e.stopPropagation();
+    e.stopPropagation();
+    e.preventDefault();
 
     var par_address_line_id = $(this).data('address-line-id');
     var par_entity_type = document.getElementById('entity_type').value;
@@ -117,6 +120,7 @@ $(document).on('click', '.dropdown-item.modify_address_line', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying adddress data:');
@@ -124,10 +128,12 @@ $(document).on('click', '.dropdown-item.modify_address_line', function(e) {
     })
 });
 
-//$('.dropdown-item.delete_address_line').on('click', function(e) {
-$(document).on('click', '.dropdown-item.delete_address_line', function(e) {
+
+$('.dropdown-item.delete_address_line').on('click', function(e) {
+//$(document).on('click', '.dropdown-item.delete_address_line', function(e) {
 
     e.stopPropagation();
+    e.preventDefault();
 
     var $this = $(this);
     var par_address_line_id = $(this).data('address-line-id');
@@ -148,6 +154,7 @@ $(document).on('click', '.dropdown-item.delete_address_line', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting address data:');

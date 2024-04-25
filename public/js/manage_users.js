@@ -54,6 +54,7 @@ document.getElementById('new_user').addEventListener('click', function() {
                 </tr>`;
 
             $('.user_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error saving user data:');
@@ -89,6 +90,7 @@ $('.dropdown-item.modify_user').on('click', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.log(par_name, par_user_line_id, par_email, par_phone_number, par_company_position);
@@ -117,6 +119,7 @@ $('.dropdown-item.delete_user').on('click', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting user data:');

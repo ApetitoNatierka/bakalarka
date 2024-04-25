@@ -86,6 +86,7 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log(response.message);
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error saving organisation data:');
@@ -141,15 +142,17 @@ $(document).ready(function() {
                 $this.closest('tr').fadeOut(500, function() {
                     $(this).remove();
                 });
+                alert(response.message);
             },
             error: function (response) {
+                console.log(par_employee_id);
                 console.error('Error deleting employee data:');
             }
         })
     });
 });
 
-$('.dropdown-item.modify_emplyee_line').on('click', function(e) {
+$('.dropdown-item.modify_employee_line').on('click', function(e) {
 
     e.stopPropagation();
     e.preventDefault();
@@ -184,7 +187,8 @@ $('.dropdown-item.modify_emplyee_line').on('click', function(e) {
             phone_number: par_phone_number,
         },
         success: function (response) {
-            console.log(response.employees);
+            console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying item data:');
@@ -298,6 +302,7 @@ document.getElementById('new_employee').addEventListener('click', function() {
                                value="${employee.phone_number}"></td>
                 </tr>`;
             $('.employee_line_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function(xhr, status, error) {
             console.error('Error saving Order data:')

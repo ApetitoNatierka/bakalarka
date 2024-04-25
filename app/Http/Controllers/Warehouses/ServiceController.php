@@ -38,7 +38,7 @@ class ServiceController extends Controller
 
         $service->delete();
 
-        return response()->json(['message' => 'service_id number deleted successfully']);
+        return response()->json(['message' => 'service  deleted successfully']);
     }
 
     public function modify_service(Request $request)

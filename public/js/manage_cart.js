@@ -46,6 +46,7 @@ $('.dropdown-item.delete_cart_item').on('click', function(e) {
             $this.closest('.cart_item[data-cart-item-id="' + par_cart_item_id + '"]').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting product data:');
@@ -78,6 +79,7 @@ $('.dropdown-item.modify_cart_item').on('click', function(e) {
             var totalPrice = par_quantity * response.unit_price;
             $cart_container.find('.total-price').text(totalPrice.toFixed(2));
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying product data:');

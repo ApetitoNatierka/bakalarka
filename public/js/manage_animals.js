@@ -129,7 +129,8 @@ document.getElementById('new_animal').addEventListener('click', function() {
                                        <td>${createwarehousesSelect(warehouses, animal.warehouse_id)}</td>
                 </tr>`;
             $('.animals_table tbody').append(new_row);
-            console.log(animal.warehouse_id)
+            console.log(animal.warehouse_id);
+            alert(response.message);
         },
         error: function (error) {
             console.error('Error adding animal:', error);
@@ -158,6 +159,7 @@ $(document).on('click', '.dropdown-item.delete_animal', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting animal data:');
@@ -201,6 +203,7 @@ $(document).on('click', '.dropdown-item.modify_animal', function(e) {
         success: function (response) {
             console.log(response.message);
             console.log(par_warehouse_id);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying animal data:');

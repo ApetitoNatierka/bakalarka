@@ -16,6 +16,7 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log(response.message);
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error saving order data:');
@@ -161,6 +162,7 @@ document.getElementById('new_order_line').addEventListener('click', function() {
 
             $('.order_lines_table tbody').append(new_row);
             actualise_total_amounts(order_line.total_net_amount, order_line.total_gross_amount);
+            alert(response.message);
         },
         error: function(xhr, status, error) {
            console.error('Error saving Order data:')
@@ -227,6 +229,7 @@ $('.dropdown-item.modify_order_line').on('click', function(e) {
             $row.find('input[name="total_order_line_net_amount"]').val(order_line.total_order_line_net_amount);
             $row.find('input[name="total_order_line_gross_amount"]').val(order_line.total_order_line_gross_amount);
             actualise_total_amounts(order_line.total_net_amount, order_line.total_gross_amount);
+            alert(response.message);
         },
         error: function(error) {
             console.error('Error modifying Order Line data:');
@@ -263,6 +266,7 @@ $('.dropdown-item.delete_order_line').on('click', function(e) {
             var order_lines = order.order_lines;
             actualise_total_amounts(order.total_net_amount, order.total_gross_amount);
             actualise_order_lines_nums(order_lines);
+            alert(response.message);
         },
         error: function(error) {
             console.error('Error deleting Order Line data:');

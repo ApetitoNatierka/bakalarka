@@ -69,6 +69,7 @@ document.getElementById('new_animal_number').addEventListener('click', function(
                                                    value="${animal_number.description}"></td>
                 </tr>`;
             $('.animal_number_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (xhr) {
             console.error('Error adding animal number:', xhr);
@@ -103,6 +104,7 @@ $(document).on('click', '.dropdown-item.delete_animal_number', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting animal number data:');
@@ -136,6 +138,7 @@ $(document).on('click', '.dropdown-item.modify_animal_number', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying animal number data:');

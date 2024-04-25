@@ -85,6 +85,7 @@ document.getElementById('new_service').addEventListener('click', function() {
                                value="${service.price}"></td>
                 </tr>`;
             $('.service_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (error) {
             console.error('Error adding animal number:', error);
@@ -113,6 +114,7 @@ $(document).on('click', '.dropdown-item.delete_service', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting service data:');
@@ -148,6 +150,7 @@ $(document).on('click', '.dropdown-item.modify_service', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying service data:');

@@ -112,14 +112,14 @@
                                                             </button>
                                                             <ul class="dropdown-menu"
                                                                 aria-labelledby="dropdownMenuButton">
-                                                                <li><p class="dropdown-item modify_emplyee_line"
+                                                                <li><p class="dropdown-item modify_employee_line"
                                                                        id="modify_emplyee_line"
-                                                                       data-emplyee-line-id="{{ $employee->id }}">
+                                                                       data-employee-line-id="{{ $employee->id }}">
                                                                         Modify</p>
                                                                 </li>
                                                                 <li><p class="dropdown-item delete_employee_line"
                                                                        id="delete_employee_line"
-                                                                       data-emplyee-line-id="{{ $employee->id }}">
+                                                                       data-employee-line-id="{{ $employee->id }}">
                                                                         Delete</p>
                                                                 </li>
                                                             </ul>

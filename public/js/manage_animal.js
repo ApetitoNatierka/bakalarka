@@ -121,6 +121,7 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log(response.message);
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error saving order data:');
@@ -227,6 +228,7 @@ document.getElementById('new_medical_treatment').addEventListener('click', funct
                                value="${medical_treatment.end}" disabled></td>
                 </tr>`;
             $('.medical_treatment_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function(xhr, status, error) {
             console.error('Error saving Order data:')
@@ -267,6 +269,7 @@ $(document).ready(function() {
                 $this.closest('tr').fadeOut(500, function() {
                     $(this).remove();
                 });
+                alert(response.message);
             },
             error: function (response) {
                 console.log(par_medical_treatment_id);
@@ -306,6 +309,7 @@ $('.dropdown-item.modify_medical_treatment').on('click', function(e) {
         },
         success: function (response) {
             console.log('Medical treatment modified sucessfully');
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying item data:');

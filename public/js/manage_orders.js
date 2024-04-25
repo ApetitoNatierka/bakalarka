@@ -74,6 +74,7 @@ document.getElementById('new_order').addEventListener('click', function() {
                 </tr>`;
 
             $('.order_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error saving user data:');
@@ -102,6 +103,7 @@ document.getElementById('new_order').addEventListener('click', function() {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting product data:');
@@ -132,6 +134,7 @@ $(document).on('click', '.dropdown-item.modify_order', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying user data:');

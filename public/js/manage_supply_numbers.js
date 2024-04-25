@@ -72,6 +72,7 @@ document.getElementById('new_supply_number').addEventListener('click', function(
                                                    value="${supply_number.description}"></td>
                 </tr>`;
             $('.supply_number_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (xhr) {
             console.error('Error adding supply number:', xhr);
@@ -105,6 +106,7 @@ $(document).on('click', '.dropdown-item.delete_supply_number', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function(response) {
             console.error('Error deleting supply number data:');
@@ -137,6 +139,7 @@ $(document).on('click', '.dropdown-item.modify_supply_number', function(e) {
         },
         success: function(response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function(response) {
             console.error('Error modifying supply number data:');

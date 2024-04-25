@@ -157,6 +157,7 @@ document.getElementById('new_supply').addEventListener('click', function() {
                     <td>${createwarehousesSelect(warehouses, supply.warehouse_id)}</td>
                 </tr>`;
             $('.supplies_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (error) {
             console.error('Error adding supply:', error);
@@ -185,6 +186,7 @@ $(document).on('click', '.dropdown-item.delete_supply', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting supply data:');
@@ -238,6 +240,7 @@ $(document).on('click', '.dropdown-item.modify_supply', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying supply data:');

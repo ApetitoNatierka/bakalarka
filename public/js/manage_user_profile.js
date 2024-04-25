@@ -17,6 +17,7 @@ document.getElementById('modify_user_info').addEventListener('click', function()
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error saving user data:');

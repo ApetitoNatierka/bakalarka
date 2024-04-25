@@ -73,7 +73,7 @@ class AnimalController extends Controller
         $animal_nos = AnimalNumber::all();
         $warehouses = Warehouse::all();
 
-        return response()->json(['message' => 'Animal deleted successfully', 'animal' => $animal, 'animal_nos' => $animal_nos, 'warehouses' => $warehouses]);
+        return response()->json(['message' => 'Animal created successfully', 'animal' => $animal, 'animal_nos' => $animal_nos, 'warehouses' => $warehouses]);
 
     }
 

@@ -87,6 +87,7 @@ document.getElementById('new_organisation').addEventListener('click', function()
 
 
             $('.organisations_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error saving Organisation data:');
@@ -116,6 +117,7 @@ $(document).on('click', '.dropdown-item.delete_organisation', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting organisation data:');
@@ -150,6 +152,7 @@ $(document).on('click', '.dropdown-item.delete_organisation', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying organisation data:');

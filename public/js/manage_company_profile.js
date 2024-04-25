@@ -77,6 +77,7 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log(response.message);
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error saving user data:');
@@ -143,6 +144,7 @@ document.getElementById('new_user').addEventListener('click', function() {
                 </tr>`;
 
             $('.users_line_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error saving user data:');
@@ -178,6 +180,7 @@ $('.dropdown-item.modify_user_line').on('click', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying user data:');
@@ -205,6 +208,7 @@ $('.dropdown-item.delete_user_line').on('click', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting user data:');

@@ -70,9 +70,6 @@ document.getElementById('new_company').addEventListener('click', function() {
                                 </svg>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a href="/company/${ company.id }"
-                                       class="dropdown-item detail_company" id="detail_company"
-                                       data-company-id="${ company.id }">Detail</a></li>
                                 <li><p class="dropdown-item modify_company" id="modify_company"
                                        data-company-id="${ company.id }">Modify</p></li>
                                 <li><p class="dropdown-item delete_company" id="delete_company"
@@ -95,6 +92,7 @@ document.getElementById('new_company').addEventListener('click', function() {
                 </tr>`;
 
             $('.company_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error saving company data:');
@@ -123,6 +121,7 @@ $(document).on('click', '.dropdown-item.delete_company', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting product data:');
@@ -164,6 +163,7 @@ $(document).on('click', '.dropdown-item.modify_company', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying company data:');
@@ -250,9 +250,6 @@ $(document).ready(function() {
                 </svg>
                 </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a href="/company/${ company.id }"
-                               class="dropdown-item detail_company" id="detail_company"
-                               data-company-id="${ company.id }">Detail</a></li>
                         <li><p class="dropdown-item modify_company" id="modify_company"
                                data-company-id="${ company.id }">Modify</p></li>
                         <li><p class="dropdown-item delete_company" id="delete_company"

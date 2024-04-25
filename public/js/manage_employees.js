@@ -132,9 +132,6 @@ document.getElementById('new_employee').addEventListener('click', function() {
                                 </svg>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a href="/employee/${employee.id}"
-                                       class="dropdown-item detail_employee" id="detail_employee"
-                                       data-employee-id="${employee.id}">Detail</a></li>
                                 <li><p class="dropdown-item modify_employee" id="modify_employee"
                                        data-employee-id="${employee.id}">Modify</p></li>
                                 <li><p class="dropdown-item delete_employee" id="delete_employee"
@@ -160,6 +157,7 @@ document.getElementById('new_employee').addEventListener('click', function() {
                                value="${employee.phone_number}"></td>
                 </tr>`;
             $('.employee_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (error) {
             console.error('Error adding employee:', error);
@@ -189,6 +187,7 @@ $(document).on('click', '.dropdown-item.delete_employee', function(e) {
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting employee data:');
@@ -232,6 +231,7 @@ $(document).on('click', '.dropdown-item.modify_employee', function(e) {
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying employee data:');
@@ -327,9 +327,6 @@ $(document).ready(function() {
                                 </svg>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a href="/employee/${employee.id}"
-                                       class="dropdown-item detail_employee" id="detail_employee"
-                                       data-employee-id="${employee.id}">Detail</a></li>
                                 <li><p class="dropdown-item modify_employee" id="modify_employee"
                                        data-employee-id="${employee.id}">Modify</p></li>
                                 <li><p class="dropdown-item delete_employee" id="delete_employee"

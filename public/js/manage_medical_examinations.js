@@ -71,6 +71,7 @@ document.getElementById('new_medical_examination').addEventListener('click', fun
                                value="${medical_examination.description}"></td>
                 </tr>`;
             $('.medical_examination_table tbody').append(new_row);
+            alert(response.message);
         },
         error: function (error) {
             console.error('Error adding medical examination:', error);
@@ -99,6 +100,7 @@ $(document).on('click', '.dropdown-item.delete_medical_examination', function(e)
             $this.closest('tr').fadeOut(500, function() {
                 $(this).remove();
             });
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error deleting medical examination data:');
@@ -131,6 +133,7 @@ $(document).on('click', '.dropdown-item.modify_medical_examination', function(e)
         },
         success: function (response) {
             console.log(response.message);
+            alert(response.message);
         },
         error: function (response) {
             console.error('Error modifying medical examination data:');

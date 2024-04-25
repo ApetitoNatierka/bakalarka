@@ -57,9 +57,6 @@
                                                     </svg>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <li><a href="/employee/{{$employee->id}}"
-                                                           class="dropdown-item detail_employee" id="detail_employee"
-                                                           data-employee-id="{{ $employee->id }}">Detail</a></li>
                                                     <li><p class="dropdown-item modify_employee" id="modify_employee"
                                                            data-employee-id="{{ $employee->id }}">Modify</p></li>
                                                     <li><p class="dropdown-item delete_employee" id="delete_employee"

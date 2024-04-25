@@ -135,6 +135,7 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log(response.message);
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error saving order data:');
@@ -191,6 +192,7 @@ $(document).ready(function() {
                 $this.closest('tr').fadeOut(500, function() {
                     $(this).remove();
                 });
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error deleting item data:');
@@ -226,6 +228,7 @@ $('.dropdown-item.modify_item').on('click', function(e) {
             success: function (response) {
                 console.log(response.items);
                 console.log(par_warehouse_id, par_item_id);
+                alert(response.message);
             },
             error: function (response) {
                 console.error('Error modifying item data:');
