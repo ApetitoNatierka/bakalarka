@@ -78,11 +78,18 @@ class OrganisationController extends Controller
     public function get_search_organisations(Request $request) {
         $organisation_id = $request->input('organisation_id', null);
         $email = $request->input('email', null);
+        $organisation = $request->input('organisation' , null);
         $phone_number = $request->input('phone_number', null);
         $empl_min = $request->input('empl_min', null);
         $empl_max = $request->input('empl_max', null);
 
         $organisationQuery = Organisation::query();
+
+        if ($organisation) {
+            $organisationQuery->where(function ($query) use ($organisation) {
+                $query->where('organisation', 'like', '%' . $organisation . '%');
+            });
+        }
 
         if ($organisation_id) {
             $organisationQuery->where(function ($query) use ($organisation_id) {
